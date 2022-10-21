@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/alfa_slab_one</item>
+        <item>@font/baloo_bhai</item>
+        <item>@font/bowlby_one_sc</item>
+        <item>@font/kanit_thin</item>
+        <item>@font/libre_baskerville_bold</item>
+        <item>@font/yrsa</item>
+        <item>@font/yrsa_light</item>
+        <item>@font/yrsa_semibold</item>
+        <item>@font/yusei_magic</item>
+    </array>
+</resources>
