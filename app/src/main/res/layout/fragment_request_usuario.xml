@@ -52,7 +52,6 @@
             android:layout_weight="1"
             android:background="@drawable/round_imagebutton_usuario"
             android:backgroundTint="#9CABC2"
-            android:marginLeft="58dp"
             android:src="@drawable/lupa" />
 
         <ImageButton
@@ -64,7 +63,6 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/round_imagebutton_usuario"
             android:backgroundTint="#9CABC2"
-            android:marginLeft="58dp"
             android:src="@drawable/plus" />
 
     </LinearLayout>

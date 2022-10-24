@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Saget"
         tools:targetApi="31">
-        <activity
-            android:name=".RegistroActivity"
+        <!--activity
+            android:name=".VistaPrincipalUsuarioActivity"
             android:exported="false" />
         <activity
             android:name=".InicioActivity"
-            android:exported="false" />
+            android:exported="false" /-->
         <activity
-            android:name=".VistaPrincipalUsuarioActivity"
+            android:name=".RegistroActivity"
             android:exported="true"
             android:theme="@style/Theme.Saget.Registro">
             <intent-filter>
