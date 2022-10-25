@@ -4,6 +4,45 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Agust/AndroidStudioProjects/Saget/app/src/main/res/layout/activity_main.xml" value="0.2734375" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable-v24/ic_fondo_principal_foreground.xml" value="0.2985" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.144" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_back_button.xml" value="0.2315" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_camera.xml" value="0.2635" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_house.xml" value="0.2985" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_house_green.xml" value="0.144" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_image_3.xml" value="0.2435" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_launcher_background.xml" value="0.209" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_profile.xml" value="0.2985" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_request.xml" value="0.2985" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_three_dots.xml" value="0.2635" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/inicio_usuario_selector.xml" value="0.244" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/profile_usuario_selector.xml" value="0.244" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/request_usuario_selector.xml" value="0.244" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/round_buttons_usuario.xml" value="0.2315" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/round_device_usuario.xml" value="0.2315" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/round_imagebutton_usuario.xml" value="0.2635" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/round_images_usuario.xml" value="0.2635" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/round_input_usuario.xml" value="0.2635" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/round_scroll_usuario.xml" value="0.2635" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/activity_registro.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/activity_vista_principal_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/app_bar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/app_bar_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/app_bar_usuario_fragments.xml" value="0.365625" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_detalle_equipo_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_inicio_usuario.xml" value="0.25" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_profile_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_request_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_solicitud_prestamo_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/lista_dispositivos_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/lista_solicitudes_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/rounded_button_usuario.xml" value="0.365625" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/spinnerborder.xml" value="0.365625" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/app_bar_usuario.xml" value="0.5" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/bottom_menu_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/mipmap-anydpi-v26/ic_fondo_principal.xml" value="0.196" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/mipmap-anydpi-v26/ic_fondo_principal_round.xml" value="0.196" />
       </map>
     </option>
   </component>

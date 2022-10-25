@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/fondo_principal_flujos"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        tools:context=".RequestFragmentUsuario">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="172dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="52dp"
+            android:fontFamily="@font/yrsa"
+            android:text="SOLICITUDES"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="204dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:weightSum="3"
+            app:layout_constraintHorizontal_bias="0.727"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <ImageButton
+                android:id="@+id/imageButton6"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#9CABC2"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_imagebutton_usuario"
+                android:src="@drawable/three_lines" />
+
+            <ImageButton
+                android:id="@+id/imageButton7"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/round_imagebutton_usuario"
+                android:backgroundTint="#9CABC2"
+                android:src="@drawable/lupa" />
+
+            <ImageButton
+                android:id="@+id/imageButton8"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_imagebutton_usuario"
+                android:backgroundTint="#9CABC2"
+                android:src="@drawable/plus" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="408dp"
+            android:layout_height="532dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.528"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclersolicitudusuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/lista_solicitudes_usuario" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

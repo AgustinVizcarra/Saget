@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/fondo_principal_flujos"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        tools:context=".SolicitudPrestamoFragmentUsuario">
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="264dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/yrsa"
+            android:text="SOLICITUD DE PRÉSTAMO"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.578"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="37dp"
+            android:layout_height="38dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button_usuario"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintHorizontal_bias="0.692"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView5"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="370dp"
+            android:layout_height="800dp"
+            android:orientation="vertical"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/fondo_blanco"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintHorizontal_bias="0.600"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                app:layout_constraintHorizontal_bias="0.548">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#0869FD"
+                    android:text="SOLICITAR"
+                    android:textStyle="bold"
+                    app:cornerRadius="15dp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="260dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/round_device_usuario">
+
+                <LinearLayout
+                    android:id="@+id/linerLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="27dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titulostock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Subir foto de DNI(parte delantera)"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="54dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/linerLayout"
+                    android:layout_alignStart="@+id/linerLayout"
+                    android:layout_alignEnd="@+id/linerLayout"
+                    android:layout_marginStart="68dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="76dp"
+                    android:orientation="vertical">
+
+
+                    <ImageButton
+                        android:id="@+id/imageButton6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#9CABC2"
+                        android:background="@drawable/round_imagebutton_usuario"
+                        android:src="@drawable/ic_camera" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="66dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Marca:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName2"
+                    android:layout_width="320dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/textView4"
+                    android:layout_marginStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:inputType="textPersonName"
+                    android:text="Toshiba" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="66dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextTextPersonName2"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Curso:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName3"
+                    android:layout_width="320dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/textView11"
+                    android:layout_marginStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:inputType="textPersonName"
+                    android:text="IOT" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextTextPersonName3"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="80dp"
+                    android:text="Programas Requeridos:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName4"
+                    android:layout_width="320dp"
+                    android:layout_height="65dp"
+                    android:layout_below="@+id/textView12"
+                    android:layout_marginStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:inputType="textPersonName"
+                    android:text="Android Studio" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextTextPersonName4"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="80dp"
+                    android:text="Motivo:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName5"
+                    android:layout_width="320dp"
+                    android:layout_height="105dp"
+                    android:layout_below="@+id/textView13"
+                    android:layout_marginStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:inputType="textPersonName"
+                    android:text="Laboratorio" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextTextPersonName5"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="80dp"
+                    android:text="Detalles Adicionales:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName6"
+                    android:layout_width="320dp"
+                    android:layout_height="65dp"
+                    android:layout_below="@+id/textView14"
+                    android:layout_marginStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:inputType="textPersonName"
+                    android:text="Ninguno"/>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
