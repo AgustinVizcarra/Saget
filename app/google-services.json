@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "343195023229",
+    "firebase_url": "https://saget-d5557-default-rtdb.firebaseio.com",
+    "project_id": "saget-d5557",
+    "storage_bucket": "saget-d5557.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343195023229:android:3f46d3d54e3772d8fa7e14",
+        "android_client_info": {
+          "package_name": "com.example.saget"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343195023229-fcuicpsla3ga1sqrj6vcm09f81t164lc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTtM9wdVNIgSlx6D5E_cYDakL1pCpvktQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343195023229-fcuicpsla3ga1sqrj6vcm09f81t164lc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
