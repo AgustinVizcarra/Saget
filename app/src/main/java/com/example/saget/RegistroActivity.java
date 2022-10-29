@@ -69,7 +69,7 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
 
-        EditText codigoText = findViewById(R.id.codigoPUCP);
+        /*EditText codigoText = findViewById(R.id.codigoPUCP);
         String codigoPUCP = codigoText.getText().toString();
         if(codigoPUCP.equalsIgnoreCase("") || codigoPUCP == null || codigoPUCP.isEmpty()){
             codigoText.setError("Ingrese su código PUCP");
@@ -90,6 +90,25 @@ public class RegistroActivity extends AppCompatActivity {
                 guardar = false;
             }
 
+        }*/
+        EditText dniText = findViewById(R.id.DNI);
+        String DNI = dniText.getText().toString();
+        if(DNI.equalsIgnoreCase("") || DNI == null || DNI.isEmpty()){
+            dniText.setError("Ingrese su DNI");
+            guardar = false;
+        }else{
+            try{
+                int dniHelper = Integer.parseInt(DNI);
+                int length = dniText.length();
+                if(length != 8){
+                    dniText.setError("Ingrese un DNI valido");
+                    guardar = false;
+                }
+
+            }catch (NumberFormatException e){
+                dniText.setError("Ingrese un DNI valido");
+                guardar = false;
+            }
         }
 
 
