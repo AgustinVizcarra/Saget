@@ -50,7 +50,7 @@ public class RegistroActivity extends AppCompatActivity {
     public void botonRegistrarse(View view){
         boolean guardar = true;
         String correo = null;
-        String rol = null;
+        String cargo = null;
 
         DatabaseReference databaseReference = firebaseDatabase.getReference();
         EditText nombresText = findViewById(R.id.nombresRegistro);
@@ -103,7 +103,8 @@ public class RegistroActivity extends AppCompatActivity {
                     correoText.setError("Ingrese un correo PUCP valido");
                     guardar = false;
 
-                }else{
+                }
+                /*else{
                     if(!String.valueOf(partesCorreo[0].charAt(0)).equals("a")){
                         correoText.setError("Ingrese un correo PUCP valido");
                         guardar = false;
@@ -127,7 +128,7 @@ public class RegistroActivity extends AppCompatActivity {
 
                     }
 
-                }
+                }*/
 
                 if (partesCorreo[1].equals("pucp.edu.pe")){
                     correo = correoHelper;
@@ -148,15 +149,15 @@ public class RegistroActivity extends AppCompatActivity {
 
 
         Spinner spinner = findViewById(R.id.spinnerRolRegistro);
-        String rolHelper =spinner.getSelectedItem().toString();
-        if(rolHelper.equals("Estudiante")){
-            rol = rolHelper;
+        String cargoHelper =spinner.getSelectedItem().toString();
+        if(cargoHelper.equals("Estudiante")){
+            cargo = cargoHelper;
         }else{
-            if(rolHelper.equals("Profesor")){
-                rol = rolHelper;
+            if(cargoHelper.equals("Profesor")){
+                cargo = cargoHelper;
             }else{
-                if(rolHelper.equals("Personal Administrativo")){
-                    rol = rolHelper;
+                if(cargoHelper.equals("Personal Administrativo")){
+                    cargo = cargoHelper;
                 }else{
                     ((TextView)spinner.getSelectedView()).setError("Seleciona un rol válido");
                     guardar = false;
@@ -175,12 +176,12 @@ public class RegistroActivity extends AppCompatActivity {
 
         if(guardar){
             String finalCorreo = correo;
-            String finalRol = rol;
+            String finalCargo = cargo;
             databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.getValue() == null){
-                        Usuario usuario = new Usuario(nombres,apellidos, finalCorreo,sexo, finalRol,sha256(contrasena));
+                        Usuario usuario = new Usuario(nombres,apellidos, finalCorreo,sexo, finalCargo,1,sha256(contrasena));
                         databaseReference.child("usuario").child(DNI).setValue(usuario);
                         Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
                     }else{
@@ -199,7 +200,7 @@ public class RegistroActivity extends AppCompatActivity {
                             }
                         }
                         if(!existe){
-                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo,sexo, finalRol,sha256(contrasena));
+                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo,sexo, finalCargo,1,sha256(contrasena));
                             databaseReference.child("usuario").child(DNI).setValue(usuario);
                             Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
                         }

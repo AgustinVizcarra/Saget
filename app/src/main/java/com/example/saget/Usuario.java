@@ -5,8 +5,17 @@ public class Usuario {
     private String apellidos;
     private String correo;
     private String sexo;
-    private String rol;
+    private String cargo;
+    private int rol;
     private String password;
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
 
     public String getNombres() {
         return nombres;
@@ -40,11 +49,11 @@ public class Usuario {
         this.sexo = sexo;
     }
 
-    public String getRol() {
+    public int getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(int rol) {
         this.rol = rol;
     }
 
@@ -56,10 +65,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(String nombres, String apellidos, String correo, String sexo, String rol, String password) {
+    public Usuario(String nombres, String apellidos, String correo, String sexo,String cargo, int rol, String password) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
+        this.cargo = cargo;
         this.sexo = sexo;
         this.rol = rol;
         this.password = password;
