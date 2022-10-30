@@ -69,28 +69,6 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
 
-        /*EditText codigoText = findViewById(R.id.codigoPUCP);
-        String codigoPUCP = codigoText.getText().toString();
-        if(codigoPUCP.equalsIgnoreCase("") || codigoPUCP == null || codigoPUCP.isEmpty()){
-            codigoText.setError("Ingrese su código PUCP");
-            guardar = false;
-        }else{
-            try{
-                int code = Integer.parseInt(codigoPUCP);
-                Calendar cal= Calendar.getInstance();
-                int year= cal.get(Calendar.YEAR);
-
-                if(code<1917 || code>year){
-                    codigoText.setError("Ingrese un código PUCP valido");
-                    guardar = false;
-                }
-
-            }catch (NumberFormatException e){
-                codigoText.setError("Ingrese un código PUCP valido");
-                guardar = false;
-            }
-
-        }*/
         EditText dniText = findViewById(R.id.DNI);
         String DNI = dniText.getText().toString();
         if(DNI.equalsIgnoreCase("") || DNI == null || DNI.isEmpty()){
@@ -99,7 +77,7 @@ public class RegistroActivity extends AppCompatActivity {
         }else{
             try{
                 int dniHelper = Integer.parseInt(DNI);
-                int length = dniText.length();
+                int length = DNI.length();
                 if(length != 8){
                     dniText.setError("Ingrese un DNI valido");
                     guardar = false;
@@ -121,16 +99,41 @@ public class RegistroActivity extends AppCompatActivity {
             if(correoHelper.contains("@")){
                 String[] partesCorreo = correoHelper.split("@");
 
-                if(partesCorreo[0].equals("") || partesCorreo[0].isEmpty()){
+                if(partesCorreo[0].length() != 9){
                     correoText.setError("Ingrese un correo PUCP valido");
                     guardar = false;
+
                 }else{
-                    if (partesCorreo[1].equals("pucp.edu.pe")){
-                        correo = correoHelper;
-                    }else{
+                    if(!String.valueOf(partesCorreo[0].charAt(0)).equals("a")){
                         correoText.setError("Ingrese un correo PUCP valido");
                         guardar = false;
+
+                    }else{
+                        try {
+                            int numeros = Integer.parseInt(partesCorreo[0].substring(1,8));
+                            int anho = Integer.parseInt(partesCorreo[0].substring(1,4));
+                            Calendar cal= Calendar.getInstance();
+                            int year= cal.get(Calendar.YEAR);
+
+                            if(anho<1917 || anho>year){
+                                correoText.setError("Ingrese un correo PUCP valido");
+                                guardar = false;
+                            }
+
+                        }catch (NumberFormatException e){
+                            correoText.setError("Ingrese un correo PUCP valido");
+                            guardar = false;
+                        }
+
                     }
+
+                }
+
+                if (partesCorreo[1].equals("pucp.edu.pe")){
+                    correo = correoHelper;
+                }else{
+                    correoText.setError("Ingrese un correo PUCP valido");
+                    guardar = false;
                 }
 
             }else{
@@ -140,7 +143,7 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
 
-        RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
+        RadioGroup rg = findViewById(R.id.radioGroup);
         String sexo = ((RadioButton) findViewById(rg.getCheckedRadioButtonId())).getText().toString();
 
 
@@ -170,13 +173,50 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
 
-        //GUARDAMOS
         if(guardar){
-            Usuario usuario = new Usuario(nombres,apellidos,correo,sexo,rol,sha256(contrasena));
-            databaseReference.child("usuario").child(codigoPUCP).setValue(usuario);
-            Toast.makeText(this,"Cuenta creada exitosamente",Toast.LENGTH_SHORT).show();
+            String finalCorreo = correo;
+            String finalRol = rol;
+            databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.getValue() == null){
+                        Usuario usuario = new Usuario(nombres,apellidos, finalCorreo,sexo, finalRol,sha256(contrasena));
+                        databaseReference.child("usuario").child(DNI).setValue(usuario);
+                        Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
+                    }else{
+                        boolean existe = false;
+                        for(DataSnapshot children : snapshot.getChildren()){
+                            if(children.getKey().equalsIgnoreCase(DNI)){
+                                existe = true;
+                                Toast.makeText(RegistroActivity.this,"DNI ya existe!",Toast.LENGTH_SHORT).show();
+                                break;
+                            }else{
+                                if(children.getValue(Usuario.class).getCorreo().equals(finalCorreo)){
+                                    existe = true;
+                                    Toast.makeText(RegistroActivity.this,"Correo ya existe!",Toast.LENGTH_SHORT).show();
+                                    break;
+                                }
+                            }
+                        }
+                        if(!existe){
+                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo,sexo, finalRol,sha256(contrasena));
+                            databaseReference.child("usuario").child(DNI).setValue(usuario);
+                            Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(RegistroActivity.this,"An error has ocurred!",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
         }else{
-            Toast.makeText(this,"Campo(s) incorrecto(s)",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Campo(s) incorrecto(s)!",Toast.LENGTH_SHORT).show();
         }
 
     }
