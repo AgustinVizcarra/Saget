@@ -83,7 +83,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/stock"
+                        android:id="@+id/stockEquipo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="15"
@@ -91,7 +91,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/marca"
+                        android:id="@+id/marcaEquipo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"

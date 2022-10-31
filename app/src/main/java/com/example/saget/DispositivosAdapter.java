@@ -10,72 +10,45 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DispositivosAdapter extends RecyclerView.Adapter<DispositivosAdapter.DispositivosViewHolder> {
+public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,DispositivosAdapter.myViewHolder> {
 
-    private ArrayList<Equipo> equipoArrayList;
-    private Context context;
 
-    public ArrayList<Equipo> getEquipoArrayList() {
-        return equipoArrayList;
+    public DispositivosAdapter(@NonNull FirebaseRecyclerOptions<Equipo> options) {
+        super(options);
     }
 
-    public void setEquipoArrayList(ArrayList<Equipo> equipoArrayList) {
-        this.equipoArrayList = equipoArrayList;
+    @Override
+    protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Equipo equipo) {
+        holder.stock.setText(String.valueOf(equipo.getStock()));
+        holder.marca.setText(String.valueOf(equipo.getMarca()));
+
     }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-
-    public DispositivosAdapter(Context context,ArrayList<Equipo> arrayList){
-        this.equipoArrayList = arrayList;
-        this.context = context;
-    }
-
-    class DispositivosViewHolder extends RecyclerView.ViewHolder {
-        Equipo equipo;
-
-        public DispositivosViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
 
     @NonNull
     @Override
-    public DispositivosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.fragment_inicio_usuario, parent, false);
-        return new DispositivosViewHolder(itemView);
+    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_dispositivos_usuario,parent,false);
+        return new myViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull DispositivosViewHolder holder, int position) {
-        Equipo eq = equipoArrayList.get(position);
-        holder.equipo = eq;
+    public class myViewHolder extends RecyclerView.ViewHolder{
+        TextView stock;
+        TextView marca;
 
-        TextView textView = holder.itemView.findViewById(R.id.stock);
-        textView.setText(String.valueOf(eq.getStock()));
+        public myViewHolder(@NonNull View itemView) {
+            super(itemView);
 
-        TextView textView2 = holder.itemView.findViewById(R.id.marca);
-        textView2.setText(eq.getMarca());
+            stock = itemView.findViewById(R.id.stockEquipo);
+            marca = itemView.findViewById(R.id.marcaEquipo);
+        }
     }
-
-
-    @Override
-    public int getItemCount() {
-        return equipoArrayList.size();
-    }
-
-
 
 }

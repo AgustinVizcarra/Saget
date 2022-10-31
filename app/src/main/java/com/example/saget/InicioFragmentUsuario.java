@@ -16,11 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toolbar;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class InicioFragmentUsuario extends Fragment {
 
-    ArrayList<Equipo> listaEquipos = new ArrayList<>();
+    RecyclerView recycleview;
+    DispositivosAdapter adapter;
+
+    public InicioFragmentUsuario(){
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,30 +39,30 @@ public class InicioFragmentUsuario extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_inicio_usuario,container,false);
 
-        View vista = inflater.inflate(R.layout.fragment_inicio_usuario, container, false);
+        recycleview = (RecyclerView) view.findViewById(R.id.recycleriniciousuario);
+        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        Equipo equipo1 = new Equipo(20,"Toshiba");
-        Equipo equipo2 = new Equipo(30,"HP");
-        Equipo equipo3 = new Equipo(40,"Asus");
-        Equipo equipo4 = new Equipo(50,"Acer");
-        listaEquipos.add(equipo1);
-        listaEquipos.add(equipo2);
-        listaEquipos.add(equipo3);
-        listaEquipos.add(equipo4);
+        FirebaseRecyclerOptions<Equipo> options = new FirebaseRecyclerOptions.Builder<Equipo>()
+                .setQuery(FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/").getReference().child("equipo"),Equipo.class)
+                .build();
 
+        adapter = new DispositivosAdapter(options);
+        recycleview.setAdapter(adapter);
 
-
-        /*DispositivosAdapter adapter = new DispositivosAdapter();
-        adapter.setEquipoArrayList(listaEquipos);
-        adapter.setContext(getContext());
-
-        RecyclerView recyclerEquipos = vista.findViewById(R.id.recycleriniciousuario);
-        recyclerEquipos.setAdapter(adapter);
-        recyclerEquipos.setLayoutManager(new LinearLayoutManager(getContext()));*/
-
-        return vista;
+        return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 }

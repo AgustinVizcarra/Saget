@@ -43,7 +43,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="607dp"
+            android:layout_height="595dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.428"
@@ -54,7 +54,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleriniciousuario"
                 android:layout_width="match_parent"
-                tools:listitem="@layout/lista_dispositivos_usuario"
+                android:layout_marginBottom="50dp"
                 android:layout_height="match_parent"/>
 
 

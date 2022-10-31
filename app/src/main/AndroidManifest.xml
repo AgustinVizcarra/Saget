@@ -23,13 +23,15 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".RegistroActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Saget.Registro"/>
+        <activity
             android:name=".InicioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Saget.Registro"/>
         <activity
             android:name=".VistaPrincipalUsuarioActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistroActivity"
             android:exported="false"
             android:theme="@style/Theme.Saget.Registro">
         </activity>
