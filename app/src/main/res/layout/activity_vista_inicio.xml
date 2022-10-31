@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VistaInicioActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_inicio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icono_saget" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="0dp"
+                android:fontFamily="sans-serif-condensed-light"
+                android:text="El sistema de arrenadmiento y gestion de Equipos y Tecnología por sus siglas SAGET es una solución orientada a la gestión y administración de dispositivos electrónicos en cuanto a la recepción y emisión tanto de solicitudes de préstamo como aprobaciones de arrendamiento usando dispositivos moviles"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/botonInicioRegistro"
+                android:layout_width="150dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="139dp"
+                android:layout_marginTop="80dp"
+                android:backgroundTint="#0BA6FE"
+                android:text="Registrarse"
+                android:onClick="redireccionRegistro"
+                app:cornerRadius="20dp"
+                android:textSize="12dp"
+                app:layout_constraintVertical_bias="0.972" />
+
+            <Button
+                android:id="@+id/botonInicioLogueo"
+                android:layout_width="150dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="139dp"
+                android:layout_marginTop="0dp"
+                android:onClick="redireccionLogueo"
+                android:backgroundTint="#005A8D"
+                android:text="Iniciar Sesión"
+                app:cornerRadius="20dp"
+                android:textSize="11dp"
+                app:layout_constraintVertical_bias="0.972" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
