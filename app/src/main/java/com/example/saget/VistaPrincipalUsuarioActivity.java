@@ -55,5 +55,7 @@ public class VistaPrincipalUsuarioActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-
+    @Override
+    public void onBackPressed() {
+    }
 }

@@ -17,12 +17,15 @@ import android.view.ViewGroup;
 import android.widget.Toolbar;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.ObservableSnapshotArray;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class InicioFragmentUsuario extends Fragment {
-
     RecyclerView recycleview;
     DispositivosAdapter adapter;
 
@@ -30,10 +33,26 @@ public class InicioFragmentUsuario extends Fragment {
 
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        View botonRetrocederCatalogo = view.findViewById(R.id.imageButton3);
+        botonRetrocederCatalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                botonRetrocederCatalogo(view);
+            }
+        });
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +64,8 @@ public class InicioFragmentUsuario extends Fragment {
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FirebaseRecyclerOptions<Equipo> options = new FirebaseRecyclerOptions.Builder<Equipo>()
-                .setQuery(FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/").getReference().child("equipo"),Equipo.class)
+                .setQuery(FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/").getReference().child("equipo")
+                                .orderByChild("estado").equalTo("1_1"),Equipo.class)
                 .build();
 
         adapter = new DispositivosAdapter(options);
@@ -64,5 +84,11 @@ public class InicioFragmentUsuario extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    public void botonRetrocederCatalogo(View view){
+        //Falta implementar vista o fragmento
+        //AppCompatActivity activity = (AppCompatActivity) getContext();
+        //activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
     }
 }

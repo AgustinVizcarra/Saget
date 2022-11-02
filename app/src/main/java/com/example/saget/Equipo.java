@@ -4,8 +4,9 @@ public class Equipo {
     private String caracteristicas;
     private int disponibilidad;
     private String equiposAdicionales;
-    private int estado;
+    private String estado;
     private String marca;
+    private String nombre;
     private int stock;
     private int tipo;
 
@@ -33,11 +34,11 @@ public class Equipo {
         this.equiposAdicionales = equiposAdicionales;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -73,12 +74,21 @@ public class Equipo {
     public Equipo() {
     }
 
-    public Equipo(String caracteristicas, int disponibilidad, String equiposAdicionales, int estado, String marca, int stock, int tipo) {
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Equipo(String caracteristicas, int disponibilidad, String equiposAdicionales, String estado, String marca, String nombre, int stock, int tipo) {
         this.caracteristicas = caracteristicas;
         this.disponibilidad = disponibilidad;
         this.equiposAdicionales = equiposAdicionales;
         this.estado = estado;
         this.marca = marca;
+        this.nombre = nombre;
         this.stock = stock;
         this.tipo = tipo;
     }

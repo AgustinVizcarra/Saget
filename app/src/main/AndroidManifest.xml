@@ -31,13 +31,14 @@
             android:exported="false"
             android:theme="@style/Theme.Saget.Registro"/>
         <activity
-            android:name=".VistaPrincipalUsuarioActivity"
+            android:name=".VistaInicioActivity"
             android:exported="false"
             android:theme="@style/Theme.Saget.Registro">
         </activity>
         <activity
-            android:name=".VistaInicioActivity"
+            android:name=".VistaPrincipalUsuarioActivity"
             android:exported="true"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.Saget.Registro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

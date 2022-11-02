@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/botonretrocerderSolicitud"
             android:layout_width="37dp"
             android:layout_height="38dp"
             android:background="@android:color/transparent"
@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="370dp"
-            android:layout_height="800dp"
+            android:layout_height="870dp"
             android:orientation="vertical"
             android:layout_marginTop="25dp"
             android:background="@drawable/fondo_blanco"
@@ -127,12 +127,13 @@
 
 
             <RelativeLayout
+                android:id="@+id/solicitudplantilla"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="66dp"
+                    android:id="@+id/nombresolicitudtitulo"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
@@ -140,32 +141,63 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="105dp"
-                    android:text="Marca:"
+                    android:text="Equipo:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/nombreEquipoSolicitud"
+                    android:layout_width="320dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/nombresolicitudtitulo"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:backgroundTint="@color/gris"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text="Laptop + nombre"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tiempoTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nombreEquipoSolicitud"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Tiempo Limite de Reserva:"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName2"
+                    android:id="@+id/marcaPrestamo"
                     android:layout_width="320dp"
                     android:layout_height="35dp"
-                    android:layout_below="@+id/textView4"
+                    android:layout_below="@+id/tiempoTitulo"
                     android:layout_marginStart="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
-                    android:text="Toshiba" />
+                    android:paddingLeft="10dp"
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:layout_width="66dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextTextPersonName2"
+                    android:layout_below="@+id/marcaPrestamo"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="105dp"
                     android:text="Curso:"
                     android:textColor="#000000"
@@ -177,12 +209,12 @@
                     android:layout_height="35dp"
                     android:layout_below="@+id/textView11"
                     android:layout_marginStart="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
-                    android:text="IOT" />
+                    android:paddingLeft="10dp"
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -209,7 +241,7 @@
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
-                    android:text="Android Studio" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/textView13"
@@ -236,7 +268,7 @@
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
-                    android:text="Laboratorio" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/textView14"
@@ -264,14 +296,21 @@
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
-                    android:text="Ninguno"/>
+                    android:text=""/>
 
 
             </RelativeLayout>
 
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/separador"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         </LinearLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

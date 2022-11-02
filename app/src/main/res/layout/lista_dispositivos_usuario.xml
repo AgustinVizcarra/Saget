@@ -23,23 +23,24 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/iconImageView"
+                android:id="@+id/iconImageViewequipo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
                 android:background="@drawable/round_images_usuario" />
 
             <RelativeLayout
                 android:layout_width="265dp"
                 android:layout_height="100dp"
-                android:layout_alignTop="@+id/iconImageView"
-                android:layout_alignBottom="@+id/iconImageView"
+                android:layout_alignTop="@+id/iconImageViewequipo"
+                android:layout_alignBottom="@+id/iconImageViewequipo"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/iconImageView"
+                android:layout_toEndOf="@+id/iconImageViewequipo"
                 android:background="@drawable/round_device_usuario">
 
                 <LinearLayout
@@ -49,8 +50,17 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="9dp"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titulonombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre:"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="6dp"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/titulostock"
@@ -64,7 +74,7 @@
                         android:id="@+id/titulomarca"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="7dp"
                         android:text="Marca:"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
@@ -77,16 +87,24 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="2dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/linerLayout"
                     android:layout_toRightOf="@+id/linerLayout"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/nombreEquipo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="6dp"
+                        android:textSize="18sp" />
+                    <TextView
                         android:id="@+id/stockEquipo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="15"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
@@ -94,25 +112,26 @@
                         android:id="@+id/marcaEquipo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:text="Toshiba"
+                        android:layout_marginTop="7dp"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="18sp" />
                 </LinearLayout>
+
             </RelativeLayout>
 
             <Button
                 android:id="@+id/botonVerDetalle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="107dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="7dp"
+                android:backgroundTint="#0869FD"
                 android:text="Ver Detalle"
                 android:textSize="10sp"
-                app:cornerRadius="15dp"
-                android:backgroundTint="#0869FD"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:cornerRadius="15dp" />
         </RelativeLayout>
     </LinearLayout>
 
