@@ -157,7 +157,7 @@
                     android:ems="12"
                     android:paddingLeft="10dp"
                     android:paddingTop="3dp"
-                    android:text="Laptop + nombre"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 

@@ -21,25 +21,12 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class SolicitudPrestamoFragmentUsuario extends Fragment {
-    private String caracteristicas;
-    private int disponibilidad;
-    private String equiposAdicionales;
-    private String marca;
-    private String nombre;
-    private int stock;
-    private int tipo;
-    private String estado;
+    private String key;
+    private Equipo equipo;
     FirebaseDatabase firebaseDatabase;
 
-    public SolicitudPrestamoFragmentUsuario(String marca,int stock,String nombre,int disponibilidad,String caracteristicas,String equiposAdicionales,int tipo,String estado){
-        this.caracteristicas = caracteristicas;
-        this.disponibilidad = disponibilidad;
-        this.estado = estado;
-        this.equiposAdicionales = equiposAdicionales;
-        this.marca = marca;
-        this.nombre = nombre;
-        this.stock = stock;
-        this.tipo = tipo;
+    public SolicitudPrestamoFragmentUsuario(String keyEquipo){
+        this.key = keyEquipo;
     }
 
     public SolicitudPrestamoFragmentUsuario(){
@@ -74,37 +61,53 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
         DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-        final String[] nombreTipo = {""};
-
         TextView nombreEquipoPrestamo = view.findViewById(R.id.nombreEquipoSolicitud);
 
-        databaseReference.child("tipo_equipo").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("equipo/"+key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot children : snapshot.getChildren()){
-                    if(children.getKey().equalsIgnoreCase(String.valueOf(tipo))){
-                        nombreTipo[0] = children.child("nombre").getValue(String.class);
-                        break;
+                if(snapshot.getValue() != null){
+                    Equipo equipoBanderita = snapshot.getValue(Equipo.class);
+                    if(equipoBanderita.getEstado().equals("0_"+equipoBanderita.getTipo()) || equipoBanderita.getStock() == 0){
+                        //error message
+                        AppCompatActivity activity = (AppCompatActivity) getContext();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+
+                    }else{
+                        equipo = equipoBanderita;
+
+                        //laptop
+                        if(equipo.getTipo() == 1){
+                            nombreEquipoPrestamo.setText(String.valueOf("LAPTOP " + equipo.getMarca() + " " + equipo.getNombre()));
+                        }
+
+
+
+
                     }
+
+                }else{
+                    //error message
+                    AppCompatActivity activity = (AppCompatActivity) getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
                 }
 
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                //error message
                 AppCompatActivity activity = (AppCompatActivity) getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
             }
         });
 
-        nombreEquipoPrestamo.setText(String.valueOf(nombreTipo[0] + " " + marca + " " + nombre));
 
         return  view;
     }
 
     public void botonRetrocoderSolicitud(View view){
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(marca,stock,nombre,disponibilidad,caracteristicas,equiposAdicionales,tipo,estado)).addToBackStack(null).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(key)).addToBackStack(null).commit();
     }
 
 }

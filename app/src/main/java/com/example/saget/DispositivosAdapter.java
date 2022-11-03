@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +38,6 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
     StorageReference imageRef = firebaseStorage.getReference();
     String uri;
 
-
     public DispositivosAdapter(@NonNull FirebaseRecyclerOptions<Equipo> options) {
         super(options);
     }
@@ -48,7 +48,6 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
         holder.nombre.setText(String.valueOf(equipo.getNombre()));
         holder.stock.setText(String.valueOf(equipo.getStock()));
         holder.marca.setText(String.valueOf(equipo.getMarca()));
-
         databaseReference.child("tipo_equipo").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -66,11 +65,41 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
             }
         });
 
+
         holder.botonVerDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(equipo.getMarca(),equipo.getStock(),equipo.getNombre(),equipo.getDisponibilidad(),equipo.getCaracteristicas(),equipo.getEquiposAdicionales(),equipo.getTipo(),equipo.getEstado())).addToBackStack(null).commit();
+
+                databaseReference.child("equipo").orderByChild("estado").equalTo("1_1").addListenerForSingleValueEvent(new ValueEventListener() {
+                    String keyEquipo;
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot children : snapshot.getChildren()){
+                            Equipo equipo1 = children.getValue(Equipo.class);
+                            boolean igualNombre = equipo1.getNombre().equals(equipo.getNombre());
+                            boolean igualMarca = equipo1.getMarca().equals(equipo.getMarca());
+                            boolean igualCaracteristicas = equipo1.getCaracteristicas().equals(equipo.getCaracteristicas());
+                            boolean igualEquiposAdicionales = equipo1.getEquiposAdicionales().equals(equipo.getEquiposAdicionales());
+                            if(igualNombre && igualMarca && igualCaracteristicas && igualEquiposAdicionales){
+                                keyEquipo = children.getKey();
+                                break;
+                            }
+
+                        }
+
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(keyEquipo)).addToBackStack(null).commit();
+
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        //error message
+                    }
+                });
+
+
             }
         });
 
