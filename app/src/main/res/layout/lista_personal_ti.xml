@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardviewPersonalTi"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:animateLayoutChanges="true"
+    android:background="#09FFA6"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iconImageViewPersonalTI"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/round_images_usuario"
+                android:scaleType="centerCrop" />
+
+            <RelativeLayout
+                android:id="@+id/containerInfoTI"
+                android:layout_width="265dp"
+                android:layout_height="100dp"
+                android:layout_alignTop="@+id/iconImageViewPersonalTI"
+                android:layout_alignBottom="@+id/iconImageViewPersonalTI"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="55dp"
+                android:layout_toEndOf="@+id/iconImageViewPersonalTI"
+                android:background="@drawable/round_device_usuario">
+
+                <LinearLayout
+                    android:id="@+id/linerLayoutTI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nombrePersonal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Nombre:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/apellidoPersonal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Apellidos:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/correoPersonal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="Correo:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoLayoutTI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/linerLayoutTI"
+                    android:layout_toRightOf="@+id/linerLayoutTI"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nombreTI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/apellidoTI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/correoTI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/containerInfoTI"
+                android:layout_alignEnd="@+id/containerInfoTI"
+                android:layout_alignBottom="@+id/containerInfoTI"
+                android:layout_marginTop="-1dp"
+                android:layout_marginEnd="-50dp"
+                android:layout_marginBottom="1dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/editarTi"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#09FFA6"
+                    android:foreground="@drawable/ic_edit"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/eliminarTi"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#FF0909"
+                    android:foreground="@drawable/ic_delete"></ImageButton>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

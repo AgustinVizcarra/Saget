@@ -13,7 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
+    <style name="buttonEditInfoTI" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">#09FFA6</item>
+        <item name="android:radius">7dp</item>
+    </style>
+    <style name="buttonDeleteInfoTI" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">#FF0909</item>
+        <item name="android:radius">7dp</item>
+    </style>
     <style name="Theme.Saget.Registro" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#000000</item>
