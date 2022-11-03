@@ -1,5 +1,6 @@
 package com.example.saget;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +12,29 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 public class DetalleEquipoFragmentUsuario extends Fragment {
     private Equipo equipo;
     private String key;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://saget-d5557.appspot.com");
+    StorageReference imageRef = firebaseStorage.getReference();
+    String uri;
 
     public DetalleEquipoFragmentUsuario(String keyEquipo){
         this.key = keyEquipo;
@@ -69,9 +82,11 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
         TextView marcaDetalleEquipo = view.findViewById(R.id.editTextTextPersonName2);
         TextView caracteristicasDetalleEquipo = view.findViewById(R.id.editTextTextPersonName3);
         TextView incluyeDetalleEquipo = view.findViewById(R.id.editTextTextPersonName4);
+        ImageSlider imageSlider = view.findViewById(R.id.sliderdetalleequipo);
 
 
         databaseReference.child("equipo/"+key).addValueEventListener(new ValueEventListener() {
+            ArrayList<SlideModel> imageList = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue() != null){
@@ -88,6 +103,24 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
                         marcaDetalleEquipo.setText(String.valueOf(equipo.getMarca()));
                         caracteristicasDetalleEquipo.setText(String.valueOf(equipo.getCaracteristicas()));
                         incluyeDetalleEquipo.setText(String.valueOf(equipo.getEquiposAdicionales()));
+
+                        //laptop
+                        if(equipo.getTipo() == 1){
+                            /*uri = "laptop" + "_" + equipo.getMarca() + "_" + equipo.getNombre() + ".jpg";
+                            imageRef.child(uri).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                                    generatedFilePath = downloadUri.toString();
+                                }
+                            });*/
+
+
+                            imageList.add(new SlideModel("https://mejoreslaptops.com/wp-content/uploads/2022/07/Las-mejores-laptops-Asus-2022.jpg", null));
+                            imageSlider.setImageList(imageList,ScaleTypes.CENTER_CROP);
+                        }
+
+
                     }
 
                 }else{

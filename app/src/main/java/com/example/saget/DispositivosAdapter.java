@@ -38,6 +38,7 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
     StorageReference imageRef = firebaseStorage.getReference();
     String uri;
 
+
     public DispositivosAdapter(@NonNull FirebaseRecyclerOptions<Equipo> options) {
         super(options);
     }

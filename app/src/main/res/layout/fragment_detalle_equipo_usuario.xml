@@ -48,10 +48,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                android:id="@+id/imagecarousel"
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/sliderdetalleequipo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                app:iss_auto_cycle="true"
+                app:iss_period="1000"
+                app:iss_delay="0"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 
