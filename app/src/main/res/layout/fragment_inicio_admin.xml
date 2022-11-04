@@ -3,5 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_principal_flujos">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPersonalTI"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
