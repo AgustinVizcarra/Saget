@@ -1,5 +1,9 @@
 package com.example.saget;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Equipo {
     private String caracteristicas;
     private int disponibilidad;
@@ -9,6 +13,15 @@ public class Equipo {
     private String nombre;
     private int stock;
     private int tipo;
+    private Object imagenes;
+
+    public Object getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(Object imagenes) {
+        this.imagenes = imagenes;
+    }
 
     public String getCaracteristicas() {
         return caracteristicas;
@@ -82,7 +95,7 @@ public class Equipo {
         this.nombre = nombre;
     }
 
-    public Equipo(String caracteristicas, int disponibilidad, String equiposAdicionales, String estado, String marca, String nombre, int stock, int tipo) {
+    public Equipo(String caracteristicas, int disponibilidad, String equiposAdicionales, String estado, String marca, String nombre, int stock, int tipo,Object imagenes) {
         this.caracteristicas = caracteristicas;
         this.disponibilidad = disponibilidad;
         this.equiposAdicionales = equiposAdicionales;
@@ -91,5 +104,6 @@ public class Equipo {
         this.nombre = nombre;
         this.stock = stock;
         this.tipo = tipo;
+        this.imagenes = imagenes;
     }
 }

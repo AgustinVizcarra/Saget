@@ -30,6 +30,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,DispositivosAdapter.myViewHolder> {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
@@ -49,24 +50,11 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
         holder.nombre.setText(String.valueOf(equipo.getNombre()));
         holder.stock.setText(String.valueOf(equipo.getStock()));
         holder.marca.setText(String.valueOf(equipo.getMarca()));
-        databaseReference.child("tipo_equipo").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot children : snapshot.getChildren()){
-                    if(children.getKey().equalsIgnoreCase(String.valueOf(equipo.getTipo()))){
-                        uri = children.child("nombre").getValue(String.class) + "_" + equipo.getMarca() + "_" + equipo.getNombre() + ".jpg";
-                        Glide.with(holder.imagenEquipo.getContext()).load(imageRef.child(uri)).override(100,100).into(holder.imagenEquipo);
-                        uri = "";
-                        break;
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
+        ArrayList<String> imagenes = (ArrayList<String>) equipo.getImagenes();
+        int n = (int) (Math.random() * (imagenes.size() - 1)) + 1;
 
+        Glide.with(holder.imagenEquipo.getContext()).load(imagenes.get(n)).override(100,100).into(holder.imagenEquipo);
         holder.botonVerDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +87,6 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
                         //error message
                     }
                 });
-
 
             }
         });
