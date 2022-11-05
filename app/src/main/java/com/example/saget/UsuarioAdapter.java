@@ -45,13 +45,15 @@ public class UsuarioAdapter extends FirebaseRecyclerAdapter<Usuario,UsuarioAdapt
         this.filenames = filenames;
     }
 
+
+
     @Override
     protected void onBindViewHolder(@NonNull viewHolder holder, int position, @NonNull Usuario model) {
         holder.nombre.setText(model.getNombres());
         holder.apellido.setText(model.getApellidos());
         holder.correo.setText(model.getCorreo());
         //obtengo el DNI de los usuarios para hacer el match consigo
-        databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("ti").addListenerForSingleValueEvent(new ValueEventListener() {
         String uri = "";
         boolean found = false;
         @Override

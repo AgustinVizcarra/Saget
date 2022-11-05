@@ -1,10 +1,16 @@
 package com.example.saget;
 
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
@@ -32,6 +41,10 @@ public class InicioAdminFragment extends Fragment {
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
     List<String> filenames;
+    SearchView txtBuscar;
+    ValueEventListener queryListener;
+    String option;
+
     public InicioAdminFragment(){
 
     }
@@ -54,6 +67,45 @@ public class InicioAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         Query query = databaseReference.orderByChild("rol").equalTo("2");
         View view = inflater.inflate(R.layout.fragment_inicio_admin, container, false);
+        txtBuscar = (SearchView) view.findViewById(R.id.textBuscar);
+        option = "";
+        //Filtrado
+        View filtros = view.findViewById(R.id.floatingFiltros);
+        PopupMenu popupMenu = new PopupMenu(view.getContext(),filtros);
+        popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_ti, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.opcion1:
+                        txtBuscar.setQueryHint("Ingresar los nombres del usuario");
+                        option="nombres";
+                        return true;
+                    case R.id.opcion2:
+                        txtBuscar.setQueryHint("Ingresar los apellidos del usuario");
+                        option="apellidos";
+                        return true;
+                    case R.id.opcion3:
+                        txtBuscar.setQueryHint("Ingresar el correo del usuario");
+                        option="correo";
+                        return true;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+        //
+        txtBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewPersonalTI);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
@@ -61,14 +113,36 @@ public class InicioAdminFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         return view;
     }
-    @Override
-    public void onStart(){
-        super.onStart();
-        adapter.startListening();
+    public void textBuscar(String s,String option){
+        Query query = databaseReference.child("ti");
+        switch (option){
+            case "":
+                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("rol").equalTo("2"),Usuario.class).build();
+                adapter = new UsuarioAdapter(options,filenames);
+                adapter.startListening();
+                recyclerView.setAdapter(adapter);
+                break;
+            case "nombres":
+                FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s+"~"),Usuario.class).build();
+                adapter = new UsuarioAdapter(options1,filenames);
+                adapter.startListening();
+                recyclerView.setAdapter(adapter);
+                break;
+            case "apellidos":
+                FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s+"~"),Usuario.class).build();
+                adapter = new UsuarioAdapter(options2,filenames);
+                adapter.startListening();
+                recyclerView.setAdapter(adapter);
+                break;
+            case "correo":
+                FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("correo").startAt(s).endAt(s+"~"),Usuario.class).build();
+                adapter = new UsuarioAdapter(options3,filenames);
+                adapter.startListening();
+                recyclerView.setAdapter(adapter);
+                break;
+            default:
+                Toast.makeText(this.getContext(),"Error en la busqueda con filtros",Toast.LENGTH_LONG).show();
+        }
     }
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
+
 }
