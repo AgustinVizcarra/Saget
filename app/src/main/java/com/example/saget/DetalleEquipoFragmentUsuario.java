@@ -32,9 +32,9 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
     private String key;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://saget-d5557.appspot.com");
-    StorageReference imageRef = firebaseStorage.getReference();
-    String uri;
+    ArrayList<String> urls = new ArrayList<>();
+    ArrayList<SlideModel> imageList = new ArrayList<>();
+
 
     public DetalleEquipoFragmentUsuario(String keyEquipo){
         this.key = keyEquipo;
@@ -69,7 +69,6 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
         });
 
 
-
     }
 
     @Override
@@ -86,7 +85,6 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
 
 
         databaseReference.child("equipo/"+key).addValueEventListener(new ValueEventListener() {
-            ArrayList<SlideModel> imageList = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue() != null){
@@ -98,28 +96,20 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
 
                     }else{
                         equipo = equipoBanderita;
+                        imageList.clear();
+
                         nameDetalleEquipo.setText(String.valueOf(equipo.getNombre()));
                         stockDetalleEquipo.setText(String.valueOf(equipo.getStock()));
                         marcaDetalleEquipo.setText(String.valueOf(equipo.getMarca()));
                         caracteristicasDetalleEquipo.setText(String.valueOf(equipo.getCaracteristicas()));
                         incluyeDetalleEquipo.setText(String.valueOf(equipo.getEquiposAdicionales()));
 
-                        //laptop
-                        if(equipo.getTipo() == 1){
-                            /*uri = "laptop" + "_" + equipo.getMarca() + "_" + equipo.getNombre() + ".jpg";
-                            imageRef.child(uri).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
-                                    generatedFilePath = downloadUri.toString();
-                                }
-                            });*/
+                        urls = (ArrayList<String>) equipo.getImagenes();
 
-
-                            imageList.add(new SlideModel("https://mejoreslaptops.com/wp-content/uploads/2022/07/Las-mejores-laptops-Asus-2022.jpg", null));
-                            imageSlider.setImageList(imageList,ScaleTypes.CENTER_CROP);
+                        for(int i=1;i<urls.size();i++){
+                            imageList.add(new SlideModel(urls.get(i),null));
                         }
-
+                        imageSlider.setImageList(imageList,ScaleTypes.CENTER_CROP);
 
                     }
 
@@ -137,7 +127,6 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
             }
         });
-
 
         return  view;
 

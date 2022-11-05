@@ -62,7 +62,7 @@
                 app:layout_constraintHorizontal_bias="0.548">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/solicitarprestamoboton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:backgroundTint="#0869FD"
@@ -177,7 +177,7 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/marcaPrestamo"
+                    android:id="@+id/tiempoPrestamo"
                     android:layout_width="320dp"
                     android:layout_height="35dp"
                     android:layout_below="@+id/tiempoTitulo"
@@ -193,7 +193,7 @@
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/marcaPrestamo"
+                    android:layout_below="@+id/tiempoPrestamo"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -204,7 +204,7 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName3"
+                    android:id="@+id/cursosolicitud"
                     android:layout_width="320dp"
                     android:layout_height="35dp"
                     android:layout_below="@+id/textView11"
@@ -220,7 +220,7 @@
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextTextPersonName3"
+                    android:layout_below="@+id/cursosolicitud"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -231,23 +231,23 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName4"
+                    android:id="@+id/programassolicitud"
                     android:layout_width="320dp"
                     android:layout_height="65dp"
                     android:layout_below="@+id/textView12"
                     android:layout_marginStart="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
+                    android:paddingLeft="10dp"
                     android:text="" />
 
                 <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextTextPersonName4"
+                    android:layout_below="@+id/programassolicitud"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -258,23 +258,23 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName5"
+                    android:id="@+id/motivosolicitud"
                     android:layout_width="320dp"
                     android:layout_height="105dp"
                     android:layout_below="@+id/textView13"
                     android:layout_marginStart="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
+                    android:paddingLeft="10dp"
                     android:text="" />
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextTextPersonName5"
+                    android:layout_below="@+id/motivosolicitud"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -285,7 +285,7 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName6"
+                    android:id="@+id/detallessolicitud"
                     android:layout_width="320dp"
                     android:layout_height="65dp"
                     android:layout_below="@+id/textView14"
