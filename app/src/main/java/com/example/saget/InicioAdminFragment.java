@@ -119,7 +119,7 @@ public class InicioAdminFragment extends Fragment {
         Query query = databaseReference.child("ti");
         switch (option){
             case "":
-                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("rol").equalTo("2"),Usuario.class).build();
+                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres"),Usuario.class).build();
                 adapter = new UsuarioAdapter(options,filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
