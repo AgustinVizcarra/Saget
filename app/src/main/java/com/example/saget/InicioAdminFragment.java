@@ -98,11 +98,13 @@ public class InicioAdminFragment extends Fragment {
         txtBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                textBuscar(s,option);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                textBuscar(s,option);
                 return false;
             }
         });
