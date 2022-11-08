@@ -1,24 +1,46 @@
 package com.example.saget;
 
+import static android.app.Activity.RESULT_OK;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.provider.MediaStore;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsic;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Random;
 
 
 public class SolicitudPrestamoFragmentUsuario extends Fragment {
@@ -26,6 +48,12 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
     private Equipo equipo;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    ImageButton botonCamara;
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://saget-d5557.appspot.com");
+    StorageReference imageRef = firebaseStorage.getReference();
+    ImageView fondoDNI;
+    Bitmap imgBitMap;
+
 
     public SolicitudPrestamoFragmentUsuario(String keyEquipo){
         this.key = keyEquipo;
@@ -67,8 +95,26 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
         TextView programasText = view.findViewById(R.id.programassolicitud);
         TextView motivoText = view.findViewById(R.id.motivosolicitud);
         TextView detallesText = view.findViewById(R.id.detallessolicitud);
+        fondoDNI = view.findViewById(R.id.fondoDNI);
 
         Button botonSolicitarPrestamo = view.findViewById(R.id.solicitarprestamoboton);
+
+        /*fondoDNI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });*/
+
+        botonCamara = view.findViewById(R.id.imageButton6);
+        botonCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,1);
+            }
+        });
 
 
         databaseReference.child("equipo/"+key).addValueEventListener(new ValueEventListener() {
@@ -136,6 +182,10 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                         guardar = false;
                                     }
 
+                                    if(fondoDNI.equals("") || fondoDNI == null){
+                                        guardar = false;
+                                    }
+
 
                                     if(guardar){
                                         //Quito en 1 el stock o inhabilito el stock dependiendo de como este el stock -> Hago update en db del equip
@@ -153,8 +203,25 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                         }
 
 
-                                        //en prestamos del usuario -> necesito el id del usuario y la key del equipo
+                                        //en prestamos del usuario -> necesito el id del usuario y la key del equipo y estos campos llenados
+                                        String idFoto = getRandomString();
 
+                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                        imgBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                        byte[] data = baos.toByteArray();
+
+                                        UploadTask uploadTask = imageRef.child(idFoto+".jpg").putBytes(data);
+                                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception exception) {
+                                                //error message
+                                            }
+                                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                //se subio correctamente
+                                            }
+                                        });
 
 
 
@@ -200,9 +267,54 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
         return  view;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            Bundle extras = data.getExtras();
+            imgBitMap = (Bitmap) extras.get("data");
+
+            //Efecto Blur
+            imgBitMap = getBlurImage(imgBitMap);
+
+            fondoDNI.setImageBitmap(imgBitMap);
+        }
+    }
+
+
+
+
+    public Bitmap getBlurImage(Bitmap imagenBitMap){
+        Bitmap salidaBitmap = Bitmap.createBitmap(imagenBitMap);
+        final RenderScript renderScript = RenderScript.create(getContext());
+        Allocation entradaTemp = Allocation.createFromBitmap(renderScript,imagenBitMap);
+        Allocation salidaTemp = Allocation.createFromBitmap(renderScript,salidaBitmap);
+
+        ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+
+        scriptIntrinsicBlur.setRadius(25f);
+        scriptIntrinsicBlur.setInput(entradaTemp);
+        scriptIntrinsicBlur.forEach(salidaTemp);
+        salidaTemp.copyTo(salidaBitmap);
+
+        return salidaBitmap;
+    }
+
     public void botonRetrocoderSolicitud(View view){
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(key)).addToBackStack(null).commit();
     }
+
+
+    public String getRandomString() {
+        String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+        int sizeOfRandomString = 15;
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
+        for(int i=0;i<sizeOfRandomString;++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
+    }
+
+
 
 }
