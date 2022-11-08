@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import androidx.fragment.app.FragmentTransaction;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.renderscript.Allocation;
@@ -225,7 +227,6 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
 
 
-
                                         //Redirigo a fragmento request y muestro su solicitud
                                         //No cambia el color verde del botombar de la casa pintada al archivo pintado
                                         AppCompatActivity activity = (AppCompatActivity) getContext();
@@ -314,7 +315,6 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
         return sb.toString();
     }
-
 
 
 }
