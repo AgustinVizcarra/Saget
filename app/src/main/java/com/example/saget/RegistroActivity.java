@@ -33,7 +33,7 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         List<String> valuesSpinner = new ArrayList<>();
         valuesSpinner.add(0,"Seleccionar");

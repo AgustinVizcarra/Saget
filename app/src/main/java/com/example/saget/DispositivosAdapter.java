@@ -33,9 +33,9 @@ import java.util.List;
 import java.util.Random;
 
 public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,DispositivosAdapter.myViewHolder> {
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://saget-d5557.appspot.com");
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference imageRef = firebaseStorage.getReference();
     String uri;
 

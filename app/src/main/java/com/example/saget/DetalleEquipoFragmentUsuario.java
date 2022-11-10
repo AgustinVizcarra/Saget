@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class DetalleEquipoFragmentUsuario extends Fragment {
     private Equipo equipo;
     private String key;
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     ArrayList<String> urls = new ArrayList<>();
     ArrayList<SlideModel> imageList = new ArrayList<>();

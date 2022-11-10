@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "343195023229-cccct718bd82dse5beajttl68psv52pc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saget",
+            "certificate_hash": "2ddbb271af0cad3aa2e879f0e6e1abc50166b6ce"
+          }
+        },
+        {
           "client_id": "343195023229-fcuicpsla3ga1sqrj6vcm09f81t164lc.apps.googleusercontent.com",
           "client_type": 3
         }

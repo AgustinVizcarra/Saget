@@ -64,7 +64,7 @@ public class InicioFragmentUsuario extends Fragment {
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FirebaseRecyclerOptions<Equipo> options = new FirebaseRecyclerOptions.Builder<Equipo>()
-                .setQuery(FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/").getReference().child("equipo")
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("equipo")
                                 .orderByChild("estado").equalTo("1_1"),Equipo.class)
                 .build();
 
