@@ -60,6 +60,15 @@
                 android:orientation="vertical"
                 app:layout_constraintHorizontal_bias="0.548">
 
+                <Button
+                    android:id="@+id/actualizarprestamohistorial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#0869FD"
+                    android:text="Actualizar"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    app:cornerRadius="15dp" />
 
             </LinearLayout>
 

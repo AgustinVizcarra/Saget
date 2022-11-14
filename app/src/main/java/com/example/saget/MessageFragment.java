@@ -61,6 +61,8 @@ public class MessageFragment extends DialogFragment{
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new HistorialPrestamoFragmentUsuario(solicitudID)).addToBackStack(null).commit();
+
+
                 dismiss();
             }
         });

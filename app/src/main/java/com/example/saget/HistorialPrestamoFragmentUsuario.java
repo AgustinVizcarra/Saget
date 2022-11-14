@@ -86,8 +86,7 @@ public class HistorialPrestamoFragmentUsuario extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_historial_solicitud, container, false);
-
-
+        Button botonActualizar = view.findViewById(R.id.actualizarprestamohistorial);
         TextView nombreEquipoPrestamoHistorial = view.findViewById(R.id.nombreEquipoSolicitudHistorial);
         TextView tiempoPrestamoTextHistorial = view.findViewById(R.id.tiempoPrestamoHistorial);
         TextView cursoTextHistorial = view.findViewById(R.id.cursosolicitudHistorial);
@@ -97,12 +96,12 @@ public class HistorialPrestamoFragmentUsuario extends Fragment {
         fondoDNIHistorial = view.findViewById(R.id.fondoDNIHistorial);
 
         databaseReference.child("prestamos/"+solicitudID).addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if(snapshot.getValue() != null){
                     SolicitudDePrestamo solicitudDePrestamo = snapshot.getValue(SolicitudDePrestamo.class);
+
 
                     tiempoPrestamoTextHistorial.setText(String.valueOf(solicitudDePrestamo.getTiempoPrestamo()));
                     cursoTextHistorial.setText(String.valueOf(solicitudDePrestamo.getCurso()));
@@ -124,12 +123,26 @@ public class HistorialPrestamoFragmentUsuario extends Fragment {
                                 }
                                 //Falta setear los demas tipos
 
+
                                 imageRef.child(solicitudDePrestamo.getFoto()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         Glide.with(getContext()).load(uri).override(260,140).into(fondoDNIHistorial);
                                     }
                                 });
+
+
+                                if(solicitudDePrestamo.getEstado().equals("En trámite")){
+                                    botonActualizar.setVisibility(View.VISIBLE);
+                                    botonActualizar.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            AppCompatActivity activity = (AppCompatActivity) getContext();
+                                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new UpdateSolicitudFragmentUsuario(solicitudID,solicitudDePrestamo,solicitudDePrestamo.getEquipo(),equipo)).addToBackStack(null).commit();
+                                        }
+                                    });
+                                }
+
 
                             }else{
                                 //error message
