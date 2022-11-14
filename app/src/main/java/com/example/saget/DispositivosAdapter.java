@@ -35,10 +35,6 @@ import java.util.Random;
 public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,DispositivosAdapter.myViewHolder> {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    StorageReference imageRef = firebaseStorage.getReference();
-    String uri;
-
 
     public DispositivosAdapter(@NonNull FirebaseRecyclerOptions<Equipo> options) {
         super(options);

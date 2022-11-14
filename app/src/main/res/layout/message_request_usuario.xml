@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/idlinear"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:background="@color/kindofgris"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/namesolicitudmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="85dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="46dp"
+            android:text="SOLICITUD # 15"
+            android:textColor="@color/black"
+            android:textSize="24sp"></TextView>
+
+        <View
+            android:id="@+id/lineahorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="50dp"
+            android:background="#000000" />
+
+        <TextView
+            android:id="@+id/nameobsmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="90dp"
+            android:text="Observación:"
+            android:textColor="@color/black"
+            android:textSize="18sp"></TextView>
+
+        <TextView
+            android:id="@+id/obs"
+            android:layout_width="254dp"
+            android:layout_height="129dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:layout_marginEnd="14dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"></TextView>
+
+        <Button
+            android:id="@+id/buttonObservacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="90dp"
+            android:text="Leer más">
+
+        </Button>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

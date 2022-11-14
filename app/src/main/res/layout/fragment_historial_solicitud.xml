@@ -9,11 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        tools:context=".SolicitudPrestamoFragmentUsuario">
-
+        tools:context=".HistorialPrestamoFragmentUsuario">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView5Historial"
             android:layout_width="264dp"
             android:layout_height="32dp"
             android:layout_marginTop="56dp"
@@ -27,33 +26,33 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/botonretrocerderSolicitud"
+            android:id="@+id/botonretrocerderSolicitudHistorial"
             android:layout_width="37dp"
             android:layout_height="38dp"
             android:background="@android:color/transparent"
             android:src="@drawable/back_button_usuario"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5Historial"
+            app:layout_constraintEnd_toStartOf="@+id/textView5Historial"
             app:layout_constraintHorizontal_bias="0.692"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="@+id/textView5Historial"
             app:layout_constraintVertical_bias="1.0" />
 
         <LinearLayout
-            android:id="@+id/linearLayout5"
+            android:id="@+id/linearLayout5Historial"
             android:layout_width="370dp"
             android:layout_height="870dp"
             android:orientation="vertical"
             android:layout_marginTop="25dp"
             android:background="@drawable/fondo_blanco"
             android:gravity="center_horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="@+id/textView5Historial"
             app:layout_constraintHorizontal_bias="0.600"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5">
+            app:layout_constraintStart_toStartOf="@+id/textView5Historial"
+            app:layout_constraintTop_toBottomOf="@+id/textView5Historial">
 
             <LinearLayout
-                android:id="@+id/linearLayout6"
+                android:id="@+id/linearLayout6Historial"
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:gravity="center|right"
@@ -61,14 +60,6 @@
                 android:orientation="vertical"
                 app:layout_constraintHorizontal_bias="0.548">
 
-                <Button
-                    android:id="@+id/solicitarprestamoboton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="#0869FD"
-                    android:text="SOLICITAR"
-                    android:textStyle="bold"
-                    app:cornerRadius="15dp" />
 
             </LinearLayout>
 
@@ -80,63 +71,17 @@
                 android:background="@drawable/round_device_usuario">
 
                 <ImageView
+                    android:id="@+id/fondoDNIHistorial"
                     android:layout_width="match_parent"
-                    android:id="@+id/fondoDNI"
-                    android:scaleType="centerCrop"
-                    android:layout_height="match_parent">
-                </ImageView>
-
-
-                <LinearLayout
-                    android:id="@+id/linerLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="35dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="27dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/titulostock"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Subir foto de DNI(parte delantera)"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="54dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/linerLayout"
-                    android:layout_alignStart="@+id/linerLayout"
-                    android:layout_alignEnd="@+id/linerLayout"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginEnd="76dp"
-                    android:orientation="vertical">
-
-
-                    <ImageButton
-                        android:id="@+id/imageButton6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#9CABC2"
-                        android:background="@drawable/round_imagebutton_usuario"
-                        android:src="@drawable/ic_camera" />
-
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"></ImageView>
 
             </RelativeLayout>
 
 
 
             <RelativeLayout
-                android:id="@+id/solicitudplantilla"
+                android:id="@+id/solicitudplantillaHistorial"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -155,7 +100,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/nombreEquipoSolicitud"
+                    android:id="@+id/nombreEquipoSolicitudHistorial"
                     android:layout_width="320dp"
                     android:layout_height="35dp"
                     android:layout_below="@+id/nombresolicitudtitulo"
@@ -171,10 +116,10 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tiempoTitulo"
+                    android:id="@+id/tiempoTituloHistorial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/nombreEquipoSolicitud"
+                    android:layout_below="@+id/nombreEquipoSolicitudHistorial"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="10dp"
@@ -185,24 +130,28 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/tiempoPrestamo"
+                <TextView
+                    android:id="@+id/tiempoPrestamoHistorial"
                     android:layout_width="320dp"
                     android:layout_height="35dp"
-                    android:layout_below="@+id/tiempoTitulo"
+                    android:layout_below="@+id/tiempoTituloHistorial"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/gris"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
+                    android:textColor="#000000"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:textSize="18sp"
                     android:text="" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/textView11Historial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tiempoPrestamo"
+                    android:layout_below="@+id/tiempoPrestamoHistorial"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -212,24 +161,28 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/cursosolicitud"
+                <TextView
+                    android:id="@+id/cursosolicitudHistorial"
                     android:layout_width="320dp"
                     android:layout_height="35dp"
-                    android:layout_below="@+id/textView11"
+                    android:layout_below="@+id/textView11Historial"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/gris"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
+                    android:textColor="#000000"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:textSize="18sp"
                     android:text="" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/textView12Historial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/cursosolicitud"
+                    android:layout_below="@+id/cursosolicitudHistorial"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -239,24 +192,28 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/programassolicitud"
+                <TextView
+                    android:id="@+id/programassolicitudHistorial"
                     android:layout_width="320dp"
                     android:layout_height="65dp"
-                    android:layout_below="@+id/textView12"
+                    android:layout_below="@+id/textView12Historial"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/gris"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
+                    android:textColor="#000000"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:textSize="18sp"
                     android:text="" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/textView13Historial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/programassolicitud"
+                    android:layout_below="@+id/programassolicitudHistorial"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -266,24 +223,28 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/motivosolicitud"
+                <TextView
+                    android:id="@+id/motivosolicitudHistorial"
                     android:layout_width="320dp"
                     android:layout_height="105dp"
-                    android:layout_below="@+id/textView13"
+                    android:layout_below="@+id/textView13Historial"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
+                    android:backgroundTint="@color/gris"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:paddingTop="3dp"
+                    android:textSize="18sp"
                     android:text="" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/textView14Historial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/motivosolicitud"
+                    android:layout_below="@+id/motivosolicitudHistorial"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
@@ -293,17 +254,21 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/detallessolicitud"
+                <TextView
+                    android:id="@+id/detallessolicitudHistorial"
                     android:layout_width="320dp"
                     android:layout_height="65dp"
-                    android:layout_below="@+id/textView14"
+                    android:layout_below="@+id/textView14Historial"
                     android:layout_marginStart="10dp"
                     android:paddingLeft="10dp"
+                    android:backgroundTint="@color/gris"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
+                    android:paddingTop="3dp"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
                     android:inputType="textPersonName"
                     android:text=""/>
 
@@ -311,13 +276,13 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/separador"
+            android:id="@+id/separadorHistorial"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout5"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+            app:layout_constraintStart_toStartOf="@+id/linearLayout5Historial"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout5Historial"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5Historial">
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

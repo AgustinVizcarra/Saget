@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="coloricon">#45A5A5</color>
     <color name="gris">#545757</color>
+    <color name="kindofgris">#E9E6E6</color>
+    <color name="red_solicitud">#FF0505</color>
+    <color name="yellow_solicitud">#FAFF00</color>
+    <color name="green_solicitud">#24FF00</color>
 </resources>

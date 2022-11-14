@@ -11,6 +11,17 @@
         android:gravity="center_horizontal"
         tools:context=".RequestFragmentUsuario">
 
+        <ImageButton
+            android:id="@+id/buttonBackSolicitudes"
+            android:layout_width="37dp"
+            android:layout_height="38dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button_usuario"
+            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintHorizontal_bias="0.337"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView5" />
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="172dp"
@@ -83,8 +94,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclersolicitudusuario"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/lista_solicitudes_usuario" />
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 

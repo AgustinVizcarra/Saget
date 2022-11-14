@@ -1,6 +1,8 @@
 package com.example.saget;
 
 import static android.app.Activity.RESULT_OK;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -32,6 +34,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +60,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
     StorageReference imageRef = firebaseStorage.getReference();
     ImageView fondoDNI;
     Bitmap imgBitMap;
-
+    FirebaseAuth mAuth;
 
     public SolicitudPrestamoFragmentUsuario(String keyEquipo){
         this.key = keyEquipo;
@@ -81,8 +86,10 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
     }
+
 
 
     @Override
@@ -101,13 +108,16 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
         Button botonSolicitarPrestamo = view.findViewById(R.id.solicitarprestamoboton);
 
+        //Metodo para que al ahcer clickj se agrande la imagen
         /*fondoDNI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                ImageView imagenGrande = view.findViewById(R.id.imageView30);
+                imagenGrande.setImageBitmap(imgBitMap);
+                onPause();
             }
         });*/
+
 
         botonCamara = view.findViewById(R.id.imageButton6);
         botonCamara.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +148,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                     if(equipo.getTipo() == 1){
                         nombreEquipoPrestamo.setText(String.valueOf("LAPTOP " + equipo.getMarca() + " " + equipo.getNombre()));
                     }
-
+                    //Falta setear los demas tipos
 
                     botonSolicitarPrestamo.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -184,7 +194,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                         guardar = false;
                                     }
 
-                                    if(fondoDNI.equals("") || fondoDNI == null){
+                                    if(imgBitMap.equals("") || imgBitMap == null){
                                         guardar = false;
                                     }
 
@@ -212,6 +222,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                         imgBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                         byte[] data = baos.toByteArray();
 
+                                        //Se puede borrar los metodos -> ya seria verlo
                                         UploadTask uploadTask = imageRef.child(idFoto+".jpg").putBytes(data);
                                         uploadTask.addOnFailureListener(new OnFailureListener() {
                                             @Override
@@ -226,11 +237,40 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                         });
 
 
+                                        //FirebaseUser currentUser = mAuth.getCurrentUser();
+                                        //String correoUsuarioPrestamo = currentUser.getEmail();
+                                        String correoUsuarioPrestamo = "a20191566@pucp.edu.pe";
 
-                                        //Redirigo a fragmento request y muestro su solicitud
-                                        //No cambia el color verde del botombar de la casa pintada al archivo pintado
-                                        AppCompatActivity activity = (AppCompatActivity) getContext();
-                                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new RequestFragmentUsuario()).addToBackStack(null).commit();
+                                        databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            String keyUsuario;
+
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for(DataSnapshot children : snapshot.getChildren()){
+                                                    Usuario usuario = children.getValue(Usuario.class);
+                                                    boolean igualCorreo = usuario.getCorreo().equals(correoUsuarioPrestamo);
+                                                    if(igualCorreo){
+                                                        keyUsuario = children.getKey();
+                                                        break;
+                                                    }
+
+                                                }
+
+                                                SolicitudDePrestamo solicitudDePrestamo = new SolicitudDePrestamo(keyUsuario,key,tiempoPrestamo,curso,programas,motivo,detalles,idFoto,"En trámite",null);
+                                                databaseReference.child("prestamos").push().setValue(solicitudDePrestamo);
+
+
+                                                AppCompatActivity activity = (AppCompatActivity) getContext();
+                                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).commit();
+                                                //success message
+
+                                            }
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                //error message
+                                            }
+                                        });
+
 
                                     }else{
                                         //message error -> campos incorrectos

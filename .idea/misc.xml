@@ -6,6 +6,7 @@
         <entry key="..\:/Users/Agust/AndroidStudioProjects/Saget/app/src/main/res/layout/activity_main.xml" value="0.2734375" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable-v24/ic_fondo_principal_foreground.xml" value="0.2985" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.144" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/bottom_bar_color_selector.xml" value="0.2195" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_back_button.xml" value="0.2315" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_camera.xml" value="0.2635" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/drawable/ic_house.xml" value="0.2985" />
@@ -34,8 +35,10 @@
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/app_bar_usuario_fragments.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_detalle_equipo_usuario.xml" value="0.33" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_estadisticas.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_historial_solicitud.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_inicio_admin.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_inicio_usuario.xml" value="0.22" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_inicio_usuario.xml" value="0.33" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_message.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_profile_usuario.xml" value="0.33" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_puntos_recojo.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_request_usuario.xml" value="0.33" />
@@ -43,10 +46,13 @@
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_usuarios.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/lista_dispositivos_usuario.xml" value="0.33" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/lista_solicitudes_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/message_request_usuario.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/rounded_button_usuario.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/spinnerborder.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/app_bar_usuario.xml" value="0.5" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/bottom_menu_administrador.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/bottom_menu_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/filtros_admin_ti.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/mipmap-anydpi-v26/ic_fondo_principal.xml" value="0.196" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/mipmap-anydpi-v26/ic_fondo_principal_round.xml" value="0.196" />
       </map>
