@@ -33,9 +33,9 @@ import java.util.List;
 
 public class UsuarioAdapter extends FirebaseRecyclerAdapter<Usuario,UsuarioAdapter.viewHolder> {
 
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://saget-d5557.appspot.com");
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
     List<String> filenames;
