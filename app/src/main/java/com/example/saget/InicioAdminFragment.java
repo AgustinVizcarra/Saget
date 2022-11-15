@@ -13,11 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,22 +35,21 @@ import java.util.List;
 
 public class InicioAdminFragment extends Fragment {
 
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://saget-d5557-default-rtdb.firebaseio.com/");
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     UsuarioAdapter adapter;
     RecyclerView recyclerView;
-    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://saget-d5557.appspot.com");
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
     List<String> filenames;
     SearchView txtBuscar;
     ValueEventListener queryListener;
     String option;
-
+    EditarUsuarioTIFragment editar ;
     public InicioAdminFragment(){
 
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +114,17 @@ public class InicioAdminFragment extends Fragment {
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
         adapter = new UsuarioAdapter(options,filenames);
         recyclerView.setAdapter(adapter);
+        //Floating button action -> Agregar
+        FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAgregar);
+        fabAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Hago uso del constructor vacio para no enviar data :v
+                editar = new EditarUsuarioTIFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_container_admin,editar).commit();
+            }
+        });
         return view;
     }
     public void textBuscar(String s,String option){
@@ -146,5 +158,4 @@ public class InicioAdminFragment extends Fragment {
                 Toast.makeText(this.getContext(),"Error en la busqueda con filtros",Toast.LENGTH_LONG).show();
         }
     }
-
 }
