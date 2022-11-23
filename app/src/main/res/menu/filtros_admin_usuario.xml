@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/opcionU1"
+        android:title="Cargo" />
+    <item
+        android:id="@+id/opcionU2"
+        android:title="Nombre" />
+    <item
+        android:id="@+id/opcionU3"
+        android:title="Apellido" />
+</menu>

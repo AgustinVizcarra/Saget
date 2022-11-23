@@ -1,7 +1,6 @@
 package com.example.saget;
 
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -30,14 +26,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InicioAdminFragment extends Fragment {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    UsuarioAdapter adapter;
+    UsuarioTIAdapter adapter;
     RecyclerView recyclerView;
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
@@ -90,8 +85,9 @@ public class InicioAdminFragment extends Fragment {
                         txtBuscar.setQueryHint("Ingresar el correo del usuario");
                         option="correo";
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
         popupMenu.show();
@@ -112,7 +108,7 @@ public class InicioAdminFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewPersonalTI);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
-        adapter = new UsuarioAdapter(options,filenames);
+        adapter = new UsuarioTIAdapter(options,filenames);
         recyclerView.setAdapter(adapter);
         //Floating button action -> Agregar
         FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAgregar);
@@ -132,25 +128,25 @@ public class InicioAdminFragment extends Fragment {
         switch (option){
             case "":
                 FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options,filenames);
+                adapter = new UsuarioTIAdapter(options,filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "nombres":
                 FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options1,filenames);
+                adapter = new UsuarioTIAdapter(options1,filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "apellidos":
                 FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options2,filenames);
+                adapter = new UsuarioTIAdapter(options2,filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "correo":
                 FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("correo").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options3,filenames);
+                adapter = new UsuarioTIAdapter(options3,filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;

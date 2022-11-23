@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UsuariosFragment"
+    android:orientation="vertical"
     android:background="@drawable/fondo_principal_flujos">
-
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <SearchView
+            android:id="@+id/textBuscarU"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:queryHint="Ingresar búsqueda"
+            android:scrollbarSize="30dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingFiltrosU"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            app:fabCustomSize="35dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_baseline_density_medium_24"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
