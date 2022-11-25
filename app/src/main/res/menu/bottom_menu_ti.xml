@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/house_ti"
+        android:icon="@drawable/ic_house_white"
+        android:title="Inicio" />
+
+    <item android:id="@+id/request_ti"
+        android:title="Solicitudes"
+        android:icon="@drawable/ic_request_white" />
+
+    <item android:id="@+id/profile_ti"
+        android:title="Perfil"
+        android:icon="@drawable/ic_profile_white" />
+</menu>
