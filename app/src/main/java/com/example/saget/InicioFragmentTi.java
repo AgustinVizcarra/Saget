@@ -18,7 +18,7 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class InicioFragmentTi extends Fragment {
-
+    Fragment listadoDispositivosTIFragment = new ListadoDispositivosTIFragment();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,7 +74,7 @@ public class InicioFragmentTi extends Fragment {
                 Toast test = Toast.makeText(getContext(), "TEST", Toast.LENGTH_SHORT);
                 test.show();
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new ProfileFragmentUsuario()).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoDispositivosTIFragment).addToBackStack(null).commit();
             }
         });
 

@@ -20,6 +20,7 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_principal_tiactivity);
         BottomNavigationView bottomNavigationViewTI = findViewById(R.id.bottom_navigation_ti);
+        loadFragment(fragmentInicioTI);
         bottomNavigationViewTI.setOnItemSelectedListener(item ->{
             switch(item.getItemId()){
              case R.id.house_ti:
