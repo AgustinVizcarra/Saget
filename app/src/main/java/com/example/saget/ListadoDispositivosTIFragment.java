@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ListadoDispositivosTIFragment extends Fragment {
     RecyclerView recycleview;
     DispositivosTIAdapter adapter;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,9 +76,21 @@ public class ListadoDispositivosTIFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentTi()).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new InicioFragmentTi()).addToBackStack(null).commit();
             }
         });
+        View btnadd=view.findViewById(R.id.imageBtnTiAdd);
+        btnadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) getContext();
+                activity.getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.frame_container_TI,FormDispositivosFragment.newInstance("",""))
+                        .addToBackStack(null).commit();
+            }
+        });
+
         recycleview = (RecyclerView) view.findViewById(R.id.recycleListadoDispoTI);
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Equipo> options = new FirebaseRecyclerOptions.Builder<Equipo>()

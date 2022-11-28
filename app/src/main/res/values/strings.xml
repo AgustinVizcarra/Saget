@@ -7,4 +7,11 @@
     <string name="ubicacion"><font size="12">Puntos de Recojo</font></string>
     <string name="estadisticas"><font size="12">Estadisticas</font></string>
     <string name="usuarios"><font size="12">Usuarios</font></string>
+    <string-array name="listaEquipos">
+        <item>Seleccione el tipo de Equipo</item>
+        <item>Tablet</item>
+        <item>Laptop</item>
+        <item>Celular</item>
+        <item>Otro</item>
+    </string-array>
 </resources>
