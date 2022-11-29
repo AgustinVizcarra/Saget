@@ -67,12 +67,61 @@ public class InicioFragmentTi extends Fragment {
         // Inflate the layout for this fragment
 
         View view= inflater.inflate(R.layout.fragment_inicio_ti, container, false);
-        ImageView image = view.findViewById(R.id.imageTablet);
-        image.setOnClickListener(new View.OnClickListener() {
+        ImageView imageTablet = view.findViewById(R.id.imageTablet);
+        imageTablet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast test = Toast.makeText(getContext(), "TEST", Toast.LENGTH_SHORT);
-                test.show();
+
+                Bundle bundle=new Bundle();
+                bundle.putInt("tipo",1);
+                listadoDispositivosTIFragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoDispositivosTIFragment).addToBackStack(null).commit();
+            }
+        });
+
+        ImageView imageLaptop = view.findViewById(R.id.imageLaptop);
+        imageLaptop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("tipo",2);
+                listadoDispositivosTIFragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoDispositivosTIFragment).addToBackStack(null).commit();
+            }
+        });
+
+        ImageView imageCelular = view.findViewById(R.id.imageCelular);
+        imageCelular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("tipo",3);
+                listadoDispositivosTIFragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoDispositivosTIFragment).addToBackStack(null).commit();
+            }
+        });
+        ImageView iamgeMonitor = view.findViewById(R.id.imageMonitor);
+        iamgeMonitor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("tipo",4);
+                listadoDispositivosTIFragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoDispositivosTIFragment).addToBackStack(null).commit();
+            }
+        });
+
+        ImageView imageOtros = view.findViewById(R.id.imageOtros);
+        imageOtros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("tipo",5);
+                listadoDispositivosTIFragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoDispositivosTIFragment).addToBackStack(null).commit();
             }

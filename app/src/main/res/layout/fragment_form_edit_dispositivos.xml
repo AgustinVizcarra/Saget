@@ -5,21 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_principal_flujos"
-    tools:context=".FormDispositivosFragment">
+    tools:context=".FormEditDispositivosFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        tools:context=".FormDispositivosFragment">
+        tools:context=".FormEditDispositivosFragment">
         <TextView
-            android:id="@+id/txtViewNuevoEquipo"
+            android:id="@+id/txtViewEditarEquipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:fontFamily="@font/yrsa"
-            android:text="Añadir Nuevo Equipo"
+            android:text="Editar Equipo"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,28 +27,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <ImageButton
-            android:id="@+id/imgBtnBackListEquipo"
+            android:id="@+id/imgBtnEditBackListEquipo"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginStart="20dp"
             android:background="@android:color/transparent"
             android:src="@drawable/back_button_usuario"
-            app:layout_constraintBottom_toBottomOf="@+id/txtViewNuevoEquipo"
+            app:layout_constraintBottom_toBottomOf="@+id/txtViewEditarEquipo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtViewNuevoEquipo"
+            app:layout_constraintTop_toTopOf="@+id/txtViewEditarEquipo"
             app:layout_constraintVertical_bias="0.5" />
         <LinearLayout
-            android:id="@+id/linearLayoutFormEquipo"
+            android:id="@+id/linearLayoutFormEditEquipo"
             android:layout_width="370dp"
             android:layout_height="900dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/round_scroll_usuario"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/txtViewNuevoEquipo"
+            app:layout_constraintEnd_toEndOf="@+id/txtViewEditarEquipo"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/txtViewNuevoEquipo"
-            app:layout_constraintTop_toBottomOf="@+id/txtViewNuevoEquipo">
+            app:layout_constraintStart_toStartOf="@+id/txtViewEditarEquipo"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewEditarEquipo">
 
 
             <RelativeLayout
@@ -57,7 +57,7 @@
 
 
                 <TextView
-                    android:id="@+id/txtViewTipoDispo"
+                    android:id="@+id/txtViewEditTipoDispo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -71,10 +71,10 @@
                     android:textSize="18sp" />
 
                 <Spinner
-                    android:id="@+id/spinnerFormEquipo"
+                    android:id="@+id/spinnerFormEditEquipo"
                     android:layout_width="270dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtViewTipoDispo"
+                    android:layout_below="@+id/txtViewEditTipoDispo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="16dp"
@@ -82,10 +82,10 @@
                     android:entries="@array/listaEquipos" />
 
                 <TextView
-                    android:id="@+id/textFoto"
+                    android:id="@+id/textEditFoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/spinnerFormEquipo"
+                    android:layout_below="@+id/spinnerFormEditEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="10dp"
@@ -96,20 +96,20 @@
                     android:textSize="18sp" />
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutimgequipo"
+                    android:id="@+id/linearLayoutimgEditequipo"
                     android:layout_width="245dp"
                     android:layout_height="205dp"
-                    android:layout_below="@+id/textFoto"
+                    android:layout_below="@+id/textEditFoto"
                     android:layout_marginStart="59dp"
                     android:layout_marginTop="33dp"
                     android:background="@drawable/round_device_usuario"
                     android:gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textFoto">
+                    app:layout_constraintTop_toBottomOf="@+id/textEditFoto">
 
                     <com.denzcoskun.imageslider.ImageSlider
-                        android:id="@+id/sliderdetalleequipo"
+                        android:id="@+id/sliderdetalleEditequipo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -118,7 +118,7 @@
                         app:iss_period="1000">
 
                         <ImageButton
-                            android:id="@+id/imgbtnsubir"
+                            android:id="@+id/imgbtnEditsubir"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_marginStart="100dp"
@@ -131,10 +131,10 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textViewNameEquipo"
+                    android:id="@+id/textViewEditNameEquipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linearLayoutimgequipo"
+                    android:layout_below="@+id/linearLayoutimgEditequipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="10dp"
@@ -146,10 +146,10 @@
 
 
                 <EditText
-                    android:id="@+id/editTextNameEquipo"
+                    android:id="@+id/editTextEditNameEquipo"
                     android:layout_width="177dp"
                     android:layout_height="39dp"
-                    android:layout_below="@+id/textViewNameEquipo"
+                    android:layout_below="@+id/textViewEditNameEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -164,10 +164,10 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textViewMarcaEquipo"
+                    android:id="@+id/textViewEditMarcaEquipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextNameEquipo"
+                    android:layout_below="@+id/editTextEditNameEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="10dp"
@@ -178,10 +178,10 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textViewStockEquipo"
+                    android:id="@+id/textViewEditStockEquipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextNameEquipo"
+                    android:layout_below="@+id/editTextEditNameEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="207dp"
@@ -192,10 +192,10 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextMarcaEquipo"
+                    android:id="@+id/editTextEditMarcaEquipo"
                     android:layout_width="177dp"
                     android:layout_height="41dp"
-                    android:layout_below="@+id/textViewMarcaEquipo"
+                    android:layout_below="@+id/textViewEditMarcaEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -211,10 +211,10 @@
 
 
                 <EditText
-                    android:id="@+id/editTextStockEquipo"
+                    android:id="@+id/editTextEditStockEquipo"
                     android:layout_width="71dp"
                     android:layout_height="38dp"
-                    android:layout_below="@+id/textViewMarcaEquipo"
+                    android:layout_below="@+id/textViewEditMarcaEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="209dp"
                     android:layout_marginTop="7dp"
@@ -229,10 +229,10 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textViewCaracteristicas"
+                    android:id="@+id/textViewEditCaracteristicas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextMarcaEquipo"
+                    android:layout_below="@+id/editTextEditMarcaEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="10dp"
@@ -243,10 +243,10 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextCaracEquipo"
+                    android:id="@+id/editTextEditCaracEquipo"
                     android:layout_width="400dp"
                     android:layout_height="82dp"
-                    android:layout_below="@+id/textViewCaracteristicas"
+                    android:layout_below="@+id/textViewEditCaracteristicas"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -262,10 +262,10 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textViewEquiposAdicion"
+                    android:id="@+id/textViewEditEquiposAdicion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextCaracEquipo"
+                    android:layout_below="@+id/editTextEditCaracEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="10dp"
@@ -276,10 +276,10 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextAdiciEquipo"
+                    android:id="@+id/editTextEditAdiciEquipo"
                     android:layout_width="400dp"
                     android:layout_height="82dp"
-                    android:layout_below="@+id/textViewEquiposAdicion"
+                    android:layout_below="@+id/textViewEditEquiposAdicion"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -295,10 +295,10 @@
                     android:textSize="18sp" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxFormDispo"
+                    android:id="@+id/checkBoxEditFormDispo"
                     android:layout_width="138dp"
                     android:layout_height="33dp"
-                    android:layout_below="@+id/editTextAdiciEquipo"
+                    android:layout_below="@+id/editTextEditAdiciEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="10dp"
@@ -310,28 +310,28 @@
                     android:text="Disponibilidad" />
 
                 <Button
-                    android:id="@+id/btnAddEquipoForm"
+                    android:id="@+id/btnActualizarEquipoForm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/editTextAdiciEquipo"
+                    android:layout_below="@+id/editTextEditAdiciEquipo"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="201dp"
                     android:layout_marginTop="22dp"
                     android:layout_marginEnd="31dp"
-                    android:text="Añadir" />
+                    android:text="Actualizar" />
 
 
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/separadorForm"
+            android:id="@+id/separadorEditForm"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/linearLayoutFormEquipo"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayoutFormEquipo"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutFormEquipo">
+            app:layout_constraintStart_toStartOf="@+id/linearLayoutFormEditEquipo"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayoutFormEditEquipo"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutFormEditEquipo">
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package com.example.saget;
 
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,8 +8,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +29,8 @@ import java.util.ArrayList;
 public class DispositivosTIAdapter extends FirebaseRecyclerAdapter<Equipo,DispositivosTIAdapter.DispositivosViewHolder> {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-
+    String keyEquipo;
+    int tipoEquipo;
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -48,6 +52,67 @@ public class DispositivosTIAdapter extends FirebaseRecyclerAdapter<Equipo,Dispos
         int n = (int) (Math.random() * (imagenes.size() - 1)) + 1;
 
         Glide.with(holder.imagenEquipoTI.getContext()).load(imagenes.get(n)).override(100,100).into(holder.imagenEquipoTI);
+        databaseReference.child("equipo").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot children : snapshot.getChildren()){
+                    Equipo equipo1 = children.getValue(Equipo.class);
+                    boolean igualNombre = equipo1.getNombre().equals(equipo.getNombre());
+                    boolean igualMarca = equipo1.getMarca().equals(equipo.getMarca());
+                    boolean igualCaracteristicas = equipo1.getCaracteristicas().equals(equipo.getCaracteristicas());
+                    boolean igualEquiposAdicionales = equipo1.getEquiposAdicionales().equals(equipo.getEquiposAdicionales());
+                    if(igualNombre && igualMarca && igualCaracteristicas && igualEquiposAdicionales){
+                        keyEquipo = children.getKey();
+                        tipoEquipo=equipo1.getTipo();
+                        break;
+                    }
+
+                }
+
+
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //error message
+            }
+        });
+
+
+        //boton editar
+        holder.btnEditarDispoTI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new FormEditDispositivosFragment(keyEquipo,tipoEquipo)).addToBackStack(null).commit();
+            }
+        });
+        //btn borrar
+        holder.btnBorrarDispoTI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialog=new AlertDialog.Builder(view.getContext());
+                alertDialog.setTitle("SAGET");
+                alertDialog.setMessage("¿Estás seguro de eliminar el equipo?");
+                alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        databaseReference.child("equipo").child(keyEquipo).removeValue();
+                        Toast.makeText(view.getContext(), "Se elimino correctamente", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(view.getContext(), "Accion cancelada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.show();
+
+            }
+        });
 
     }
 

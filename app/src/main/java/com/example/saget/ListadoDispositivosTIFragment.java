@@ -2,8 +2,10 @@ package com.example.saget;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ListadoDispositivosTIFragment extends Fragment {
     RecyclerView recycleview;
     DispositivosTIAdapter adapter;
-
+    TextView txtViewTablet;
+    int tipoint;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,13 +68,45 @@ public class ListadoDispositivosTIFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_listado_dispositivos_t_i,container,false);
+        tipoint=1;
+        Bundle datosRecuperados = getArguments();
+        if (datosRecuperados != null) {
+            tipoint = datosRecuperados.getInt("tipo");
+
+        }
+
+        //cambiamos el titulo segun el tipo de equipo
+        txtViewTablet=view.findViewById(R.id.txtViewTablet);
+        switch (tipoint){
+            case 1:
+                txtViewTablet.setText("TABLET");
+                break;
+            case 2:
+                txtViewTablet.setText("LAPTOP");
+                break;
+            case 3:
+                txtViewTablet.setText("CELULAR");
+                break;
+            case 4:
+                txtViewTablet.setText("MONITOR");
+                break;
+            default:
+                txtViewTablet.setText("OTROS EQUIPOS");
+                break;
+        }
+
         //btn retroceder menu principal
         View btnRetroceder=view.findViewById(R.id.imageBtnTI);
         btnRetroceder.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +116,7 @@ public class ListadoDispositivosTIFragment extends Fragment {
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new InicioFragmentTi()).addToBackStack(null).commit();
             }
         });
+        //btn añadir equipo
         View btnadd=view.findViewById(R.id.imageBtnTiAdd);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +124,7 @@ public class ListadoDispositivosTIFragment extends Fragment {
                 AppCompatActivity activity = (AppCompatActivity) getContext();
                 activity.getSupportFragmentManager().beginTransaction()
                         .setReorderingAllowed(true)
-                        .replace(R.id.frame_container_TI,FormDispositivosFragment.newInstance("",""))
+                        .replace(R.id.frame_container_TI,new FormDispositivosFragment(tipoint))
                         .addToBackStack(null).commit();
             }
         });
@@ -95,7 +133,7 @@ public class ListadoDispositivosTIFragment extends Fragment {
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Equipo> options = new FirebaseRecyclerOptions.Builder<Equipo>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("equipo")
-                        .orderByChild("tipo").equalTo(1),Equipo.class)
+                        .orderByChild("tipo").equalTo(tipoint),Equipo.class)
                 .build();
 
         adapter = new DispositivosTIAdapter(options);
