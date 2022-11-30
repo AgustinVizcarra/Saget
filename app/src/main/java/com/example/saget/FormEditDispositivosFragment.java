@@ -21,6 +21,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -49,7 +53,8 @@ public class FormEditDispositivosFragment extends Fragment {
     EditText nombreEditEquipo,marcaEditEquipo,stockEditEquipo,caracteristicasEditEquipo,equiposEditAdicion;
     Spinner spinnerFormEditEquipo;
     CheckBox checkBox;
-
+    ArrayList<String> urls = new ArrayList<>();
+    ArrayList<SlideModel> imageList = new ArrayList<>();
     //static int cont = 1;
 
     int numero = (int)(Math.random()*11351+1);
@@ -156,7 +161,7 @@ public class FormEditDispositivosFragment extends Fragment {
         caracteristicasEditEquipo=view.findViewById(R.id.editTextEditCaracEquipo);
         equiposEditAdicion=view.findViewById(R.id.editTextEditAdiciEquipo);
         checkBox=view.findViewById(R.id.checkBoxEditFormDispo);
-
+        ImageSlider imageSlider = view.findViewById(R.id.sliderdetalleEditequipo);
 
 
         ref.child("equipo/"+key).addValueEventListener(new ValueEventListener() {
@@ -174,8 +179,14 @@ public class FormEditDispositivosFragment extends Fragment {
                     caracteristicasEditEquipo.setText(String.valueOf(equipoForm.getCaracteristicas()));
                     equiposEditAdicion.setText(String.valueOf(equipoForm.getEquiposAdicionales()));
                     spinnerFormEditEquipo.setSelection(equipoForm.getTipo());
-                    checkBox.setEnabled(equipoForm.getDisponibilidad()==1);
+                    checkBox.setSelected(equipoForm.getDisponibilidad()==1);
 
+                    urls = (ArrayList<String>) equipoForm.getImagenes();
+
+                    for(int i=1;i<urls.size();i++){
+                        imageList.add(new SlideModel(urls.get(i),null));
+                    }
+                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP);
                 }else{
                     //error message
                     AppCompatActivity activity = (AppCompatActivity) getContext();

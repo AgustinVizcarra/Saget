@@ -9,6 +9,16 @@ public class Usuario {
     private int rol;
     private String password;
 
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    private String imgurl;
+
     public String getCargo() {
         return cargo;
     }
@@ -65,7 +75,7 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(String nombres, String apellidos, String correo, String sexo,String cargo, int rol, String password) {
+    public Usuario(String nombres, String apellidos, String correo, String sexo,String cargo, int rol, String password,String imgurl) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
@@ -73,6 +83,7 @@ public class Usuario {
         this.sexo = sexo;
         this.rol = rol;
         this.password = password;
+        this.imgurl=imgurl;
     }
 
     public Usuario() {

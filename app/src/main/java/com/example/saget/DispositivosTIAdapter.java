@@ -1,6 +1,7 @@
 package com.example.saget;
 
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,41 +53,46 @@ public class DispositivosTIAdapter extends FirebaseRecyclerAdapter<Equipo,Dispos
         int n = (int) (Math.random() * (imagenes.size() - 1)) + 1;
 
         Glide.with(holder.imagenEquipoTI.getContext()).load(imagenes.get(n)).override(100,100).into(holder.imagenEquipoTI);
-        databaseReference.child("equipo").addListenerForSingleValueEvent(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot children : snapshot.getChildren()){
-                    Equipo equipo1 = children.getValue(Equipo.class);
-                    boolean igualNombre = equipo1.getNombre().equals(equipo.getNombre());
-                    boolean igualMarca = equipo1.getMarca().equals(equipo.getMarca());
-                    boolean igualCaracteristicas = equipo1.getCaracteristicas().equals(equipo.getCaracteristicas());
-                    boolean igualEquiposAdicionales = equipo1.getEquiposAdicionales().equals(equipo.getEquiposAdicionales());
-                    if(igualNombre && igualMarca && igualCaracteristicas && igualEquiposAdicionales){
-                        keyEquipo = children.getKey();
-                        tipoEquipo=equipo1.getTipo();
-                        break;
-                    }
-
-                }
-
-
-
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //error message
-            }
-        });
 
 
         //boton editar
         holder.btnEditarDispoTI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new FormEditDispositivosFragment(keyEquipo,tipoEquipo)).addToBackStack(null).commit();
+
+
+                databaseReference.child("equipo").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot children : snapshot.getChildren()){
+                            Equipo equipo1 = children.getValue(Equipo.class);
+                            boolean igualNombre = equipo1.getNombre().equals(equipo.getNombre());
+                            boolean igualMarca = equipo1.getMarca().equals(equipo.getMarca());
+                            boolean igualCaracteristicas = equipo1.getCaracteristicas().equals(equipo.getCaracteristicas());
+                            boolean igualEquiposAdicionales = equipo1.getEquiposAdicionales().equals(equipo.getEquiposAdicionales());
+                            if(igualNombre && igualMarca && igualCaracteristicas && igualEquiposAdicionales){
+                                keyEquipo = children.getKey();
+                                tipoEquipo=equipo1.getTipo();
+                                break;
+                            }
+
+                        }
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new FormEditDispositivosFragment(keyEquipo,tipoEquipo)).addToBackStack(null).commit();
+                        Log.d("msglist",keyEquipo);
+
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        //error message
+                    }
+                });
+
+
+
             }
         });
         //btn borrar
@@ -99,6 +105,33 @@ public class DispositivosTIAdapter extends FirebaseRecyclerAdapter<Equipo,Dispos
                 alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        databaseReference.child("equipo").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot children : snapshot.getChildren()){
+                                    Equipo equipo1 = children.getValue(Equipo.class);
+                                    boolean igualNombre = equipo1.getNombre().equals(equipo.getNombre());
+                                    boolean igualMarca = equipo1.getMarca().equals(equipo.getMarca());
+                                    boolean igualCaracteristicas = equipo1.getCaracteristicas().equals(equipo.getCaracteristicas());
+                                    boolean igualEquiposAdicionales = equipo1.getEquiposAdicionales().equals(equipo.getEquiposAdicionales());
+                                    if(igualNombre && igualMarca && igualCaracteristicas && igualEquiposAdicionales){
+                                        keyEquipo = children.getKey();
+                                        tipoEquipo=equipo1.getTipo();
+                                        break;
+                                    }
+
+                                }
+
+                                Log.d("msglist",keyEquipo);
+
+
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                //error message
+                            }
+                        });
                         databaseReference.child("equipo").child(keyEquipo).removeValue();
                         Toast.makeText(view.getContext(), "Se elimino correctamente", Toast.LENGTH_SHORT).show();
                     }

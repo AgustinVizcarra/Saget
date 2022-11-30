@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class VistaPrincipalTIActivity extends AppCompatActivity {
 
     Fragment fragmentInicioTI = new InicioFragmentTi();
+    Fragment fragmentProfileTI=new ProfileFragmentTi();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,9 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
             switch(item.getItemId()){
              case R.id.house_ti:
                  loadFragment(fragmentInicioTI);
+                 return true;
+             case R.id.profile_ti:
+                 loadFragment(fragmentProfileTI);
                  return true;
              default:
                 return false;

@@ -156,7 +156,7 @@ public class EditarUsuarioTIFragment extends Fragment {
                         if(dniAlfa){
                             crearDni.setText("Ha ingresado un DNI invalido");
                         }else{
-                            Usuario usuario = new Usuario(nombresText,apellidosText,correoText,"No especifica","Operario",2,sha256(pwdeTxt));
+                            Usuario usuario = new Usuario(nombresText,apellidosText,correoText,"No especifica","Operario",2,sha256(pwdeTxt),"");
                             firebaseDatabase.getReference("ti").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {

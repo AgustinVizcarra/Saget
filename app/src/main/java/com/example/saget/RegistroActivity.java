@@ -196,7 +196,7 @@ public class RegistroActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getValue() == null){
-                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,sha256(contrasena));
+                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,sha256(contrasena),"");
                             databaseReference.child("usuario").child(DNI).setValue(usuario);
                             Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
                         }else{
@@ -215,7 +215,7 @@ public class RegistroActivity extends AppCompatActivity {
                                 }
                             }
                             if(!existe){
-                                Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,sha256(contrasena));
+                                Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,sha256(contrasena),"");
                                 databaseReference.child("usuario").child(DNI).setValue(usuario);
                                 Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
                             }

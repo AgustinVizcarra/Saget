@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,7 +55,8 @@ public class FormDispositivosFragment extends Fragment {
     EditText nombreEquipo,marcaEquipo,stockEquipo,caracteristicasEquipo,equiposAdicion;
     Spinner spinnerFormEquipo;
     int tipoint;
-
+    ArrayList<String> urls = new ArrayList<>();
+    ArrayList<SlideModel> imageList = new ArrayList<>();
 
 
 
@@ -79,7 +81,7 @@ public class FormDispositivosFragment extends Fragment {
                                                 public void onComplete(@NonNull Task<Uri> task) {
                                                     String fileLink = task.getResult().toString();
                                                     Log.d("url", fileLink);
-
+                                                    urls.add(fileLink);
                                                 }
                                             });
                                 }
@@ -160,10 +162,15 @@ public class FormDispositivosFragment extends Fragment {
         caracteristicasEquipo=view.findViewById(R.id.editTextCaracEquipo);
         equiposAdicion=view.findViewById(R.id.editTextAdiciEquipo);
         CheckBox checkBox=view.findViewById(R.id.checkBoxFormDispo);
+        ImageSlider imageSlider = view.findViewById(R.id.sliderAddEquipo);
 
+        if(urls != null || urls.size() != 0){
+            for(int i=1;i<urls.size();i++){
+                imageList.add(new SlideModel(urls.get(i),null));
+            }
+            imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP);
+        }
         DatabaseReference refequipos = ref.child("equipo");
-
-
         //btn guardar data form
         View btnadd=view.findViewById(R.id.btnAddEquipoForm);
         btnadd.setOnClickListener(new View.OnClickListener() {
@@ -290,6 +297,9 @@ public class FormDispositivosFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/jpeg");
                 launcherPhotos.launch(intent);
+                if(urls.size() != 0){
+                    Log.d("msg-foto",urls.get(0));
+                }
 
             }
         });
