@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -102,7 +103,6 @@ public class HistorialPrestamoFragmentUsuario extends Fragment {
                 if(snapshot.getValue() != null){
                     SolicitudDePrestamo solicitudDePrestamo = snapshot.getValue(SolicitudDePrestamo.class);
 
-
                     tiempoPrestamoTextHistorial.setText(String.valueOf(solicitudDePrestamo.getTiempoPrestamo()));
                     cursoTextHistorial.setText(String.valueOf(solicitudDePrestamo.getCurso()));
                     programasTextHistorial.setText(String.valueOf(solicitudDePrestamo.getProgramas()));
@@ -116,13 +116,23 @@ public class HistorialPrestamoFragmentUsuario extends Fragment {
                             if(snapshot.getValue() != null){
                                 Equipo equipo = snapshot.getValue(Equipo.class);
 
-                                //seteo el nombre de acuerdo al tipo de equipo
-                                //laptop
-                                if(equipo.getTipo() == 1){
-                                    nombreEquipoPrestamoHistorial.setText(String.valueOf("LAPTOP " + equipo.getMarca() + " " + equipo.getNombre()));
+                                switch (equipo.getTipo()){
+                                    case 1:
+                                        nombreEquipoPrestamoHistorial.setText(String.valueOf("TABLET " + equipo.getMarca() + " " + equipo.getNombre()));
+                                        break;
+                                    case 2:
+                                        nombreEquipoPrestamoHistorial.setText(String.valueOf("LAPTOP " + equipo.getMarca() + " " + equipo.getNombre()));
+                                        break;
+                                    case 3:
+                                        nombreEquipoPrestamoHistorial.setText(String.valueOf("CELULAR " + equipo.getMarca() + " " + equipo.getNombre()));
+                                        break;
+                                    case 4:
+                                        nombreEquipoPrestamoHistorial.setText(String.valueOf("MONITOR " + equipo.getMarca() + " " + equipo.getNombre()));
+                                        break;
+                                    default:
+                                        nombreEquipoPrestamoHistorial.setText(String.valueOf("OTROS " + equipo.getMarca() + " " + equipo.getNombre()));
+                                        break;
                                 }
-                                //Falta setear los demas tipos
-
 
                                 imageRef.child(solicitudDePrestamo.getFoto()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
@@ -145,34 +155,42 @@ public class HistorialPrestamoFragmentUsuario extends Fragment {
 
 
                             }else{
-                                //error message
+
+                                Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                                 AppCompatActivity activity = (AppCompatActivity) getContext();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new RequestFragmentUsuario()).addToBackStack(null).commit();
+
                             }
 
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            //error message
+
+                            Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                             AppCompatActivity activity = (AppCompatActivity) getContext();
                             activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new RequestFragmentUsuario()).addToBackStack(null).commit();
+
                         }
                     });
 
 
                 }else{
-                    //error message
+
+                    Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                     AppCompatActivity activity = (AppCompatActivity) getContext();
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new RequestFragmentUsuario()).addToBackStack(null).commit();
+
                 }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //error message
+
+                Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                 AppCompatActivity activity = (AppCompatActivity) getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new RequestFragmentUsuario()).addToBackStack(null).commit();
+
             }
 
         });
