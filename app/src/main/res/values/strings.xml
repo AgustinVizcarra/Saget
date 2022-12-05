@@ -7,6 +7,15 @@
     <string name="ubicacion"><font size="12">Puntos de Recojo</font></string>
     <string name="estadisticas"><font size="12">Estadisticas</font></string>
     <string name="usuarios"><font size="12">Usuarios</font></string>
+    <string name="totalEquipos">
+        <u>Total de Equipos: 2022</u>
+    </string>
+    <string name="prestamosPorMarca">
+        <u>Cantidad de préstamos por marca: </u>
+    </string>
+    <string name="equipoMasPrestado">
+        <u>Equipo más prestado: </u>
+    </string>
     <string-array name="listaEquipos">
         <item>Seleccione el tipo de Equipo</item>
         <item>Tablet</item>

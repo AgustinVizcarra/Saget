@@ -1,9 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".EstadisticasFragment"
     android:background="@drawable/fondo_principal_flujos">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        tools:context=".EstadisticasFragment">
+        <TextView
+            android:id="@+id/txtEstadisticas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/yrsa"
+            android:text="ESTADÍSTICAS"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.477"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--
+        <ImageButton
+            android:id="@+id/imgBtnBackAdminFragment"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button_usuario"
+            app:layout_constraintBottom_toBottomOf="@+id/txtEstadisticas"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtEstadisticas"
+            app:layout_constraintVertical_bias="0.5" />-->
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/linearLayoutEstadisticas"
+            android:layout_width="370dp"
+            android:layout_height="840dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_scroll_usuario"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/txtEstadisticas"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="@+id/txtEstadisticas"
+            app:layout_constraintTop_toBottomOf="@+id/txtEstadisticas">
+
+            <TextView
+                android:id="@+id/tituloEstadisticasInicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:text="Porcentaje de préstamos según equipos"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totalEquiposVariable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/totalEquipos"
+                android:textColor="#070707"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <TableLayout
+                android:id="@+id/layoutdeGraficos"
+                android:layout_width="match_parent"
+                android:layout_height="275dp">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="100dp"
+                        android:layout_height="137.5dp"
+                        android:layout_marginStart="35dp">
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="Laptop"
+                            android:textColor="#000000" />
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartLaptop"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                        </com.github.mikephil.charting.charts.PieChart>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="100dp"
+                        android:layout_height="137.5dp"
+                        android:layout_marginStart="10dp">
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="Monitor"
+                            android:textColor="#000000" />
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartMonitor"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                        </com.github.mikephil.charting.charts.PieChart>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="100dp"
+                        android:layout_height="137.5dp"
+                        android:layout_marginStart="10dp">
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="Celular"
+                            android:textColor="#000000" />
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartCelular"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                        </com.github.mikephil.charting.charts.PieChart>
+                    </LinearLayout>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="100dp"
+                        android:layout_height="137.5dp"
+                        android:layout_marginStart="35dp">
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="Tablet"
+                            android:textColor="#000000" />
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartTablet"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                        </com.github.mikephil.charting.charts.PieChart>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="100dp"
+                        android:layout_height="137.5dp"
+                        android:layout_marginStart="10dp">
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:text="Otros"
+                            android:textColor="#000000" />
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartOtros"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                        </com.github.mikephil.charting.charts.PieChart>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/prestamosPorMarca"
+                android:textColor="#070707"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:id="@+id/horizontalBarChartPorMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.github.mikephil.charting.charts.HorizontalBarChart>
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/equipoMasPrestado"
+                android:textColor="#070707"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/iconEstadisticaDispositivo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_images_usuario"
+                    android:scaleType="centerCrop" />
+
+                <RelativeLayout
+                    android:layout_width="265dp"
+                    android:layout_height="100dp"
+                    android:layout_alignTop="@+id/iconEstadisticaDispositivo"
+                    android:layout_alignBottom="@+id/iconEstadisticaDispositivo"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/iconEstadisticaDispositivo"
+                    android:background="@drawable/round_device_usuario">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutMasPrestado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/nombreMasPrestado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:text="Nombre:"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/stockMasPrestado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Stock:"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/marcaMasPrestado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="Marca:"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/infoRellenarMasPrestado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@+id/linearLayoutMasPrestado"
+                        android:layout_toRightOf="@+id/linearLayoutMasPrestado"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/nombreMasPrestadoRellenar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/stockMasPrestadoRellenar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/marcaMasPrestadoRellenar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal"></LinearLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -173,7 +173,7 @@ public class ProfileFragmentTi extends Fragment {
 
         //FirebaseUser currentUser = mAuth.getCurrentUser();
         //String correoUsuarioPrestamo = currentUser.getEmail();
-        String correoUsuarioPrestamo = "a20181454@pucp.edu.pe";
+        String correoUsuarioPrestamo = "a20181454@pucp.edu.pe";//xd
         ImageButton botonCamara = view.findViewById(R.id.imageButtonPerfilTI);
         Button botonActualizar = view.findViewById(R.id.buttonactualizarPerfTI);
         EditText nombresTxT = view.findViewById(R.id.editTextTextNamePerfilTi);
