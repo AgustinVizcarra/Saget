@@ -59,7 +59,7 @@ public class UsuariosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Query query = databaseReference.orderByChild("rol").equalTo("1");
+        Query query = databaseReference.orderByChild("rol").equalTo(1);
         View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
         txtBuscar = (SearchView) view.findViewById(R.id.textBuscarU);
         option = "";

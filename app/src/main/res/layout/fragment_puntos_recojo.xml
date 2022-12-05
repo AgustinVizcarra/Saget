@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/map"
+    android:background="@drawable/fondo_principal_flujos"
     tools:context=".PuntosRecojoFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PuntosRecojoFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtViewPuntoRecojo"
+            android:layout_width="240dp"
+            android:layout_height="46dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="52dp"
+            android:fontFamily="@font/yrsa"
+            android:text="Puntos de Recojo"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.426"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingAregarPuntoRecojo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            app:fabCustomSize="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toEndOf="@+id/txtViewPuntoRecojo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="615dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewPuntoRecojo">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerPuntoRecojo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp" />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
