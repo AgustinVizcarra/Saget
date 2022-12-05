@@ -42,6 +42,7 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Equipo equipo) {
+        int orden = position;
 
         holder.nombre.setText(String.valueOf(equipo.getNombre()));
         holder.stock.setText(String.valueOf(equipo.getStock()));
@@ -54,41 +55,15 @@ public class DispositivosAdapter extends FirebaseRecyclerAdapter<Equipo,Disposit
         holder.botonVerDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String keyEquipo = getRef(orden).getKey();
 
-                databaseReference.child("equipo").orderByChild("estado").equalTo("1_1").addListenerForSingleValueEvent(new ValueEventListener() {
-                    String keyEquipo;
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot children : snapshot.getChildren()){
-                            Equipo equipo1 = children.getValue(Equipo.class);
-                            boolean igualNombre = equipo1.getNombre().equals(equipo.getNombre());
-                            boolean igualMarca = equipo1.getMarca().equals(equipo.getMarca());
-                            boolean igualCaracteristicas = equipo1.getCaracteristicas().equals(equipo.getCaracteristicas());
-                            boolean igualEquiposAdicionales = equipo1.getEquiposAdicionales().equals(equipo.getEquiposAdicionales());
-                            if(igualNombre && igualMarca && igualCaracteristicas && igualEquiposAdicionales){
-                                keyEquipo = children.getKey();
-                                break;
-                            }
-
-                        }
-
-                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(keyEquipo)).addToBackStack(null).commit();
-
-
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        //error message
-                    }
-                });
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(keyEquipo)).addToBackStack(null).commit();
 
             }
         });
 
     }
-
 
 
     @NonNull

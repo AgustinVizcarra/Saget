@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -28,9 +29,16 @@ import java.util.ArrayList;
 public class InicioFragmentUsuario extends Fragment {
     RecyclerView recycleview;
     DispositivosAdapter adapter;
+    String tipoEquipo;
+
 
     public InicioFragmentUsuario(){
 
+    }
+
+    //PASARME EL TIPO DE EQUIPO PARA SETEARLO EN LA VISTA
+    public InicioFragmentUsuario(String tipoEquipo){
+        this.tipoEquipo = tipoEquipo;
     }
 
 
@@ -60,12 +68,33 @@ public class InicioFragmentUsuario extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inicio_usuario,container,false);
 
+        tipoEquipo = "2"; //LAPTOP -> POR MIENTRAS
+
+        TextView titulo = view.findViewById(R.id.textView3);
+        switch (tipoEquipo){
+            case "1":
+                titulo.setText("TABLET");
+                break;
+            case "2":
+                titulo.setText("LAPTOP");
+                break;
+            case "3":
+                titulo.setText("CELULAR");
+                break;
+            case "4":
+                titulo.setText("MONITOR");
+                break;
+            default:
+                titulo.setText("OTROS");
+                break;
+        }
+
         recycleview = (RecyclerView) view.findViewById(R.id.recycleriniciousuario);
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FirebaseRecyclerOptions<Equipo> options = new FirebaseRecyclerOptions.Builder<Equipo>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("equipo")
-                                .orderByChild("estado").equalTo("1_1"),Equipo.class)
+                                .orderByChild("estado").equalTo("1_"+tipoEquipo),Equipo.class)
                 .build();
 
         adapter = new DispositivosAdapter(options);
@@ -86,8 +115,8 @@ public class InicioFragmentUsuario extends Fragment {
         adapter.stopListening();
     }
 
+    //FALTA IMPLEMENTAR EL FRAGMENT
     public void botonRetrocederCatalogo(View view){
-        //Falta implementar vista o fragmento
         //AppCompatActivity activity = (AppCompatActivity) getContext();
         //activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
     }

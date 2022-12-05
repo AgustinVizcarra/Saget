@@ -45,8 +45,10 @@
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_solicitud_prestamo_usuario.xml" value="0.33" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_update_solicitud_usuario.xml" value="0.7587890625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/fragment_usuarios.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/list_usuarios.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/lista_dispositivos_usuario.xml" value="0.33" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/lista_solicitudes_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/message_buscador_request_usuario.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/message_request_usuario.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/rounded_button_usuario.xml" value="0.365625" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/layout/spinnerborder.xml" value="0.365625" />
@@ -54,6 +56,7 @@
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/bottom_menu_administrador.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/bottom_menu_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/filtros_admin_ti.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/menu/filtros_admin_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/mipmap-anydpi-v26/ic_fondo_principal.xml" value="0.196" />
         <entry key="..\:/Users/Alonso/AndroidStudioProjects/Saget/app/src/main/res/mipmap-anydpi-v26/ic_fondo_principal_round.xml" value="0.196" />
       </map>

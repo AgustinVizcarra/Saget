@@ -108,17 +108,6 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
         Button botonSolicitarPrestamo = view.findViewById(R.id.solicitarprestamoboton);
 
-        //Metodo para que al ahcer clickj se agrande la imagen
-        /*fondoDNI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ImageView imagenGrande = view.findViewById(R.id.imageView30);
-                imagenGrande.setImageBitmap(imgBitMap);
-                onPause();
-            }
-        });*/
-
-
         botonCamara = view.findViewById(R.id.imageButton6);
         botonCamara.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,32 +132,42 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                     Equipo equipoBanderita = snapshot.getValue(Equipo.class);
                     equipo = equipoBanderita;
 
-                    //seteo el nombre de acuerdo al tipo de equipo
-                    //laptop
-                    if(equipo.getTipo() == 1){
-                        nombreEquipoPrestamo.setText(String.valueOf("LAPTOP " + equipo.getMarca() + " " + equipo.getNombre()));
+                    switch (equipo.getTipo()){
+                        case 1:
+                            nombreEquipoPrestamo.setText(String.valueOf("TABLET " + equipo.getMarca() + " " + equipo.getNombre()));
+                            break;
+                        case 2:
+                            nombreEquipoPrestamo.setText(String.valueOf("LAPTOP " + equipo.getMarca() + " " + equipo.getNombre()));
+                            break;
+                        case 3:
+                            nombreEquipoPrestamo.setText(String.valueOf("CELULAR " + equipo.getMarca() + " " + equipo.getNombre()));
+                            break;
+                        case 4:
+                            nombreEquipoPrestamo.setText(String.valueOf("MONITOR " + equipo.getMarca() + " " + equipo.getNombre()));
+                            break;
+                        default:
+                            nombreEquipoPrestamo.setText(String.valueOf("OTROS " + equipo.getMarca() + " " + equipo.getNombre()));
+                            break;
                     }
-                    //Falta setear los demas tipos
 
                     botonSolicitarPrestamo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if(equipo.getEstado().equals("0_"+equipo.getTipo()) || equipo.getStock() == 0){
-                                //error message -> no hay stock
+
+                                Toast.makeText(getActivity(),"El equipo ya no se encuentra disponible",Toast.LENGTH_SHORT).show();
                                 AppCompatActivity activity = (AppCompatActivity) getContext();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+
                             }else{
 
                                 try {
-
                                     tiempoPrestamo = tiempoPrestamoText.getText().toString();
                                     curso = cursoText.getText().toString();
                                     programas = programasText.getText().toString();
                                     motivo = motivoText.getText().toString();
                                     detalles = detallesText.getText().toString();
 
-
-                                    //Valido esos campos
                                     if(tiempoPrestamo.equalsIgnoreCase("") || tiempoPrestamo == null || tiempoPrestamo.isEmpty()){
                                         tiempoPrestamoText.setError("Ingrese su tiempo de prestamo");
                                         guardar = false;
@@ -200,87 +199,72 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
 
                                     if(guardar){
-                                        //Quito en 1 el stock o inhabilito el stock dependiendo de como este el stock -> Hago update en db del equip
                                         int stockRestante = equipo.getStock() - 1;
                                         if(stockRestante > 0){
                                             databaseReference.child("equipo/"+key).child("stock").setValue(stockRestante);
 
                                         }else{
-                                            //STOCK 0
                                             databaseReference.child("equipo/"+key).child("stock").setValue(0);
-                                            //NO DISPONIBLE
                                             databaseReference.child("equipo/"+key).child("disponibilidad").setValue(0);
-                                            //ESTADO
                                             databaseReference.child("equipo/"+key).child("estado").setValue("0_"+equipo.getTipo());
                                         }
 
 
-                                        //en prestamos del usuario -> necesito el id del usuario y la key del equipo y estos campos llenados
                                         String idFoto = getRandomString();
 
                                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                         imgBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                         byte[] data = baos.toByteArray();
-
-                                        //Se puede borrar los metodos -> ya seria verlo
-                                        UploadTask uploadTask = imageRef.child(idFoto+".jpg").putBytes(data);
-                                        uploadTask.addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception exception) {
-                                                //error message
-                                            }
-                                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                //se subio correctamente
-                                            }
-                                        });
+                                        imageRef.child(idFoto+".jpg").putBytes(data);
 
 
-                                        //FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        //String correoUsuarioPrestamo = currentUser.getEmail();
+                                        //PARA SACAR EL CORREO DEL USUARIO LOGUEADO
+                                        /*FirebaseUser currentUser = mAuth.getCurrentUser();
+                                        String correoUsuarioPrestamo = currentUser.getEmail();*/
                                         String correoUsuarioPrestamo = "a20191566@pucp.edu.pe";
 
-                                        databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            String keyUsuario;
-
+                                        databaseReference.child("usuario").child("correo").equalTo(correoUsuarioPrestamo).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                for(DataSnapshot children : snapshot.getChildren()){
-                                                    Usuario usuario = children.getValue(Usuario.class);
-                                                    boolean igualCorreo = usuario.getCorreo().equals(correoUsuarioPrestamo);
-                                                    if(igualCorreo){
-                                                        keyUsuario = children.getKey();
-                                                        break;
-                                                    }
+                                                if(snapshot != null){
+                                                    String keyUsuario = snapshot.getKey();
+
+                                                    SolicitudDePrestamo solicitudDePrestamo = new SolicitudDePrestamo(keyUsuario,key,tiempoPrestamo,curso,programas,motivo,detalles,idFoto,"En trámite",null);
+                                                    databaseReference.child("prestamos").push().setValue(solicitudDePrestamo);
+
+                                                    Toast.makeText(getActivity(),"Reserva exitosa",Toast.LENGTH_SHORT).show();
+                                                    AppCompatActivity activity = (AppCompatActivity) getContext();
+                                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).commit();
+
+                                                }else{
+
+                                                    Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
+                                                    AppCompatActivity activity = (AppCompatActivity) getContext();
+                                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
 
                                                 }
-
-                                                SolicitudDePrestamo solicitudDePrestamo = new SolicitudDePrestamo(keyUsuario,key,tiempoPrestamo,curso,programas,motivo,detalles,idFoto,"En trámite",null);
-                                                databaseReference.child("prestamos").push().setValue(solicitudDePrestamo);
-
-
-                                                AppCompatActivity activity = (AppCompatActivity) getContext();
-                                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).commit();
-                                                //success message
-
                                             }
+
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError error) {
-                                                //error message
+                                                Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
+                                                AppCompatActivity activity = (AppCompatActivity) getContext();
+                                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
                                             }
                                         });
 
-
                                     }else{
-                                        //message error -> campos incorrectos
+
+                                        Toast.makeText(getActivity(),"Campos incorrectos!",Toast.LENGTH_SHORT).show();
 
                                     }
 
                                 }catch (Exception e){
-                                    //error message
+
+                                    Toast.makeText(getActivity(),"Todos los campos son obligatorios!",Toast.LENGTH_SHORT).show();
                                     AppCompatActivity activity = (AppCompatActivity) getContext();
                                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+
                                 }
 
                             }
@@ -288,9 +272,9 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                         }
                     });
 
-
                 }else{
-                    //error message
+
+                    Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                     AppCompatActivity activity = (AppCompatActivity) getContext();
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
                 }
@@ -298,9 +282,11 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //error message
+
+                Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                 AppCompatActivity activity = (AppCompatActivity) getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+
             }
         });
 
@@ -308,15 +294,14 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
         return  view;
     }
 
+    //VER EL TEMA DEL BLUR Y DE AGRANDAR LA IMAGEN AL DARLE CLICK
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode == 1 && resultCode == RESULT_OK){
             Bundle extras = data.getExtras();
             imgBitMap = (Bitmap) extras.get("data");
 
-            //Efecto Blur
             imgBitMap = getBlurImage(imgBitMap);
-
             fondoDNI.setImageBitmap(imgBitMap);
         }
     }

@@ -1,6 +1,11 @@
 package com.example.saget;
 
-public class Usuario {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Usuario implements Serializable {
     private String nombres;
     private String apellidos;
     private String correo;
@@ -8,10 +13,31 @@ public class Usuario {
     private String cargo;
     private int rol;
     private String password;
+    private ArrayList<Object> foto;
 
     public String getImgurl() {
         return imgurl;
     }
+
+    public ArrayList<Object> getFoto() {
+        return foto;
+    }
+
+    public void setFoto(ArrayList<Object> foto) {
+        this.foto = foto;
+    }
+
+    public Usuario(String nombres, String apellidos, String correo, String sexo, String cargo, int rol, String password, ArrayList<Object>  foto) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.sexo = sexo;
+        this.cargo = cargo;
+        this.rol = rol;
+        this.password = password;
+        this.foto = foto;
+    }
+
 
     public void setImgurl(String imgurl) {
         this.imgurl = imgurl;

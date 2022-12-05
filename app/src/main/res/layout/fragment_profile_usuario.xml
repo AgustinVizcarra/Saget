@@ -30,35 +30,35 @@
             android:layout_width="245dp"
             android:layout_height="205dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/round_device_usuario"
+            android:orientation="horizontal"
             android:gravity="center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6">
 
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/sliderdetalleequipo"
+            <ImageView
+                android:id="@+id/imagenperfilusuario"
                 android:layout_width="match_parent"
-                app:iss_auto_cycle="true"
-                app:iss_period="1000"
-                app:iss_delay="0"
                 android:gravity="center"
+                android:background="@drawable/fondo_perfil"
                 android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton6"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/round_imagebutton_usuario"
-                    android:backgroundTint="#9CABC2"
-                    android:layout_marginTop="140dp"
-                    android:layout_marginStart="100dp"
-                    android:src="@drawable/ic_camera">
-                </ImageButton>
-            </com.denzcoskun.imageslider.ImageSlider>
-
+            </ImageView>
         </LinearLayout>
 
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_imagebutton_usuario"
+            android:backgroundTint="#9CABC2"
+            android:elevation="2dp"
+            android:layout_marginTop="145dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout3"></ImageButton>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -151,8 +151,8 @@
                     android:layout_below="@+id/textView12"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="@color/gris"
                     android:background="@drawable/round_input_usuario"
+                    android:backgroundTint="@color/gris"
                     android:ems="12"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"
@@ -179,8 +179,8 @@
                     android:layout_below="@+id/textView13"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="@color/gris"
                     android:background="@drawable/round_input_usuario"
+                    android:backgroundTint="@color/gris"
                     android:ems="12"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"

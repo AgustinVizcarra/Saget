@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         View botonRetrocederListaEquipos = view.findViewById(R.id.imageButton5);
         botonRetrocederListaEquipos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +92,8 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
                 if(snapshot.getValue() != null){
                     Equipo equipoBanderita = snapshot.getValue(Equipo.class);
                     if(equipoBanderita.getEstado().equals("0_"+equipoBanderita.getTipo()) || equipoBanderita.getStock() == 0){
-                        //error message
+
+                        Toast.makeText(getActivity(),"El equipo ya no se encuentra disponible",Toast.LENGTH_SHORT).show();
                         AppCompatActivity activity = (AppCompatActivity) getContext();
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
 
@@ -114,17 +117,21 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
                     }
 
                 }else{
-                    //error message
+
+                    Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                     AppCompatActivity activity = (AppCompatActivity) getContext();
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+
                 }
 
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //error message
+
+                Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                 AppCompatActivity activity = (AppCompatActivity) getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+
             }
         });
 
