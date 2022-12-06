@@ -64,12 +64,13 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
     ImageButton btnSubirFoto;
     String fileLink = "";
     ImageButton backToPuntosRecojo;
+
     public FormPuntoRecojoFragment() {
         // Required empty public constructor
     }
 
-    ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result ->{
-        if(result.getResultCode()== RESULT_OK){
+    ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
             imageUri = result.getData().getData();
         }
     });
@@ -148,14 +149,14 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                             });
                     //Una vez obtenido el enlace
                     String keyPuntoRecojo = databaseReference.getKey();
-                    PuntoRecojo puntoRecojo = new PuntoRecojo(descripcion.getText().toString(),coordenadas.getText().toString(),fileLink,keyPuntoRecojo,1);
+                    PuntoRecojo puntoRecojo = new PuntoRecojo(descripcion.getText().toString(), coordenadas.getText().toString(), fileLink, keyPuntoRecojo, 1);
                     databaseReference.child("punto_recojo").child(keyPuntoRecojo).setValue(puntoRecojo);
                     //Salvado exitoso
                     descripcion.setText("");
                     coordenadas.setText("");
-                    imageUri=null;
+                    imageUri = null;
                     mMap.clear();
-                    LatLng catolica = new LatLng(-12.075932527662884,-77.0357355);
+                    LatLng catolica = new LatLng(-12.075932527662884, -77.0357355);
                     mMap.addMarker(new MarkerOptions().position(catolica).title("PUCP"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(catolica));
                     Toast.makeText(getContext(), "Se añadio el Punto de Recojo exitosamente!", Toast.LENGTH_LONG).show();
@@ -168,24 +169,24 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,listadoPuntosRecojo).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI, listadoPuntosRecojo).addToBackStack(null).commit();
             }
         });
-        return  view;
+        return view;
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng catolica = new LatLng(-12.075932527662884,-77.0357355);
+        LatLng catolica = new LatLng(-12.075932527662884, -77.0357355);
         mMap.addMarker(new MarkerOptions().position(catolica).title("PUCP"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(catolica));
         this.mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
-                coordenadas.setText(latLng.latitude+","+latLng.longitude);
+                coordenadas.setText(latLng.latitude + "," + latLng.longitude);
                 mMap.clear();
-                LatLng marker = new LatLng(latLng.latitude,latLng.longitude);
+                LatLng marker = new LatLng(latLng.latitude, latLng.longitude);
                 mMap.addMarker(new MarkerOptions().position(marker).title(""));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
             }
@@ -193,9 +194,9 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
         this.mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(@NonNull LatLng latLng) {
-                coordenadas.setText(latLng.latitude+","+latLng.longitude);
+                coordenadas.setText(latLng.latitude + "," + latLng.longitude);
                 mMap.clear();
-                LatLng marker = new LatLng(latLng.latitude,latLng.longitude);
+                LatLng marker = new LatLng(latLng.latitude, latLng.longitude);
                 mMap.addMarker(new MarkerOptions().position(marker).title(""));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
             }
