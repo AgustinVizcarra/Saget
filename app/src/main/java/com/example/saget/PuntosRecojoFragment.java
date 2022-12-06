@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -36,6 +38,15 @@ public class PuntosRecojoFragment extends Fragment {
         FirebaseRecyclerOptions<PuntoRecojo> options = new FirebaseRecyclerOptions.Builder<PuntoRecojo>().setQuery(query,PuntoRecojo.class).build();
         puntosRecojoAdapter = new PuntosRecojoAdapter(options);
         recyclerView.setAdapter(puntosRecojoAdapter);
+        //Fab redirecccion a creacion de un nuevo punto de recojo
+        FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAregarPuntoRecojo);
+        fabAgregar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_container_admin,new FormPuntoRecojoFragment()).addToBackStack(null).commit();
+            }
+        });
         return view;
     }
 }

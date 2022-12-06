@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Saget"
         tools:targetApi="31">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+                    android:value="AIzaSyAa4IgLl97qutHgUgkUrnTzQmjvnsKZ1yw">
+        </meta-data>
         <activity
             android:name=".VistaPrincipalAdminActivity"
             android:exported="false">

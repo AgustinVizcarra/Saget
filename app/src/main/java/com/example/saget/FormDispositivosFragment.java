@@ -292,8 +292,6 @@ public class FormDispositivosFragment extends Fragment {
         btnimgadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/jpeg");
                 launcherPhotos.launch(intent);

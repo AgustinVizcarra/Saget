@@ -7,6 +7,14 @@ public class PuntoRecojo {
     private String key;
     private int estado;
 
+    public PuntoRecojo(String descripcion, String coordenadas, Object imagenes, String key, int estado) {
+        this.descripcion = descripcion;
+        this.coordenadas = coordenadas;
+        this.imagenes = imagenes;
+        this.key = key;
+        this.estado = estado;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
