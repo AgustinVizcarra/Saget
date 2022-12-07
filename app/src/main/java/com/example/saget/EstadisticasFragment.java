@@ -51,11 +51,11 @@ public class EstadisticasFragment extends Fragment {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    List<EquipoCompleto> equipos = new ArrayList<>();
-    List<SolicitudDePrestamo> prestamos = new ArrayList<>();
     HashMap<EquipoCompleto,List<SolicitudDePrestamo>> asociacion = new HashMap<>();
     HashMap<String,Double> conteoPorEquipoPrestado = new HashMap<>();
     HashMap<String, Integer> conteoPorMarca = new HashMap<>();
+    List<EquipoCompleto> equipos = new ArrayList<>();
+    List<SolicitudDePrestamo> prestamos = new ArrayList<>();
     List<String> marcas = new ArrayList<>();
     EquipoCompleto masPrestado;
     int cuentaTotal = 0;
@@ -66,11 +66,30 @@ public class EstadisticasFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         //Procesamiento Duro y Puro
         //Debo listar todos los equipos y todos los prestamos asociados a esos equipos
-        equipos = this.listarEquipos();
-        Log.d("msg longitud:",String.valueOf(equipos.size()));
-        prestamos = this.listarPrestamos();
-        Log.d("msg prestamos:",String.valueOf(prestamos.size()));
         //Asocio los prestamos con el equipo!
+        // Inflate the layout for this fragment
+        //Para equipos válidos
+        databaseReference.child("equipo").orderByChild("disponibilidad").equalTo(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    String key = postSnapshot.getKey();
+                    Equipo aux = postSnapshot.getValue(Equipo.class);
+                    Log.d("msg equipo",aux.getNombre());
+                    equipos.add(new EquipoCompleto(aux,key));
+                }
+                Log.d("msg",String.valueOf(equipos.size()));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("msg",error.toException().toString());
+            }
+        });
+        Log.d("msg equipos",String.valueOf(equipos.size()));
+        this.listarEquipos();
+        Log.d("msg longitud:",String.valueOf(equipos.size()));
+        this.listarPrestamos();
+        Log.d("msg prestamos:",String.valueOf(prestamos.size()));
         for(EquipoCompleto e:equipos){
             List<SolicitudDePrestamo> prestamosAux = new ArrayList<>();
             for(SolicitudDePrestamo s: prestamos){
@@ -155,7 +174,7 @@ public class EstadisticasFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        //
         View view = inflater.inflate(R.layout.fragment_estadisticas, container, false);
         //Primero considerando el gráfico de barras horizontal
         HorizontalBarChart horizontalBarChart = view.findViewById(R.id.horizontalBarChartPorMarca);
@@ -277,10 +296,10 @@ public class EstadisticasFragment extends Fragment {
         Glide.with(vistaEquipo.getContext()).load(imagenes.get(n)).override(100,100).into(vistaEquipo);
         return view;
     }
-    public List<EquipoCompleto> listarEquipos(){
+    public void listarEquipos(){
         List<EquipoCompleto> equipos = new ArrayList<>();
         //Para equipos válidos
-        Query equiposQuery = databaseReference.child("equipo").orderByChild("disponibilidad").equalTo("1");
+        Query equiposQuery = databaseReference.child("equipo").orderByChild("disponibilidad").equalTo(1);
         equiposQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -297,9 +316,8 @@ public class EstadisticasFragment extends Fragment {
             }
         });
         Log.d("msg equipos",String.valueOf(equipos.size()));
-        return equipos;
     }
-    public List<SolicitudDePrestamo> listarPrestamos(){
+    public void listarPrestamos(){
         List<SolicitudDePrestamo> prestamos = new ArrayList<>();
         //Inicialmente probemos con este
         Query prestamosQuery = databaseReference.child("prestamos");
@@ -321,7 +339,6 @@ public class EstadisticasFragment extends Fragment {
             }
         });
         Log.d("msg longitud ",String.valueOf(prestamos.size()));
-        return prestamos;
     }
 
 }
