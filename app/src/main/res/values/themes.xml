@@ -17,6 +17,25 @@
         <item name="colorAccent">#09FFA6</item>
         <item name="android:radius">7dp</item>
     </style>
+    <style name="buttonVerMasSoliTi" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#206CEF</item>
+        <item name="colorPrimaryVariant">#2E65D1</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:radius">7dp</item>
+    </style>
+    <style name="buttonAceptarSoliTi" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00338A</item>
+        <item name="colorPrimaryVariant">#053187</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:radius">7dp</item>
+    </style>
+    <style name="buttonDenegarSoliTi" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#E60808</item>
+        <item name="colorPrimaryVariant">#AA0202</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:radius">7dp</item>
+    </style>
+
     <style name="buttonDeleteInfoTI" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorAccent">#FF0909</item>
         <item name="android:radius">7dp</item>

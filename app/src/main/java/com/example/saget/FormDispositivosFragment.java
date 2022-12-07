@@ -246,6 +246,13 @@ public class FormDispositivosFragment extends Fragment {
                     equipo.setEquiposAdicionales(equiposAdicionStr);
                     equipo.setTipo(tipoEquipo);
                     equipo.setDisponibilidad(disponi);
+                    //se guarda el estado con disponibilidad y tipo de equipo
+                    if(stockint==0){
+                        equipo.setEstado("0_"+String.valueOf(tipoEquipo));
+                    }else{
+                        equipo.setEstado(String.valueOf(disponi)+"_"+String.valueOf(tipoEquipo));
+                    }
+
 
                     // 3. se guardan los datos
                     refequipos.child(identificador).setValue(equipo).addOnSuccessListener(unused -> {
