@@ -15,7 +15,7 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
 
     Fragment fragmentInicioTI = new InicioFragmentTi();
     Fragment fragmentProfileTI=new ProfileFragmentTi();
-
+    Fragment fragmentSolicTI=new SolicitudesFragmentTi();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,9 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
                  return true;
              case R.id.profile_ti:
                  loadFragment(fragmentProfileTI);
+                 return true;
+             case R.id.request_ti:
+                 loadFragment(fragmentSolicTI);
                  return true;
              default:
                 return false;

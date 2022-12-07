@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_principal_flujos"
+    tools:context=".DetallesSolicitudTiFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        tools:context=".FormEditDispositivosFragment">
+        <TextView
+            android:id="@+id/txtViewGestionSolic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/yrsa"
+            android:text="Gestionar Solicitud"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.477"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/imgBtnSolicBackListSoli"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button_usuario"
+            app:layout_constraintBottom_toBottomOf="@+id/txtViewGestionSolic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtViewGestionSolic"
+            app:layout_constraintVertical_bias="0.5" />
+        <LinearLayout
+            android:id="@+id/linearLayoutSoliVermas"
+            android:layout_width="370dp"
+            android:layout_height="1160dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_scroll_usuario"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/txtViewGestionSolic"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@+id/txtViewGestionSolic"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewGestionSolic">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp">
+
+
+                <TextView
+                    android:id="@+id/txtViewUserSoli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Usuario:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+                <ImageView
+                    android:id="@+id/imageViewDniSoliUser"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/txtViewUserSoli"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="33dp"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtViewUserSoli"
+                    tools:src="@tools:sample/avatars" />
+
+
+
+                <TextView
+                    android:id="@+id/textViewTituloSoli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewDniSoliUser"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="180dp"
+                    android:text="Solicitud:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/textViewSoliNumber"
+                    android:layout_width="352dp"
+                    android:layout_height="39dp"
+                    android:layout_below="@+id/textViewTituloSoli"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/textViewtituloFechaSoli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewSoliNumber"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="180dp"
+                    android:text="Fecha de la solicitud:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textViewFechaSoli"
+                    android:layout_width="352dp"
+                    android:layout_height="39dp"
+                    android:layout_below="@+id/textViewtituloFechaSoli"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/solicitudplantillaTi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/nombresolicitudTititulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Equipo:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/nombreEquipoSolicitudTI"
+                    android:layout_width="352dp"
+                    android:layout_height="39dp"
+                    android:layout_below="@+id/nombresolicitudTititulo"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tiempoSoliTiTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nombreEquipoSolicitudTI"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Tiempo Limite de Reserva:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tiempoTIPrestamo"
+                    android:layout_width="352dp"
+                    android:layout_height="39dp"
+                    android:layout_below="@+id/tiempoSoliTiTitulo"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtviewCursoTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tiempoTIPrestamo"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="105dp"
+                    android:text="Curso:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/cursosolicitudTi"
+                    android:layout_width="352dp"
+                    android:layout_height="39dp"
+                    android:layout_below="@+id/txtviewCursoTitulo"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtviewPromRequeTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cursosolicitudTi"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="80dp"
+                    android:text="Programas Requeridos:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/programassolicitudTi"
+                    android:layout_width="352dp"
+                    android:layout_height="65dp"
+                    android:layout_below="@+id/txtviewPromRequeTitulo"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/textViewtitulomotivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/programassolicitudTi"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="80dp"
+                    android:text="Motivo:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/motivosolicitudTi"
+                    android:layout_width="352dp"
+                    android:layout_height="105dp"
+                    android:layout_below="@+id/textViewtitulomotivo"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:ems="12"
+                    android:paddingLeft="10dp"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/detallesAdiTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/motivosolicitudTi"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="80dp"
+                    android:text="Detalles Adicionales:"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detallessolicitudTi"
+                    android:layout_width="352dp"
+                    android:layout_height="65dp"
+                    android:layout_below="@+id/detallesAdiTitulo"
+                    android:layout_marginStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/round_input_usuario"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:ems="12"
+                    android:text=""/>
+
+                <Button
+                    android:id="@+id/btnAceptarSoliTi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detallessolicitudTi"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="200dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="60dp"
+                    android:theme="@style/buttonAceptarSoliTi"
+                    android:text="Aceptar" />
+                <Button
+                    android:id="@+id/btnDenegarSoliTi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detallessolicitudTi"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="59dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="200dp"
+                    android:theme="@style/buttonDenegarSoliTi"
+                    android:text="Denegar" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/separadorEditForm"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/linearLayoutSoliVermas"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayoutSoliVermas"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutSoliVermas">
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
