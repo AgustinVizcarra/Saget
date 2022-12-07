@@ -9,13 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal">
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingFiltros"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            app:fabCustomSize="35dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_baseline_density_medium_24"/>
         <SearchView
             android:id="@+id/textBuscar"
             android:layout_width="280dp"
             android:layout_height="50dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:background="@color/white"
@@ -25,23 +35,12 @@
             android:id="@+id/floatingAgregar"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             app:fabCustomSize="35dp"
             android:clickable="true"
             app:srcCompat="@drawable/ic_baseline_add_24"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingFiltros"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            app:fabCustomSize="35dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_baseline_density_medium_24"/>
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

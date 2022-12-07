@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -24,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,12 +38,12 @@ public class UsuariosFragment extends Fragment {
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
-    List<String> filenames;
+    List<String> filenames = new ArrayList<>();
     SearchView txtBuscar;
     ValueEventListener queryListener;
     String option;
     EditarUsuarioTIFragment editar;
-
+    FloatingActionButton filtrosUsuarios;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,32 +66,36 @@ public class UsuariosFragment extends Fragment {
         txtBuscar = (SearchView) view.findViewById(R.id.textBuscarU);
         option = "";
         //Filtrado
-        View filtros = view.findViewById(R.id.floatingFiltrosU);
-        PopupMenu popupMenu = new PopupMenu(view.getContext(), filtros);
-        popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_usuario, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        filtrosUsuarios = (FloatingActionButton) view.findViewById(R.id.floatingFiltrosU);
+        filtrosUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.opcionU1:
-                        txtBuscar.setQueryHint("Ingresar el cargo usuario");
-                        option="nombres";
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), filtrosUsuarios);
+                popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_usuario, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()){
+                            case R.id.opcionU1:
+                                txtBuscar.setQueryHint("Ingresar el cargo usuario");
+                                option="nombres";
+                                return true;
+                            case R.id.opcionU2:
+                                txtBuscar.setQueryHint("Ingresar los nombres del usuario");
+                                option="apellidos";
+                                return true;
+                            case R.id.opcionU3:
+                                txtBuscar.setQueryHint("Ingresar el apellidos del usuario");
+                                option="correo";
+                                return true;
+                        }
                         return true;
-                    case R.id.opcionU2:
-                        txtBuscar.setQueryHint("Ingresar los nombres del usuario");
-                        option="apellidos";
-                        return true;
-                    case R.id.opcionU3:
-                        txtBuscar.setQueryHint("Ingresar el apellidos del usuario");
-                        option="correo";
-                        return true;
-                    default:
-                        return false;
-                }
+                    }
+                });
+                //
+                popupMenu.show();
             }
         });
-        //
-        popupMenu.show();
         // Inflate the layout for this fragment
         txtBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -141,5 +147,8 @@ public class UsuariosFragment extends Fragment {
             default:
                 Toast.makeText(this.getContext(),"Error en la busqueda con filtros",Toast.LENGTH_LONG).show();
         }
+    }
+    public void showPopUpMenu(View view){
+
     }
 }

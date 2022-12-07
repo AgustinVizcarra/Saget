@@ -67,7 +67,9 @@ public class EstadisticasFragment extends Fragment {
         //Procesamiento Duro y Puro
         //Debo listar todos los equipos y todos los prestamos asociados a esos equipos
         equipos = this.listarEquipos();
+        Log.d("msg longitud:",String.valueOf(equipos.size()));
         prestamos = this.listarPrestamos();
+        Log.d("msg prestamos:",String.valueOf(prestamos.size()));
         //Asocio los prestamos con el equipo!
         for(EquipoCompleto e:equipos){
             List<SolicitudDePrestamo> prestamosAux = new ArrayList<>();
@@ -137,10 +139,13 @@ public class EstadisticasFragment extends Fragment {
         //Para ver el equipo más prestado
         List<Integer> conteoPorEquipo = new ArrayList<>();
         for(EquipoCompleto e : asociacion.keySet()){
+            Log.d("msg",e.getEquipo().getNombre());
             if(!conteoPorEquipo.contains(asociacion.get(e).size())){
+                Log.d("msg","ingreso aqui");
                 if(Collections.max(conteoPorEquipo)<asociacion.get(e).size()){
                     //Tengo un nuevo máximo
                     masPrestado = e;
+                    Log.d("EQUIPO: ",e.getEquipo().getNombre());
                 }
             }
         }
@@ -167,7 +172,7 @@ public class EstadisticasFragment extends Fragment {
         barDataSet.setValueTextColor(Color.BLACK);
         BarData data = new BarData(barDataSet);
         YAxis yAxis = horizontalBarChart.getAxisLeft();
-        yAxis.setValueFormatter(new IndexAxisValueFormatter((Collection<String>) yAxis));
+        yAxis.setValueFormatter(new IndexAxisValueFormatter(yVals));
         horizontalBarChart.setFitBars(true);
         horizontalBarChart.setData(data);
         horizontalBarChart.animate();
@@ -260,11 +265,11 @@ public class EstadisticasFragment extends Fragment {
             }
         }
         //Finalmente rellenamos al equipo mas prestado
-        TextView nombreEquipo = view.findViewById(R.id.nombreMasPrestadoRellenar);
+        TextView nombreEquipo = (TextView) view.findViewById(R.id.nombreMasPrestadoRellenar);
         nombreEquipo.setText(masPrestado.getEquipo().getNombre());
-        TextView stockEquipo = view.findViewById(R.id.stockMasPrestadoRellenar);
+        TextView stockEquipo = (TextView) view.findViewById(R.id.stockMasPrestadoRellenar);
         stockEquipo.setText(masPrestado.getEquipo().getStock());
-        TextView marcaEquipo = view.findViewById(R.id.marcaMasPrestadoRellenar);
+        TextView marcaEquipo = (TextView) view.findViewById(R.id.marcaMasPrestadoRellenar);
         marcaEquipo.setText(masPrestado.getEquipo().getMarca());
         ArrayList<String> imagenes = (ArrayList<String>) masPrestado.getEquipo().getImagenes();
         int n = (int) (Math.random() * (imagenes.size() - 1)) + 1;
@@ -282,6 +287,7 @@ public class EstadisticasFragment extends Fragment {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     String key = postSnapshot.getKey();
                     Equipo aux = postSnapshot.getValue(Equipo.class);
+                    Log.d("msg equipo",aux.getNombre());
                     equipos.add(new EquipoCompleto(aux,key));
                 }
             }
@@ -290,6 +296,7 @@ public class EstadisticasFragment extends Fragment {
                 Log.d("msg",error.toException().toString());
             }
         });
+        Log.d("msg equipos",String.valueOf(equipos.size()));
         return equipos;
     }
     public List<SolicitudDePrestamo> listarPrestamos(){
@@ -310,8 +317,10 @@ public class EstadisticasFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("msg",error.toException().toString());
+
             }
         });
+        Log.d("msg longitud ",String.valueOf(prestamos.size()));
         return prestamos;
     }
 

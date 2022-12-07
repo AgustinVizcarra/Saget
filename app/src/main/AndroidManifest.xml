@@ -27,10 +27,12 @@
         </meta-data>
         <activity
             android:name=".VistaPrincipalAdminActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+            android:theme="@style/Theme.Saget.Registro"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".RegistroActivity"
@@ -47,14 +49,10 @@
         </activity>
         <activity
             android:name=".VistaPrincipalUsuarioActivity"
-            android:exported="true"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.Saget.Registro">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <meta-data
             android:name="preloaded_fonts"

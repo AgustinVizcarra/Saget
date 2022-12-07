@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InicioAdminFragment extends Fragment {
@@ -37,27 +38,40 @@ public class InicioAdminFragment extends Fragment {
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
-    List<String> filenames;
+    List<String> filenames = new ArrayList<>();
     SearchView txtBuscar;
     ValueEventListener queryListener;
     String option;
-    EditarUsuarioTIFragment editar ;
-    public InicioAdminFragment(){
+    EditarUsuarioTIFragment editar;
+    View filtros;
+    FloatingActionButton floatingFiltros;
+
+    public InicioAdminFragment() {
 
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //obtengo todos los archivos
+        /**
+         usuariosProfileStorage.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+        @Override public void onSuccess(ListResult listResult) {
+        for (StorageReference profileFile : listResult.getItems()){
+        filenames.add(profileFile.getName());
+        }
+        }
+        });**/
         usuariosProfileStorage.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
-                for (StorageReference profileFile : listResult.getItems()){
-                    filenames.add(profileFile.getName());
+                for (StorageReference item : listResult.getItems()) {
+                    filenames.add(item.getName());
                 }
             }
         });
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,50 +79,55 @@ public class InicioAdminFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_inicio_admin, container, false);
         txtBuscar = (SearchView) view.findViewById(R.id.textBuscar);
         option = "";
-        //Filtrado
-        View filtros = view.findViewById(R.id.floatingFiltros);
-        PopupMenu popupMenu = new PopupMenu(view.getContext(),filtros);
-        popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_ti, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        //Llamo al floting action button
+        floatingFiltros = (FloatingActionButton) view.findViewById(R.id.floatingFiltros);
+        floatingFiltros.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.opcion1:
-                        txtBuscar.setQueryHint("Ingresar los nombres del usuario");
-                        option="nombres";
-                        return true;
-                    case R.id.opcion2:
-                        txtBuscar.setQueryHint("Ingresar los apellidos del usuario");
-                        option="apellidos";
-                        return true;
-                    case R.id.opcion3:
-                        txtBuscar.setQueryHint("Ingresar el correo del usuario");
-                        option="correo";
-                        return true;
-                    default:
-                        return false;
-                }
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), filtros);
+                popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_ti, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                     @Override
+                     public boolean onMenuItemClick(MenuItem menuItem) {
+                         switch (menuItem.getItemId()) {
+                             case R.id.opcion1:
+                                 txtBuscar.setQueryHint("Ingresar los nombres del usuario");
+                                 option = "nombres";
+                                 return true;
+                             case R.id.opcion2:
+                                 txtBuscar.setQueryHint("Ingresar los apellidos del usuario");
+                                 option = "apellidos";
+                                 return true;
+                             case R.id.opcion3:
+                                 txtBuscar.setQueryHint("Ingresar el correo del usuario");
+                                 option = "correo";
+                                 return true;
+                             default:
+                                 return false;
+                         }
+                     }
+                 }
+                );
+                popupMenu.show();
             }
         });
-        popupMenu.show();
-        //
         txtBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                textBuscar(s,option);
+                textBuscar(s, option);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                textBuscar(s,option);
+                textBuscar(s, option);
                 return false;
             }
         });
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewPersonalTI);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPersonalTI);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
-        adapter = new UsuarioTIAdapter(options,filenames);
+        FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query, Usuario.class).build();
+        adapter = new UsuarioTIAdapter(options, filenames);
         recyclerView.setAdapter(adapter);
         //Floating button action -> Agregar
         FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAgregar);
@@ -118,40 +137,69 @@ public class InicioAdminFragment extends Fragment {
                 //Hago uso del constructor vacio para no enviar data :v
                 editar = new EditarUsuarioTIFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_container_admin,editar).commit();
+                fragmentTransaction.replace(R.id.frame_container_admin, editar).commit();
             }
         });
         return view;
     }
-    public void textBuscar(String s,String option){
+
+    public void textBuscar(String s, String option) {
         Query query = databaseReference.child("ti");
-        switch (option){
+        switch (option) {
             case "":
-                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres"),Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options,filenames);
+                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres"), Usuario.class).build();
+                adapter = new UsuarioTIAdapter(options, filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "nombres":
-                FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options1,filenames);
+                FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s + "~"), Usuario.class).build();
+                adapter = new UsuarioTIAdapter(options1, filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "apellidos":
-                FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options2,filenames);
+                FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s + "~"), Usuario.class).build();
+                adapter = new UsuarioTIAdapter(options2, filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "correo":
-                FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("correo").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options3,filenames);
+                FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("correo").startAt(s).endAt(s + "~"), Usuario.class).build();
+                adapter = new UsuarioTIAdapter(options3, filenames);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             default:
-                Toast.makeText(this.getContext(),"Error en la busqueda con filtros",Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Error en la busqueda con filtros", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), filtros);
+        popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_ti, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                 @Override
+                                                 public boolean onMenuItemClick(MenuItem menuItem) {
+                                                     switch (menuItem.getItemId()) {
+                                                         case R.id.opcion1:
+                                                             txtBuscar.setQueryHint("Ingresar los nombres del usuario");
+                                                             option = "nombres";
+                                                             return true;
+                                                         case R.id.opcion2:
+                                                             txtBuscar.setQueryHint("Ingresar los apellidos del usuario");
+                                                             option = "apellidos";
+                                                             return true;
+                                                         case R.id.opcion3:
+                                                             txtBuscar.setQueryHint("Ingresar el correo del usuario");
+                                                             option = "correo";
+                                                             return true;
+                                                         default:
+                                                             return false;
+                                                     }
+                                                 }
+                                             }
+        );
+        popupMenu.show();
     }
 }
