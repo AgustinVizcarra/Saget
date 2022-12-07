@@ -6,17 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class VistaPrincipalUsuarioActivity extends AppCompatActivity {
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     InicioFragmentUsuario inicioFragmentUsuario = new InicioFragmentUsuario();
     RequestFragmentUsuario requestFragmentUsuario = new RequestFragmentUsuario();
@@ -46,6 +51,18 @@ public class VistaPrincipalUsuarioActivity extends AppCompatActivity {
             }
             return false;
         });
+
+        ImageButton botonSalirSesion = findViewById(R.id.isalir);
+        botonSalirSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                finish();
+                Intent i = new Intent(VistaPrincipalUsuarioActivity.this,VistaInicioActivity.class);//Vista Logueo
+                startActivity(i);
+            }
+        });
+
 
     }
 
