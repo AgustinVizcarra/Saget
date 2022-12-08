@@ -79,14 +79,14 @@
             <TableLayout
                 android:id="@+id/layoutdeGraficos"
                 android:layout_width="match_parent"
-                android:layout_height="275dp">
+                android:layout_height="290dp">
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="100dp"
-                        android:layout_height="137.5dp"
+                        android:layout_height="145dp"
                         android:layout_marginStart="35dp">
                         <TextView
                             android:id="@+id/textView18"
@@ -104,7 +104,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="100dp"
-                        android:layout_height="137.5dp"
+                        android:layout_height="145dp"
                         android:layout_marginStart="10dp">
                         <TextView
                             android:id="@+id/textView19"
@@ -122,7 +122,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="100dp"
-                        android:layout_height="137.5dp"
+                        android:layout_height="145dp"
                         android:layout_marginStart="10dp">
 
                         <TextView
@@ -145,7 +145,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="100dp"
-                        android:layout_height="137.5dp"
+                        android:layout_height="145dp"
                         android:layout_marginStart="35dp">
                         <TextView
                             android:id="@+id/textView21"
@@ -163,7 +163,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="100dp"
-                        android:layout_height="137.5dp"
+                        android:layout_height="145dp"
                         android:layout_marginStart="10dp">
                         <TextView
                             android:id="@+id/textView23"
