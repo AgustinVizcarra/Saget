@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,84 +36,59 @@ public class UsuarioTIAdapter extends FirebaseRecyclerAdapter<Usuario, UsuarioTI
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
-    List<String> filenames;
 
-    public UsuarioTIAdapter(@NonNull FirebaseRecyclerOptions<Usuario> options, List<String> filenames) {
+
+    public UsuarioTIAdapter(@NonNull FirebaseRecyclerOptions<Usuario> options) {
         super(options);
-        this.filenames = filenames;
     }
-
-
 
     @Override
     protected void onBindViewHolder(@NonNull viewHolder holder, int position, @NonNull Usuario model) {
         holder.nombre.setText(model.getNombres());
         holder.apellido.setText(model.getApellidos());
         holder.correo.setText(model.getCorreo());
-        //obtengo el DNI de los usuarios para hacer el match consigo
-        databaseReference.child("ti").addListenerForSingleValueEvent(new ValueEventListener() {
-        String uri = "";
-        boolean found = false;
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for(DataSnapshot userObject: snapshot.getChildren()){
-                boolean jpg = filenames.contains(userObject.getKey()+"."+"jpg");
-                boolean png  = filenames.contains(userObject.getKey()+"."+"png");
-                if(jpg || png){
-                    //Si se encuentra dentro de la lista
-                    uri = jpg ? userObject.getKey()+"."+"jpg":userObject.getKey()+"."+"png";
-                    Glide.with(holder.imagenUsuario.getContext()).load(usuariosProfileStorage.child(uri)).override(100,100).into(holder.imagenUsuario);
-                    found = true;
-                    break;
-                }
+        if(model.getFoto()!=null){
+            String url = (String) model.getFoto().get(1);
+            Glide.with(holder.imagenUsuario.getContext()).load(url).override(100,100).into(holder.imagenUsuario);
+        }else{
+            Glide.with(holder.imagenUsuario.getContext()).load(usuariosProfileStorage.child("defaultProfile.jpg")).override(100,100).into(holder.imagenUsuario);
+        }
+        holder.editarUsuarioTI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_container_admin, new EditarUsuarioTIFragment(model.getNombres(), model.getApellidos(), model.getCorreo(), model.getPassword())).addToBackStack(null).commit();
             }
-            //si en caso no lo haya encontrado
-            if(!found) {
-                uri = "defaultProfile.jpg";
-                Glide.with(holder.imagenUsuario.getContext()).load(usuariosProfileStorage.child(uri)).override(100,100).into(holder.imagenUsuario);
+        });
+        holder.eliminarUsuarioTI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(holder.eliminarUsuarioTI.getContext());
+                builder.setTitle("Eliminar usuario");
+                builder.setMessage("¿Está seguro que desea eliminar al usuario" + model.getNombres() + " " + model.getApellidos() + "? ");
+                builder.setPositiveButton("Sí", (dialogInterface, i) -> {
+                    databaseReference.child("usuario").child(getRef(holder.getAbsoluteAdapterPosition()).getKey()).removeValue();
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(view.getContext(), "Accion cancelada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
             }
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    });
-    holder.editarUsuarioTI.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View view) {
-            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frame_container_admin,new EditarUsuarioTIFragment(model.getNombres(),model.getApellidos(),model.getCorreo(),model.getPassword())).addToBackStack(null).commit();
-        }
-    });
-    holder.eliminarUsuarioTI.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(holder.eliminarUsuarioTI.getContext());
-            builder.setTitle("Eliminar usuario");
-            builder.setMessage("¿Está seguro que desea eliminar al usuario"+model.getNombres()+" "+model.getApellidos()+"? ");
-            builder.setPositiveButton("Sí",(dialogInterface, i) -> {
-                databaseReference.child("usuario").child(getRef(holder.getAbsoluteAdapterPosition()).getKey()).removeValue();
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            builder.show();
-        }
-    });
+        });
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_personal_ti,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_personal_ti, parent, false);
         return new viewHolder(view);
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder{
+    public class viewHolder extends RecyclerView.ViewHolder {
         TextView nombre;
         TextView apellido;
         TextView correo;

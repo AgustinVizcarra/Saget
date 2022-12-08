@@ -61,7 +61,7 @@ public class PuntosRecojoAdapter extends FirebaseRecyclerAdapter<PuntoRecojo,Pun
         holder.btnEliminarPRecojo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(holder.btnEliminarPRecojo.getContext());
                 alertDialog.setTitle("SAGET");
                 alertDialog.setMessage("¿Estás seguro de eliminar el punto de Recojo?");
                 alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -72,7 +72,7 @@ public class PuntosRecojoAdapter extends FirebaseRecyclerAdapter<PuntoRecojo,Pun
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 HashMap<String,Object> map = new HashMap<>();
                                 map.put("estado","0");
-                                firebaseDatabase.getReference().child("puntos_recojo").child(model.getKey()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                firebaseDatabase.getReference().child("punto_recojo").child(model.getKey()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Toast.makeText(view.getContext(), "Se elimino correctamente", Toast.LENGTH_SHORT).show();
@@ -92,6 +92,7 @@ public class PuntosRecojoAdapter extends FirebaseRecyclerAdapter<PuntoRecojo,Pun
                         Toast.makeText(view.getContext(), "Accion cancelada", Toast.LENGTH_SHORT).show();
                     }
                 });
+                alertDialog.show();
             }
         });
     }

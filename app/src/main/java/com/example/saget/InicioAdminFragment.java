@@ -69,6 +69,7 @@ public class InicioAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         Query query = databaseReference.orderByChild("rol").equalTo("2");
         View view = inflater.inflate(R.layout.fragment_inicio_admin, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPersonalTI);
         txtBuscar = (SearchView) view.findViewById(R.id.textBuscar);
         option = "";
         //Llamo al floting action button
@@ -115,10 +116,9 @@ public class InicioAdminFragment extends Fragment {
                 return false;
             }
         });
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPersonalTI);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query, Usuario.class).build();
-        adapter = new UsuarioTIAdapter(options, filenames);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new UsuarioTIAdapter(options);
         recyclerView.setAdapter(adapter);
         //Floating button action -> Agregar
         FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAgregar);
@@ -139,25 +139,25 @@ public class InicioAdminFragment extends Fragment {
         switch (option) {
             case "":
                 FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres"), Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options, filenames);
+                adapter = new UsuarioTIAdapter(options);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "nombres":
                 FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s + "~"), Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options1, filenames);
+                adapter = new UsuarioTIAdapter(options1);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "apellidos":
                 FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s + "~"), Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options2, filenames);
+                adapter = new UsuarioTIAdapter(options2);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "correo":
                 FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("correo").startAt(s).endAt(s + "~"), Usuario.class).build();
-                adapter = new UsuarioTIAdapter(options3, filenames);
+                adapter = new UsuarioTIAdapter(options3);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
