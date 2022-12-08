@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class VistaPrincipalUsuarioActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    InicioFragmentUsuario inicioFragmentUsuario = new InicioFragmentUsuario();
+    CatalogoUsuarioFragment catalogoFragmentUsuario = new CatalogoUsuarioFragment();
     RequestFragmentUsuario requestFragmentUsuario = new RequestFragmentUsuario();
     ProfileFragmentUsuario profileFragmentUsuario = new ProfileFragmentUsuario();
 
@@ -35,12 +35,12 @@ public class VistaPrincipalUsuarioActivity extends AppCompatActivity {
 
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_user);
 
-        loadFragment(inicioFragmentUsuario);
+        loadFragment(catalogoFragmentUsuario);
 
         navigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.house_user:
-                    loadFragment(inicioFragmentUsuario);
+                    loadFragment(catalogoFragmentUsuario);
                     return true;
                 case R.id.request_user:
                     loadFragment(requestFragmentUsuario);

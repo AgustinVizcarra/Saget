@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +45,7 @@ public class ProfileFragmentUsuario extends Fragment {
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference imageRef = firebaseStorage.getReference();
     ImageView fondoPerfil;
+    FirebaseAuth mAuth;
     Bitmap imgBitMap;
     Usuario usuario;
     String keyUsuario;
@@ -57,11 +60,11 @@ public class ProfileFragmentUsuario extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_usuario, container, false);
 
-
+        mAuth= FirebaseAuth.getInstance();
         //PARA SACAR EL CORREO DEL USUARIO LOGUEADO
-        /*FirebaseUser currentUser = mAuth.getCurrentUser();
-        String correoUsuarioPrestamo = currentUser.getEmail();*/
-        String correoUsuarioPrestamo = "a20191566@pucp.edu.pe";
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String correoUsuarioPrestamo = currentUser.getEmail();
+        //String correoUsuarioPrestamo = "a20191566@pucp.edu.pe";
 
         ImageButton botonCamara = view.findViewById(R.id.imageButton6);
         Button botonActualizar = view.findViewById(R.id.buttonactualizardata);
@@ -92,7 +95,7 @@ public class ProfileFragmentUsuario extends Fragment {
                 correoTxt.setText(usuario.getCorreo());
                 correoTxt.setFocusable(false);
 
-                dniTxt.setText(keyUsuario);
+                dniTxt.setText(usuario.getDNI());
                 dniTxt.setFocusable(false);
 
                 if(usuario.getFoto() != null){

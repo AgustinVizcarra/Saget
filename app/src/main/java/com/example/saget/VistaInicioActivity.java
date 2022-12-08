@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class VistaInicioActivity extends AppCompatActivity {
-    FirebaseAuth auth;
     DatabaseReference referenceUser,referenceTi,referenceAdmin;
     String userCorreo;
     String userID;
@@ -63,7 +62,7 @@ public class VistaInicioActivity extends AppCompatActivity {
                                     i++;
                                 }
                                 if(i==0){
-                                    referenceAdmin.child(userID).child("correo").equalTo(userCorreo).addValueEventListener(new ValueEventListener() {
+                                    referenceAdmin.child(userID).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             int k=0;

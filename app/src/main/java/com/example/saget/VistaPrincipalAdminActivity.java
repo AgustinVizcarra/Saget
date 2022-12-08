@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class VistaPrincipalAdminActivity extends AppCompatActivity {
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     Fragment fragmentInicioAdmin,fragmentEstadisticasAdmin,fragmentUsuarios,fragmentPuntosRecojo,fragmentPrueba;
     @Override
@@ -39,7 +44,18 @@ public class VistaPrincipalAdminActivity extends AppCompatActivity {
                     return false;
             }
         });
+        ImageView btnLogout=findViewById(R.id.isalir);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //deslogueo
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(VistaPrincipalAdminActivity.this, VistaInicioActivity.class));
+                finish();
+            }
+        });
     }
+
     public void loadFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container_admin,fragment);

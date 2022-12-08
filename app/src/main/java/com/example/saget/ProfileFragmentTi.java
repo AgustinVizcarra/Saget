@@ -24,12 +24,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +44,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,16 +54,66 @@ import java.util.ArrayList;
 public class ProfileFragmentTi extends Fragment {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    FirebaseAuth mAuth;
     FirebaseStorage storage;
     StorageReference StorRef;
     String imgurl;
     ArrayList<SlideModel> imageList = new ArrayList<>();
-    ImageSlider imageSlider;
+    ImageView imageTiperf;
     ImageView imageView;
     //static int cont = 1;
 
 
+    int numero = (int)(Math.random()*11351+1);
+    ActivityResultLauncher<Intent> launcherPhotos = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() ==RESULT_OK) {
+                    Uri uri = result.getData().getData();
+                    Intent intent=result.getData();
+                    if(intent!=null){
+                        try {
+                            Bitmap bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),intent.getData());
+                            //set bitmap on image view
+                            imageTiperf.setImageBitmap(bitmap);
+                            StorageReference child = StorRef.child("photo" + numero + ".jpg");
 
+                            child.putFile(uri)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
+                                                    new OnCompleteListener<Uri>() {
+
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Uri> task) {
+                                                            String fileLink = task.getResult().toString();
+                                                            Log.d("url", fileLink);
+                                                            imgurl=fileLink;
+
+                                                        }
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> Log.d("msg-test", "error"))
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Log.d("msg-test", "ruta archivo: " + task.getResult());
+                                        }
+                                    });
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
 
 
 
@@ -108,62 +162,11 @@ public class ProfileFragmentTi extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_ti, container, false);
-
+        mAuth=FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorRef = storageReference.child("PerfilTiFotos");
-        imageView=view.findViewById(R.id.img_test);
-
-        int numero = (int)(Math.random()*11351+1);
-        ActivityResultLauncher<Intent> launcherPhotos = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() ==RESULT_OK) {
-                        Uri uri = result.getData().getData();
-                        Intent intent=result.getData();
-                        if(intent!=null){
-                            try {
-                                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),intent.getData());
-                                //set bitmap on image view
-                                imageView.setImageBitmap(bitmap);
-                                StorageReference child = StorRef.child("photo" + numero + ".jpg");
-
-                                child.putFile(uri)
-                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
-                                                        new OnCompleteListener<Uri>() {
-
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Uri> task) {
-                                                                String fileLink = task.getResult().toString();
-                                                                Log.d("url", fileLink);
-                                                                imgurl=fileLink;
-
-                                                            }
-                                                        });
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> Log.d("msg-test", "error"))
-                                        .addOnCompleteListener(task -> {
-                                            if (task.isSuccessful()) {
-                                                Log.d("msg-test", "ruta archivo: " + task.getResult());
-                                            }
-                                        });
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-
-                        }
-                    } else {
-                        Toast.makeText(getContext(), "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
+        imageTiperf = view.findViewById(R.id.imagenperfilTi);
 
 
 
@@ -171,15 +174,17 @@ public class ProfileFragmentTi extends Fragment {
 
 
 
-        //FirebaseUser currentUser = mAuth.getCurrentUser();
-        //String correoUsuarioPrestamo = currentUser.getEmail();
-        String correoUsuarioPrestamo = "a20181454@pucp.edu.pe";//xd
+
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String correoUsuarioPrestamo = currentUser.getEmail();
+        //String correoUsuarioPrestamo = "a20181454@pucp.edu.pe";//xd
         ImageButton botonCamara = view.findViewById(R.id.imageButtonPerfilTI);
         Button botonActualizar = view.findViewById(R.id.buttonactualizarPerfTI);
         EditText nombresTxT = view.findViewById(R.id.editTextTextNamePerfilTi);
         EditText apellidosTxt = view.findViewById(R.id.editTextTextApellPerfti);
         EditText correoTxt = view.findViewById(R.id.editTextCorrePerfti);
-        imageSlider = view.findViewById(R.id.sliderPerfilTi);
+
 
 
         databaseReference.child("ti").orderByChild("correo").equalTo(correoUsuarioPrestamo).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -211,9 +216,13 @@ public class ProfileFragmentTi extends Fragment {
 
 
 
-                imageList.add(new SlideModel(user.getImgurl(),null));
-                imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP);
-
+                //imageList.add(new SlideModel(user.getImgurl(),null));
+                //imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP);
+                if(user.getFoto() != null){
+                    String ruta = (String) user.getFoto().get(1);
+                    imageTiperf.setBackground(null);
+                    Glide.with(getContext()).load(ruta).override(100,125).into(imageTiperf);
+                }
 
                 botonActualizar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -247,13 +256,15 @@ public class ProfileFragmentTi extends Fragment {
                                 String imgUrlActualizado;
                                 if(imgurl!=null){
                                      imgUrlActualizado=imgurl;
-                                }else{
-                                    imgUrlActualizado=user.getImgurl();
+                                    databaseReference.child("ti").child(keyUsuario).child("nombres").setValue(nombresActualizados);
+                                    databaseReference.child("ti").child(keyUsuario).child("apellidos").setValue(apellidosActualizados);
+                                    HashMap<String, Object> valorcito = new HashMap<>();
+
+                                    valorcito.put("1",imgUrlActualizado);
+
+                                    databaseReference.child("ti").child(keyUsuario).child("foto").setValue(valorcito);
                                 }
 
-                                databaseReference.child("ti").child(keyUsuario).child("nombres").setValue(nombresActualizados);
-                                databaseReference.child("ti").child(keyUsuario).child("apellidos").setValue(apellidosActualizados);
-                                databaseReference.child("ti").child(keyUsuario).child("imgurl").setValue(imgUrlActualizado);
                                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new ProfileFragmentTi()).addToBackStack(null).commit();
 
