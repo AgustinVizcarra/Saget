@@ -23,15 +23,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/textBuscarU"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:background="@color/white"
-            android:queryHint="Ingresar búsqueda"
+            android:background="#1B5E71"
+            app:queryHint="Ingresar el nombre"
+            app:iconifiedByDefault="false"
             android:scrollbarSize="30dp" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingFiltrosU"

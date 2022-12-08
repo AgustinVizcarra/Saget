@@ -23,6 +23,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -31,6 +33,9 @@ import java.util.HashMap;
 
 public class EditarUsuarioTIFragment extends Fragment {
 
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    StorageReference storageReference = firebaseStorage.getReference();
+    StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
     FirebaseDatabase firebaseDatabase;
     String nombres,  apellidos, correo,  password;
 
@@ -156,11 +161,15 @@ public class EditarUsuarioTIFragment extends Fragment {
                         if(dniAlfa){
                             crearDni.setText("Ha ingresado un DNI invalido");
                         }else{
-                            Usuario usuario = new Usuario(nombresText,apellidosText,correoText,"No especifica","Operario",2,sha256(pwdeTxt),"");
+                            HashMap<Integer,String> foto = new HashMap<>();
+                            String url = usuariosProfileStorage.child("defaultProfile.jpg").toString();
+                            foto.put(1,url);
+                            Usuario usuario = new Usuario(nombresText,apellidosText,correoText,"No especifica","Operario",2,sha256(pwdeTxt),url);
                             firebaseDatabase.getReference("ti").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    firebaseDatabase.getReference().child("ti").child(dniTxt).setValue(usuario);
+                                    String key = firebaseDatabase.getReference("ti").push().getKey();
+                                    firebaseDatabase.getReference().child(key).child(dniTxt).setValue(usuario);
                                     Toast.makeText(getActivity().getApplicationContext(),"Se ha añadido al usuario de manera exitosa",Toast.LENGTH_SHORT).show();
                                     onBackPressed();
                                 }

@@ -1,15 +1,20 @@
 package com.example.saget;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
+
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,7 +72,6 @@ public class InicioAdminFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Query query = databaseReference.orderByChild("rol").equalTo("2");
         View view = inflater.inflate(R.layout.fragment_inicio_admin, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPersonalTI);
         txtBuscar = (SearchView) view.findViewById(R.id.textBuscar);
@@ -77,46 +81,22 @@ public class InicioAdminFragment extends Fragment {
         floatingFiltros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(getContext(), filtros);
-                popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_ti, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                     @Override
-                     public boolean onMenuItemClick(MenuItem menuItem) {
-                         switch (menuItem.getItemId()) {
-                             case R.id.opcion1:
-                                 txtBuscar.setQueryHint("Ingresar los nombres del usuario");
-                                 option = "nombres";
-                                 return true;
-                             case R.id.opcion2:
-                                 txtBuscar.setQueryHint("Ingresar los apellidos del usuario");
-                                 option = "apellidos";
-                                 return true;
-                             case R.id.opcion3:
-                                 txtBuscar.setQueryHint("Ingresar el correo del usuario");
-                                 option = "correo";
-                                 return true;
-                         }
-                         return true;
-                     }
-                 }
-                );
-                popupMenu.show();
+                registerForContextMenu(view);
             }
         });
         txtBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                textBuscar(s, option);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 textBuscar(s, option);
-                return false;
+                return true;
             }
         });
-        FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query, Usuario.class).build();
+        FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(databaseReference.child("ti").orderByChild("rol").equalTo("2"), Usuario.class).build();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UsuarioTIAdapter(options);
         recyclerView.setAdapter(adapter);
@@ -135,10 +115,11 @@ public class InicioAdminFragment extends Fragment {
     }
 
     public void textBuscar(String s, String option) {
+        Query defaultQuery = databaseReference.child("ti").startAt(s).endAt(s + "~");
         Query query = databaseReference.child("ti");
         switch (option) {
             case "":
-                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres"), Usuario.class).build();
+                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(defaultQuery, Usuario.class).build();
                 adapter = new UsuarioTIAdapter(options);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
@@ -164,6 +145,34 @@ public class InicioAdminFragment extends Fragment {
             default:
                 Toast.makeText(this.getContext(), "Error en la busqueda con filtros", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        int id = v.getId();
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.filtros_admin_ti,menu);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.opcion1:
+                txtBuscar.setQueryHint("Ingresar el nombre");
+                option = "nombres";
+                return true;
+            case R.id.opcion2:
+                txtBuscar.setQueryHint("Ingresar el apellido");
+                option = "apellidos";
+                return true;
+            case R.id.opcion3:
+                txtBuscar.setQueryHint("Ingresar el correo");
+                option = "correo";
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
     @Override
     public void onStart() {

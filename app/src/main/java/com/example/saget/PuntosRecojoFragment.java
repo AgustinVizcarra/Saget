@@ -45,6 +45,7 @@ public class PuntosRecojoFragment extends Fragment {
         puntosRecojoAdapter = new PuntosRecojoAdapter(options);
         recyclerView.setAdapter(puntosRecojoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        puntosRecojoAdapter.startListening();
         //Fab redirecccion a creacion de un nuevo punto de recojo
         FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAregarPuntoRecojo);
         fabAgregar.setOnClickListener(new View.OnClickListener(){

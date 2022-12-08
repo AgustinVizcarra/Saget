@@ -2,6 +2,7 @@ package com.example.saget;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -54,9 +54,10 @@ public class UsuariosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Query query = databaseReference.orderByChild("rol").equalTo(1);
+        Query query = databaseReference.child("usuarios").orderByChild("rol").equalTo(1);
         View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
         txtBuscar = (SearchView) view.findViewById(R.id.textBuscarU);
+        txtBuscar.clearFocus();
         option = "";
         //Filtrado
         filtrosUsuarios = (FloatingActionButton) view.findViewById(R.id.floatingFiltrosU);
@@ -70,16 +71,16 @@ public class UsuariosFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()){
                             case R.id.opcionU1:
-                                txtBuscar.setQueryHint("Ingresar el cargo usuario");
-                                option="nombres";
+                                txtBuscar.setQueryHint("Ingresar el cargo");
+                                option="cargo";
                                 return true;
                             case R.id.opcionU2:
-                                txtBuscar.setQueryHint("Ingresar los nombres del usuario");
-                                option="apellidos";
+                                txtBuscar.setQueryHint("Ingresar los nombres");
+                                option="nombres";
                                 return true;
                             case R.id.opcionU3:
-                                txtBuscar.setQueryHint("Ingresar el apellidos del usuario");
-                                option="correo";
+                                txtBuscar.setQueryHint("Ingresar el apellidos");
+                                option="apellidos";
                                 return true;
                         }
                         return true;
@@ -93,28 +94,31 @@ public class UsuariosFragment extends Fragment {
         txtBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                textBuscar(s,option);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 textBuscar(s,option);
-                return false;
+                return true;
             }
         });
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewUsuario);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
         adapter = new UsuarioAdapter(options);
+        adapter.startListening();
         recyclerView.setAdapter(adapter);
         return view;
     }
     public void textBuscar(String s,String option){
+        Log.d("msg received",s);
+        Log.d("msg options",option);
+        Query deffaultQuery = databaseReference.child("usuario").orderByChild("nombres").startAt(s).endAt(s+"~");
         Query query = databaseReference.child("usuario");
         switch (option){
             case "":
-                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
+                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(deffaultQuery,Usuario.class).build();
                 adapter = new UsuarioAdapter(options);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
