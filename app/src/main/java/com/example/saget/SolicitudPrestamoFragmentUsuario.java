@@ -47,6 +47,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 
@@ -228,8 +231,10 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 if(snapshot != null){
                                                     String keyUsuario = snapshot.getKey();
+                                                    DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, HH:mm:ss ");
 
-                                                    SolicitudDePrestamo solicitudDePrestamo = new SolicitudDePrestamo(keyUsuario,key,tiempoPrestamo,curso,programas,motivo,detalles,idFoto,"En trámite",null);
+                                                    String date = dateFormat.format(new Date());
+                                                    SolicitudDePrestamo solicitudDePrestamo = new SolicitudDePrestamo(keyUsuario,key,tiempoPrestamo,curso,programas,motivo,detalles,idFoto,"En trámite",null,date);
                                                     databaseReference.child("prestamos").push().setValue(solicitudDePrestamo);
 
                                                     Toast.makeText(getActivity(),"Reserva exitosa",Toast.LENGTH_SHORT).show();
