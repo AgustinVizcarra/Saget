@@ -23,11 +23,11 @@
             app:srcCompat="@drawable/ic_notifications" />
 
         <ImageView
-            android:id="@+id/ic_3puntos_ti"
+            android:id="@+id/ic_logout_ti"
             android:layout_width="38dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            app:srcCompat="@drawable/ic_three_dots" />
+            app:srcCompat="@drawable/iconologout" />
 
     </RelativeLayout>
 </RelativeLayout>

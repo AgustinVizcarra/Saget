@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class VistaPrincipalTIActivity extends AppCompatActivity {
 
@@ -21,6 +27,7 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_principal_tiactivity);
         BottomNavigationView bottomNavigationViewTI = findViewById(R.id.bottom_navigation_ti);
+
         loadFragment(fragmentInicioTI);
         bottomNavigationViewTI.setOnItemSelectedListener(item ->{
             switch(item.getItemId()){
@@ -37,6 +44,18 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
                 return false;
             }
         });
+        ImageView btnLogout=findViewById(R.id.ic_logout_ti);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //deslogueo
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(VistaPrincipalTIActivity.this, VistaInicioActivity.class));
+                finish();
+            }
+        });
+
+
     }
 
     public void loadFragment(Fragment fragment){
@@ -44,5 +63,7 @@ public class VistaPrincipalTIActivity extends AppCompatActivity {
         transaction.replace(R.id.frame_container_TI,fragment);
         transaction.commit();
     }
+
+
 
 }
