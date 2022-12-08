@@ -115,11 +115,16 @@ public class InicioAdminFragment extends Fragment {
     }
 
     public void textBuscar(String s, String option) {
-        Query defaultQuery = databaseReference.child("ti").startAt(s).endAt(s + "~");
-        Query query = databaseReference.child("ti");
+        Query query =databaseReference.child("ti");
+        if(option.equalsIgnoreCase("") && s.equalsIgnoreCase("")){
+            query = databaseReference.child("ti");
+        }
+        if(option.equalsIgnoreCase("") && !s.equalsIgnoreCase("")){
+            query = databaseReference.child("ti").orderByChild("nombres").startAt(s).endAt(s + "~");
+        }
         switch (option) {
             case "":
-                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(defaultQuery, Usuario.class).build();
+                FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query, Usuario.class).build();
                 adapter = new UsuarioTIAdapter(options);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
