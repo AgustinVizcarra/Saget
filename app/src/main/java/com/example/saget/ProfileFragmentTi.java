@@ -64,7 +64,56 @@ public class ProfileFragmentTi extends Fragment {
     //static int cont = 1;
 
 
+    int numero = (int)(Math.random()*11351+1);
+    ActivityResultLauncher<Intent> launcherPhotos = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() ==RESULT_OK) {
+                    Uri uri = result.getData().getData();
+                    Intent intent=result.getData();
+                    if(intent!=null){
+                        try {
+                            Bitmap bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),intent.getData());
+                            //set bitmap on image view
+                            imageTiperf.setImageBitmap(bitmap);
+                            StorageReference child = StorRef.child("photo" + numero + ".jpg");
 
+                            child.putFile(uri)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
+                                                    new OnCompleteListener<Uri>() {
+
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Uri> task) {
+                                                            String fileLink = task.getResult().toString();
+                                                            Log.d("url", fileLink);
+                                                            imgurl=fileLink;
+
+                                                        }
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> Log.d("msg-test", "error"))
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Log.d("msg-test", "ruta archivo: " + task.getResult());
+                                        }
+                                    });
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
 
 
 
@@ -119,56 +168,7 @@ public class ProfileFragmentTi extends Fragment {
         StorRef = storageReference.child("PerfilTiFotos");
         imageTiperf = view.findViewById(R.id.imagenperfilTi);
 
-        int numero = (int)(Math.random()*11351+1);
-        ActivityResultLauncher<Intent> launcherPhotos = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() ==RESULT_OK) {
-                        Uri uri = result.getData().getData();
-                        Intent intent=result.getData();
-                        if(intent!=null){
-                            try {
-                                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),intent.getData());
-                                //set bitmap on image view
-                                imageTiperf.setImageBitmap(bitmap);
-                                StorageReference child = StorRef.child("photo" + numero + ".jpg");
 
-                                child.putFile(uri)
-                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
-                                                        new OnCompleteListener<Uri>() {
-
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Uri> task) {
-                                                                String fileLink = task.getResult().toString();
-                                                                Log.d("url", fileLink);
-                                                                imgurl=fileLink;
-
-                                                            }
-                                                        });
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> Log.d("msg-test", "error"))
-                                        .addOnCompleteListener(task -> {
-                                            if (task.isSuccessful()) {
-                                                Log.d("msg-test", "ruta archivo: " + task.getResult());
-                                            }
-                                        });
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-
-                        }
-                    } else {
-                        Toast.makeText(getContext(), "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
 
 
 
@@ -256,18 +256,14 @@ public class ProfileFragmentTi extends Fragment {
                                 String imgUrlActualizado;
                                 if(imgurl!=null){
                                      imgUrlActualizado=imgurl;
-                                }else{
-                                    imgUrlActualizado=user.getImgurl();
+                                    databaseReference.child("ti").child(keyUsuario).child("nombres").setValue(nombresActualizados);
+                                    databaseReference.child("ti").child(keyUsuario).child("apellidos").setValue(apellidosActualizados);
+                                    HashMap<String, Object> valorcito = new HashMap<>();
+
+                                    valorcito.put("1",imgUrlActualizado);
+
+                                    databaseReference.child("ti").child(keyUsuario).child("foto").setValue(valorcito);
                                 }
-
-                                databaseReference.child("ti").child(keyUsuario).child("nombres").setValue(nombresActualizados);
-                                databaseReference.child("ti").child(keyUsuario).child("apellidos").setValue(apellidosActualizados);
-                                HashMap<String, Object> valorcito = new HashMap<>();
-
-                                valorcito.put("1",imgurl);
-
-                                databaseReference.child("ti").child(keyUsuario).child("foto").setValue(valorcito);
-
 
                                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new ProfileFragmentTi()).addToBackStack(null).commit();
