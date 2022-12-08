@@ -13,10 +13,19 @@ public class Usuario implements Serializable {
     private String cargo;
     private int rol;
     private String password;
+    private String DNI;
     private ArrayList<Object> foto;
 
     public String getImgurl() {
         return imgurl;
+    }
+
+    public String getDNI() {
+        return DNI;
+    }
+
+    public void setDNI(String DNI) {
+        this.DNI = DNI;
     }
 
     public ArrayList<Object> getFoto() {
@@ -38,6 +47,17 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
+    public Usuario(String nombres, String apellidos, String correo, String sexo, String cargo, int rol, String password, String DNI, ArrayList<Object> foto) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.sexo = sexo;
+        this.cargo = cargo;
+        this.rol = rol;
+        this.password = password;
+        this.DNI = DNI;
+        this.foto = foto;
+    }
 
     public void setImgurl(String imgurl) {
         this.imgurl = imgurl;

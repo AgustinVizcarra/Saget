@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -15,6 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.saget.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +33,7 @@ import java.util.List;
 
 public class RegistroActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,36 +107,11 @@ public class RegistroActivity extends AppCompatActivity {
                 if(correoHelper.contains("@")){
                     String[] partesCorreo = correoHelper.split("@");
 
-                    if(partesCorreo[0].length() != 9){
+                    if(partesCorreo[0].length() == 0 || partesCorreo[0].length() == 1){
                         correoText.setError("Ingrese un correo PUCP valido");
                         guardar = false;
 
                     }
-                /*else{
-                    if(!String.valueOf(partesCorreo[0].charAt(0)).equals("a")){
-                        correoText.setError("Ingrese un correo PUCP valido");
-                        guardar = false;
-
-                    }else{
-                        try {
-                            int numeros = Integer.parseInt(partesCorreo[0].substring(1,8));
-                            int anho = Integer.parseInt(partesCorreo[0].substring(1,4));
-                            Calendar cal= Calendar.getInstance();
-                            int year= cal.get(Calendar.YEAR);
-
-                            if(anho<1917 || anho>year){
-                                correoText.setError("Ingrese un correo PUCP valido");
-                                guardar = false;
-                            }
-
-                        }catch (NumberFormatException e){
-                            correoText.setError("Ingrese un correo PUCP valido");
-                            guardar = false;
-                        }
-
-                    }
-
-                }*/
 
                     if (partesCorreo[1].equals("pucp.edu.pe")){
                         correo = correoHelper;
@@ -192,44 +173,68 @@ public class RegistroActivity extends AppCompatActivity {
                 String finalCorreo = correo;
                 String finalCargo = cargo;
                 String finalSexo = sexo;
-                databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
+                String finalContrasena = sha256(contrasena);
+
+                firebaseAuth.createUserWithEmailAndPassword(finalCorreo,finalContrasena).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue() == null){
-                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,sha256(contrasena),"");
-                            databaseReference.child("usuario").child(DNI).setValue(usuario);
-                            Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
-                        }else{
-                            boolean existe = false;
-                            for(DataSnapshot children : snapshot.getChildren()){
-                                if(children.getKey().equalsIgnoreCase(DNI)){
-                                    existe = true;
-                                    Toast.makeText(RegistroActivity.this,"DNI ya existe!",Toast.LENGTH_SHORT).show();
-                                    break;
-                                }else{
-                                    if(children.getValue(Usuario.class).getCorreo().equals(finalCorreo)){
-                                        existe = true;
-                                        Toast.makeText(RegistroActivity.this,"Correo ya existe!",Toast.LENGTH_SHORT).show();
-                                        break;
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            String uid = firebaseAuth.getUid();
+
+                            databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    if(snapshot == null){
+                                        System.out.println("ES NULO");
+                                        Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,finalContrasena,DNI,null);
+                                        databaseReference.child("usuario").child(uid).setValue(usuario);
+                                        Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
+
+                                        Intent i = new Intent(RegistroActivity.this,VistaInicioActivity.class);
+                                        startActivity(i);
+                                    }else{
+                                        boolean existe = false;
+                                        for(DataSnapshot children2 : snapshot.getChildren()){
+                                            Usuario user2 = children2.getValue(Usuario.class);
+                                            if(user2.getDNI().equalsIgnoreCase(DNI)){
+                                                existe = true;
+                                                Toast.makeText(RegistroActivity.this,"DNI ya existe!",Toast.LENGTH_SHORT).show();
+                                                break;
+                                            }else{
+                                                if(user2.getCorreo().equals(finalCorreo)){
+                                                    existe = true;
+                                                    Toast.makeText(RegistroActivity.this,"Correo ya existe!",Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if(!existe){
+                                            Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,finalContrasena,DNI,null);
+                                            databaseReference.child("usuario").child(uid).setValue(usuario);
+                                            Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
+
+                                            Intent i = new Intent(RegistroActivity.this,VistaInicioActivity.class);
+                                            startActivity(i);
+                                        }
+
+
                                     }
+
                                 }
-                            }
-                            if(!existe){
-                                Usuario usuario = new Usuario(nombres,apellidos, finalCorreo, finalSexo, finalCargo,1,sha256(contrasena),"");
-                                databaseReference.child("usuario").child(DNI).setValue(usuario);
-                                Toast.makeText(RegistroActivity.this,"Cuenta creada exitosamente!",Toast.LENGTH_SHORT).show();
-                            }
 
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(RegistroActivity.this,"An error has ocurred!",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }else{
+                            Toast.makeText(RegistroActivity.this,"An error has ocurred!",Toast.LENGTH_SHORT).show();
                         }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(RegistroActivity.this,"An error has ocurred!",Toast.LENGTH_SHORT).show();
                     }
                 });
-
 
             }else{
                 Toast.makeText(this,"Campo(s) incorrecto(s)!",Toast.LENGTH_SHORT).show();
