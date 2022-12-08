@@ -20,10 +20,9 @@ public class VistaInicioActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void redireccionLogueo(View view){
-        /*
-        Intent i = new Intent(this,LogueoActivity.class);
+
+        Intent i = new Intent(this,LoginActivity.class);
         startActivity(i);
-         */
-        Toast.makeText(this,"Este método aún no esta implementado",Toast.LENGTH_LONG).show();
+
     }
 }

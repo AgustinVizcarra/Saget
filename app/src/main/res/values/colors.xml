@@ -13,4 +13,7 @@
     <color name="red_solicitud">#FF0505</color>
     <color name="yellow_solicitud">#FAFF00</color>
     <color name="green_solicitud">#24FF00</color>
+    <color name="input_color_login">#0BA6FE</color>
+    <color name="olvi_password">#1739DF</color>
+
 </resources>
