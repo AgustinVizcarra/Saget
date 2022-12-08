@@ -54,14 +54,6 @@ public class InicioAdminFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //obtengo todos los archivos
-        /**
-         usuariosProfileStorage.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-        @Override public void onSuccess(ListResult listResult) {
-        for (StorageReference profileFile : listResult.getItems()){
-        filenames.add(profileFile.getName());
-        }
-        }
-        });**/
         usuariosProfileStorage.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {

@@ -10,14 +10,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class VistaPrincipalAdminActivity extends AppCompatActivity {
 
-    Fragment fragmentInicioAdmin,fragmentEstadisticas,fragmentUsuarios,fragmentPuntosRecojo;
+    Fragment fragmentInicioAdmin,fragmentEstadisticasAdmin,fragmentUsuarios,fragmentPuntosRecojo,fragmentPrueba;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_principal_admin);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_admin);
         fragmentInicioAdmin = new InicioAdminFragment();
-        fragmentEstadisticas = new EstadisticasFragment();
+        fragmentEstadisticasAdmin = new EstadisticasAdminFragment();
         fragmentUsuarios = new UsuariosFragment();
         fragmentPuntosRecojo = new PuntosRecojoFragment();
         loadFragment(fragmentInicioAdmin);
@@ -27,7 +27,7 @@ public class VistaPrincipalAdminActivity extends AppCompatActivity {
                     loadFragment(fragmentInicioAdmin);
                     return true;
                 case R.id.estadisticas_admin:
-                    loadFragment(fragmentEstadisticas);
+                    loadFragment(fragmentEstadisticasAdmin);
                     return true;
                 case R.id.users_admin:
                     loadFragment(fragmentUsuarios);
