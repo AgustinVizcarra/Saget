@@ -166,32 +166,14 @@ public class InicioAdminFragment extends Fragment {
                 Toast.makeText(this.getContext(), "Error en la busqueda con filtros", Toast.LENGTH_LONG).show();
         }
     }
-
-    public void showPopup(View v) {
-        PopupMenu popupMenu = new PopupMenu(v.getContext(), filtros);
-        popupMenu.getMenuInflater().inflate(R.menu.filtros_admin_ti, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                                 @Override
-                                                 public boolean onMenuItemClick(MenuItem menuItem) {
-                                                     switch (menuItem.getItemId()) {
-                                                         case R.id.opcion1:
-                                                             txtBuscar.setQueryHint("Ingresar los nombres del usuario");
-                                                             option = "nombres";
-                                                             return true;
-                                                         case R.id.opcion2:
-                                                             txtBuscar.setQueryHint("Ingresar los apellidos del usuario");
-                                                             option = "apellidos";
-                                                             return true;
-                                                         case R.id.opcion3:
-                                                             txtBuscar.setQueryHint("Ingresar el correo del usuario");
-                                                             option = "correo";
-                                                             return true;
-                                                         default:
-                                                             return false;
-                                                     }
-                                                 }
-                                             }
-        );
-        popupMenu.show();
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        adapter.stopListening();
     }
 }

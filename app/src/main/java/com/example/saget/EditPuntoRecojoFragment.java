@@ -67,12 +67,12 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
 
     public static EditPuntoRecojoFragment newInstance(String param1, String param2) {
         EditPuntoRecojoFragment fragment = new EditPuntoRecojoFragment();
-
         return fragment;
     }
 
     ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
+            Toast.makeText(getContext(), "Se añadio la imagen exitosamente!", Toast.LENGTH_LONG).show();
             imageUri = result.getData().getData();
         }
     });
@@ -87,8 +87,7 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_punto_recojo, container, false);
         coordenadasEdit = (EditText) view.findViewById(R.id.ediTextCambiarCoordenadas);
@@ -126,31 +125,32 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                     } else {
                         //Quiere decir que tendrá nueva foto
                         int numero = (int) (Math.random() * 11351 + 1);
-                        StorageReference storageReference = StorRef.child("puntoRecojo" + numero + imageUri.toString().substring(imageUri.toString().lastIndexOf(".")));
+                        String[] path = imageUri.toString().split("/");
+                        String filename = path[path.length-1];
+                        StorageReference storageReference = StorRef.child("puntoRecojo" + numero + filename);
                         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Uri> task) {
-                                                fileLink = task.getResult().toString();
-                                            }
-                                        });
-                                    }
-
-                                    ;
-                                }).addOnFailureListener(e -> Log.d("msg-test", "error"))
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        Log.d("msg-test", "ruta Foto: " + task.getResult());
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        fileLink = task.getResult().toString();
+                                        //Actualizo
+                                        databaseReference.child(puntoRecojo.getKey()).child("descripcion").setValue(descripcionEdit.getText().toString());
+                                        databaseReference.child(puntoRecojo.getKey()).child("coordenadas").setValue(coordenadasEdit.getText().toString());
+                                        databaseReference.child(puntoRecojo.getKey()).child("imagenes").setValue(fileLink);
+                                        Toast.makeText(getContext(), "Punto de recojo actualizado exitosamente!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                        //Actualizo
-                        databaseReference.child(puntoRecojo.getKey()).child("descripcion").setValue(descripcionEdit.getText().toString());
-                        databaseReference.child(puntoRecojo.getKey()).child("coordenadas").setValue(coordenadasEdit.getText().toString());
-                        databaseReference.child(puntoRecojo.getKey()).child("imagenes").setValue(fileLink);
+                            }
+
+                            ;
+                        }).addOnFailureListener(e -> Log.d("msg-test", "error")).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("msg-test", "ruta Foto: " + task.getResult());
+                            }
+                        });
                     }
-                    Toast.makeText(getContext(), "Punto de recojo actualizado exitosamente!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

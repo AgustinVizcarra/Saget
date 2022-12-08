@@ -40,20 +40,18 @@ import java.util.Locale;
 
 public class EstadisticasAdminFragment extends Fragment {
 
-    List<EquipoCompleto> equipos = new ArrayList<>();
-    List<SolicitudDePrestamo> prestamos = new ArrayList<>();
-    HashMap<EquipoCompleto,List<SolicitudDePrestamo>> asociacion = new HashMap<>();
-    HashMap<String,Double> conteoPorEquipoPrestado = new HashMap<>();
-    HashMap<String, Integer> conteoPorMarca = new HashMap<>();
+    List<EquipoCompleto> equipos;
+    List<SolicitudDePrestamo> prestamos;
+    HashMap<EquipoCompleto,List<SolicitudDePrestamo>> asociacion;
+    HashMap<String,Double> conteoPorEquipoPrestado;
+    HashMap<String, Integer> conteoPorMarca;
     EquipoCompleto masPrestado;
-    List<String> marcas = new ArrayList<>();
-    int cuentaTotal = 0;
+    List<String> marcas;
+    int cuentaTotal;
 
     public EstadisticasAdminFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +61,13 @@ public class EstadisticasAdminFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        equipos = new ArrayList<>();
+        prestamos = new ArrayList<>();
+        asociacion = new HashMap<>();
+        conteoPorEquipoPrestado = new HashMap<>();
+        conteoPorMarca = new HashMap<>();
+        marcas = new ArrayList<>();
+        cuentaTotal = 0;
         View view = inflater.inflate(R.layout.fragment_estadisticas_admin, container, false);
         FirebaseDatabase.getInstance().getReference().child("equipo").orderByChild("disponibilidad").equalTo(1).addValueEventListener(new ValueEventListener() {
             @Override
@@ -269,6 +274,8 @@ public class EstadisticasAdminFragment extends Fragment {
                             }
                         }
                         //Finalmente rellenamos al equipo mas prestado
+                        Log.d("Longitudes",String.valueOf(equipos.size()));
+                        Log.d("Prestamos",String.valueOf(prestamos.size()));
                         TextView nombreEquipo = (TextView) view.findViewById(R.id.nombreMasPrestadoRellenar);
                         nombreEquipo.setText(masPrestado.getEquipo().getNombre());
                         TextView stockEquipo = (TextView) view.findViewById(R.id.stockMasPrestadoRellenar);

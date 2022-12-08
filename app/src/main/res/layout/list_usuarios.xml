@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardviewUsuarios"
+    android:id="@+id/cardviewPersonalTi"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:animateLayoutChanges="true"
-    android:background="#FFFFFF"
     app:cardCornerRadius="25dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical">
@@ -27,22 +26,24 @@
                 android:layout_height="100dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/round_images_usuario"
                 android:scaleType="centerCrop" />
 
             <RelativeLayout
                 android:id="@+id/containerInfoUsuario"
-                android:layout_width="265dp"
-                android:layout_height="265dp"
-                android:layout_alignTop="@+id/iconImageViewUsuario"
+                android:layout_width="253dp"
+                android:layout_height="116dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="-4dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="18dp"
                 android:layout_toEndOf="@+id/iconImageViewUsuario"
                 android:background="@drawable/round_device_usuario">
 
@@ -62,7 +63,8 @@
                         android:layout_marginBottom="1dp"
                         android:text="Nombre:"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/apellidoUsuario"
                         android:layout_width="match_parent"
@@ -70,7 +72,8 @@
                         android:layout_marginTop="1dp"
                         android:text="Apellidos:"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/cargoUsuario"
                         android:layout_width="match_parent"
@@ -78,7 +81,8 @@
                         android:layout_marginBottom="1dp"
                         android:text="Cargo:"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/correoUsuario"
                         android:layout_width="match_parent"
@@ -86,16 +90,15 @@
                         android:layout_marginTop="1dp"
                         android:text="Correo:"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/sexoUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
                         android:text="Sexo:"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -105,7 +108,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="2dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="1dp"
                     android:layout_toEndOf="@+id/linerLayoutUsuario"
                     android:layout_toRightOf="@+id/linerLayoutUsuario"
                     android:orientation="vertical">
@@ -116,21 +119,24 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/apellidoU"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/cargoU"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/correoU"
                         android:layout_width="match_parent"
@@ -138,7 +144,8 @@
                         android:layout_marginTop="1dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/sexoU"
                         android:layout_width="match_parent"
@@ -146,7 +153,7 @@
                         android:layout_marginTop="1dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

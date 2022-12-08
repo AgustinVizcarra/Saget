@@ -30,11 +30,9 @@ public class UsuarioAdapter extends FirebaseRecyclerAdapter<Usuario,UsuarioAdapt
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference = firebaseStorage.getReference();
     StorageReference usuariosProfileStorage = storageReference.child("Usuarios");
-    List<String> filenames;
 
-    public UsuarioAdapter(@NonNull FirebaseRecyclerOptions<Usuario> options, List<String> filenames){
+    public UsuarioAdapter(@NonNull FirebaseRecyclerOptions<Usuario> options){
         super(options);
-        this.filenames = filenames;
     }
 
     @Override
@@ -44,33 +42,12 @@ public class UsuarioAdapter extends FirebaseRecyclerAdapter<Usuario,UsuarioAdapt
         holder.correo.setText(model.getCorreo());
         holder.sexo.setText(model.getSexo());
         holder.cargo.setText(model.getCargo());
-        databaseReference.child("usuario").addListenerForSingleValueEvent(new ValueEventListener() {
-            String uri = "";
-            boolean found = false;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot userObject: snapshot.getChildren()){
-                    boolean jpg = filenames.contains(userObject.getKey()+"."+"jpg");
-                    boolean png  = filenames.contains(userObject.getKey()+"."+"png");
-                    if(jpg || png){
-                        //Si se encuentra dentro de la lista
-                        uri = jpg ? userObject.getKey()+"."+"jpg":userObject.getKey()+"."+"png";
-                        Glide.with(holder.imagenUsuario.getContext()).load(usuariosProfileStorage.child(uri)).override(100,100).into(holder.imagenUsuario);
-                        found = true;
-                        break;
-                    }
-                }
-                //si en caso no lo haya encontrado
-                if(!found) {
-                    uri = "defaultProfile.jpg";
-                    Glide.with(holder.imagenUsuario.getContext()).load(usuariosProfileStorage.child(uri)).override(100,100).into(holder.imagenUsuario);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        if(model.getFoto()!=null){
+            String url = (String) model.getFoto().get(1);
+            Glide.with(holder.imagenUsuario.getContext()).load(url).override(100,100).into(holder.imagenUsuario);
+        }else{
+            Glide.with(holder.imagenUsuario.getContext()).load(usuariosProfileStorage.child("defaultProfile.jpg")).override(100,100).into(holder.imagenUsuario);
+        }
     }
 
     @NonNull

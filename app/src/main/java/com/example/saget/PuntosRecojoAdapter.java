@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,8 +100,8 @@ public class PuntosRecojoAdapter extends FirebaseRecyclerAdapter<PuntoRecojo,Pun
         TextView descripcion;
         TextView coordenadas;
         ImageView imagenPuntoRecojo;
-        Button btnEditarPRecojo;
-        Button btnEliminarPRecojo;
+        ImageButton btnEditarPRecojo;
+        ImageButton btnEliminarPRecojo;
         public PuntosRecojoViewHolder(@NonNull View itemView){
             super(itemView);
             descripcion = itemView.findViewById(R.id.descripcionPRecojo);
