@@ -12,10 +12,7 @@ public class SolicitudDePrestamo {
     private String estado;
     private String observacion;
 
-    public SolicitudDePrestamo() {
-    }
-
-    public SolicitudDePrestamo(String usuario, String equipo, String tiempoPrestamo, String curso, String programas, String motivo, String detalles, String foto, String estado, String observacion) {
+    public SolicitudDePrestamo(String usuario, String equipo, String tiempoPrestamo, String curso, String programas, String motivo, String detalles, String foto, String estado, String observacion, String fechasoli) {
         this.usuario = usuario;
         this.equipo = equipo;
         this.tiempoPrestamo = tiempoPrestamo;
@@ -26,7 +23,22 @@ public class SolicitudDePrestamo {
         Foto = foto;
         this.estado = estado;
         this.observacion = observacion;
+        this.fechasoli = fechasoli;
     }
+
+    public String getFechasoli() {
+        return fechasoli;
+    }
+
+    public void setFechasoli(String fechasoli) {
+        this.fechasoli = fechasoli;
+    }
+
+    private String fechasoli;
+    public SolicitudDePrestamo() {
+    }
+
+
 
     public String getObservacion() {
         return observacion;

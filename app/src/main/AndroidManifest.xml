@@ -4,13 +4,17 @@
     package="com.example.saget">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,42 +26,58 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Saget"
         tools:targetApi="31">
-        <meta-data android:name="com.google.android.geo.API_KEY"
-                    android:value="AIzaSyAa4IgLl97qutHgUgkUrnTzQmjvnsKZ1yw">
-        </meta-data>
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBMiBcJkDF5v1M9qAHfv_8NTc0uCNQ8j6c" />
+
         <activity
-            android:name=".VistaPrincipalAdminActivity"
-            android:theme="@style/Theme.Saget.Registro"
-            android:exported="true">
+            android:name=".VistaPrincipalTIActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Saget.Registro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".VistaPrincipalAdminActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Saget.Registro"></activity>
+        <activity
             android:name=".RegistroActivity"
             android:exported="false"
-            android:theme="@style/Theme.Saget.Registro"/>
+            android:theme="@style/Theme.Saget.Registro" />
         <activity
             android:name=".InicioActivity"
             android:exported="false"
-            android:theme="@style/Theme.Saget.Registro"/>
+            android:theme="@style/Theme.Saget.Registro" />
         <activity
             android:name=".VistaInicioActivity"
             android:exported="false"
-            android:theme="@style/Theme.Saget.Registro">
-        </activity>
+            android:theme="@style/Theme.Saget.Registro"></activity>
         <activity
             android:name=".VistaPrincipalUsuarioActivity"
-            android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.Saget.Registro">
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.Saget.Registro"
+            android:windowSoftInputMode="adjustPan"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

@@ -44,6 +44,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -237,8 +240,10 @@ public class UpdateSolicitudFragmentUsuario extends Fragment {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             SolicitudDePrestamo solicitudDePrestamo = snapshot.getValue(SolicitudDePrestamo.class);
                                             if(solicitudDePrestamo.getEstado().equals("En trámite")){
+                                                DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, HH:mm:ss ");
 
-                                                SolicitudDePrestamo solicitudDePrestamo2 = new SolicitudDePrestamo(keyUsuario,keyEquipo,tiempoPrestamo,curso,programas,motivo,detalles,solicitudUsuario.getFoto(),"En trámite",null);
+                                                String date = dateFormat.format(new Date());
+                                                SolicitudDePrestamo solicitudDePrestamo2 = new SolicitudDePrestamo(keyUsuario,keyEquipo,tiempoPrestamo,curso,programas,motivo,detalles,solicitudUsuario.getFoto(),"En trámite",null,date);
                                                 databaseReference.child("prestamos").child(solicitudID).setValue(solicitudDePrestamo2);
                                                 Toast.makeText(getActivity(),"Si ha actualizado su solicitud",Toast.LENGTH_SHORT).show();
 

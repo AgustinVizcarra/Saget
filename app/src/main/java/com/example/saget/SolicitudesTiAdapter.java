@@ -1,5 +1,8 @@
 package com.example.saget;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,8 +29,7 @@ public class SolicitudesTiAdapter extends FirebaseRecyclerAdapter<SolicitudDePre
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     String keySoliTi;
-
-
+    String keySoliTi2;
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
      * {@link FirebaseRecyclerOptions} for configuration options.
@@ -49,7 +51,11 @@ public class SolicitudesTiAdapter extends FirebaseRecyclerAdapter<SolicitudDePre
     @Override
     protected void onBindViewHolder(@NonNull SolicitudesTiAdapter.myViewHolder holder, int position, @NonNull SolicitudDePrestamo solicitudDePrestamo) {
 
+        //falta considerar fecha de solicitud en usuario
+        holder.fechaSolic.setText(solicitudDePrestamo.getFechasoli());
 
+        holder.equipoSoli.setText(solicitudDePrestamo.getEquipo());
+        holder.tiempoPrestamoSoli.setText(solicitudDePrestamo.getTiempoPrestamo());
 
         databaseReference.child("prestamos").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -59,34 +65,22 @@ public class SolicitudesTiAdapter extends FirebaseRecyclerAdapter<SolicitudDePre
                     SolicitudDePrestamo solicitudDePrestamo1 = children.getValue(SolicitudDePrestamo.class);
                     boolean igualUsuario = solicitudDePrestamo1.getUsuario().equals(solicitudDePrestamo.getUsuario());
                     boolean igualFoto = solicitudDePrestamo1.getFoto().equals(solicitudDePrestamo.getFoto());
-                    boolean igualObservacion = solicitudDePrestamo1.getObservacion().equals(solicitudDePrestamo.getObservacion());
+                    boolean igualEquipo = solicitudDePrestamo1.getEquipo().equals(solicitudDePrestamo.getEquipo());
                     boolean igualMotivo = solicitudDePrestamo1.getMotivo().equals(solicitudDePrestamo.getMotivo());
                     boolean igualCurso=solicitudDePrestamo1.getCurso().equals(solicitudDePrestamo.getCurso());
                     boolean igualDetalles=solicitudDePrestamo1.getDetalles().equals(solicitudDePrestamo.getDetalles());
                     boolean igualProgramas=solicitudDePrestamo1.getProgramas().equals(solicitudDePrestamo.getProgramas());
                     boolean igualTiempoPres=solicitudDePrestamo1.getTiempoPrestamo().equals(solicitudDePrestamo.getTiempoPrestamo());
-                    if(igualUsuario && igualFoto && igualObservacion && igualMotivo && igualCurso && igualDetalles && igualProgramas && igualTiempoPres){
+                    if(igualUsuario && igualFoto && igualEquipo && igualMotivo && igualCurso && igualDetalles && igualProgramas && igualTiempoPres){
                         keySoliTi = children.getKey();
                         break;
                     }
 
                 }
                 holder.numeroSoli.setText(keySoliTi);
-                //falta considerar fecha de solicitud en usuario
-                holder.fechaSolic.setText("");
 
-                holder.equipoSoli.setText(solicitudDePrestamo.getEquipo());
-                holder.tiempoPrestamoSoli.setText(solicitudDePrestamo.getTiempoPrestamo());
 
-                //btn ver mas
-                holder.btn_vermassoli.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new DetallesSolicitudTiFragment(keySoliTi)).addToBackStack(null).commit();
-                        Log.d("msglist",keySoliTi);
-                    }
-                });
+
 
 
             }
@@ -96,7 +90,45 @@ public class SolicitudesTiAdapter extends FirebaseRecyclerAdapter<SolicitudDePre
             }
         });
 
+        //btn ver mas
+        holder.btn_vermassoli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.child("prestamos").addListenerForSingleValueEvent(new ValueEventListener() {
 
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot children : snapshot.getChildren()){
+                            SolicitudDePrestamo solicitudDePrestamo1 = children.getValue(SolicitudDePrestamo.class);
+                            boolean igualUsuario = solicitudDePrestamo1.getUsuario().equals(solicitudDePrestamo.getUsuario());
+                            boolean igualFoto = solicitudDePrestamo1.getFoto().equals(solicitudDePrestamo.getFoto());
+                            boolean igualEquipo = solicitudDePrestamo1.getEquipo().equals(solicitudDePrestamo.getEquipo());
+                            boolean igualMotivo = solicitudDePrestamo1.getMotivo().equals(solicitudDePrestamo.getMotivo());
+                            boolean igualCurso=solicitudDePrestamo1.getCurso().equals(solicitudDePrestamo.getCurso());
+                            boolean igualDetalles=solicitudDePrestamo1.getDetalles().equals(solicitudDePrestamo.getDetalles());
+                            boolean igualProgramas=solicitudDePrestamo1.getProgramas().equals(solicitudDePrestamo.getProgramas());
+                            boolean igualTiempoPres=solicitudDePrestamo1.getTiempoPrestamo().equals(solicitudDePrestamo.getTiempoPrestamo());
+                            if(igualUsuario && igualFoto && igualEquipo && igualMotivo && igualCurso && igualDetalles && igualProgramas && igualTiempoPres){
+                                keySoliTi2 = children.getKey();
+                                break;
+                            }
+
+                        }
+                        AppCompatActivity activity = (AppCompatActivity) unwrap(view.getContext());
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new DetallesSolicitudTiFragment(keySoliTi2)).addToBackStack(null).commit();
+                        Log.d("msglist",keySoliTi2);
+
+
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        //error message
+                    }
+                });
+
+            }
+        });
 
 
     }
@@ -120,4 +152,12 @@ public class SolicitudesTiAdapter extends FirebaseRecyclerAdapter<SolicitudDePre
 
         }
     }
+    private static Activity unwrap(Context context) {
+        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+
+        return (Activity) context;
+    }
+
 }

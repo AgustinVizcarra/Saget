@@ -15,6 +15,10 @@ public class PuntoRecojo {
         this.estado = estado;
     }
 
+    public PuntoRecojo(){
+
+    }
+
     public String getDescripcion() {
         return descripcion;
     }

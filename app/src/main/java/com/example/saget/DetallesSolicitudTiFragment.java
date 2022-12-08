@@ -1,11 +1,14 @@
 package com.example.saget;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +44,8 @@ public class DetallesSolicitudTiFragment extends Fragment {
     private FirebaseDatabase firebaseDatabase;
     TextView textViewSoliNumber,textViewFechaSoli,nombreEquipoSolicitudTI,tiempoTIPrestamo,cursosolicitudTi,programassolicitudTi,motivosolicitudTi,detallessolicitudTi;
     ImageView imageViewDniSoliUser;
-
+    Fragment solifFragmentTi =new SolicitudesFragmentTi();
+    Fragment mapsFragment =new MapsFragment();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -98,7 +103,7 @@ public class DetallesSolicitudTiFragment extends Fragment {
         //data
         textViewSoliNumber=view.findViewById(R.id.textViewSoliNumber);
         textViewFechaSoli=view.findViewById(R.id.textViewFechaSoli);
-        nombreEquipoSolicitudTI=view.findViewById(R.id.tiempoTIPrestamo);
+        nombreEquipoSolicitudTI=view.findViewById(R.id.nombreEquipoSolicitudTI);
         tiempoTIPrestamo=view.findViewById(R.id.tiempoTIPrestamo);
         cursosolicitudTi=view.findViewById(R.id.cursosolicitudTi);
         programassolicitudTi=view.findViewById(R.id.programassolicitudTi);
@@ -118,7 +123,7 @@ public class DetallesSolicitudTiFragment extends Fragment {
                     Log.d("msj-test",key);
 
                     textViewSoliNumber.setText(String.valueOf(key));
-                    textViewFechaSoli.setText(String.valueOf(""));
+                    textViewFechaSoli.setText(solicprestm.getFechasoli());
                     ref.child("equipo/"+solicprestm.getEquipo()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -167,31 +172,60 @@ public class DetallesSolicitudTiFragment extends Fragment {
         btnaceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Object> childupdate1= new HashMap<>();
-                childupdate1.put("estado","Aprobado");
-                ref.child("prestamos/"+key).updateChildren(childupdate1).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), "Se ha acepto la solicitud", Toast.LENGTH_SHORT).show();
-                        //enviar a la vista del mapa gps con los puntos añadidos
-                    }
-                });
+                //enviar a la vista del mapa gps con los puntos añadidos
+                Bundle bundle=new Bundle();
+                bundle.putString("keyPrestamo",key);
+                mapsFragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,mapsFragment).addToBackStack(null).commit();
             }
         });
 
         //btn denegar solicitud
         View btndenegar=view.findViewById(R.id.btnDenegarSoliTi);
-        btnaceptar.setOnClickListener(new View.OnClickListener() {
+        btndenegar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Object> childupdate= new HashMap<>();
-                childupdate.put("estado","Denegado");
-                ref.child("prestamos/"+key).updateChildren(childupdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                AlertDialog.Builder alertDialog=new AlertDialog.Builder(view.getContext());
+                alertDialog.setTitle("Observación");
+                final EditText obsInput=new EditText(view.getContext());
+                obsInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                alertDialog.setView(obsInput);
+                alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), "Se ha denegado la solicitud", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ref.child("prestamos/"+key).child("observacion").setValue(obsInput.getText().toString());
+                        Map<String, Object> childupdate= new HashMap<>();
+                        childupdate.put("estado","Denegado");
+                        ref.child("prestamos/"+key).updateChildren(childupdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(getContext(), "Se ha denegado la solicitud", Toast.LENGTH_SHORT).show();
+                                AppCompatActivity activity = (AppCompatActivity) getContext();
+                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,solifFragmentTi).addToBackStack(null).commit();
+                            }
+                        });
+
                     }
                 });
+                alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(view.getContext(), "Accion cancelada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.show();
+
+            }
+        });
+
+        //btn retroceder listado solicitudes
+        View btnbacksolilista=view.findViewById(R.id.imgBtnSolicBackListSoli);
+        btnbacksolilista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,new SolicitudesFragmentTi()).addToBackStack(null).commit();
             }
         });
 
