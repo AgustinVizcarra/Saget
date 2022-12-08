@@ -45,6 +45,21 @@
         </activity>
         <activity
             android:name=".VistaPrincipalAdminActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Saget.Registro">
+        </activity>
+        <activity
+            android:name=".RegistroActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Saget.Registro" >
+
+        </activity>
+        <activity
+            android:name=".InicioActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Saget.Registro" />
+        <activity
+            android:name=".VistaInicioActivity"
             android:exported="true"
             android:theme="@style/Theme.Saget.Registro">
             <intent-filter>
@@ -52,19 +67,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".RegistroActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Saget.Registro" />
-        <activity
-            android:name=".InicioActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Saget.Registro" />
-        <activity
-            android:name=".VistaInicioActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Saget.Registro">
         </activity>
         <activity
             android:name=".VistaPrincipalUsuarioActivity"

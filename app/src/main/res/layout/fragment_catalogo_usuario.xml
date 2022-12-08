@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CatalogoUsuarioFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fondo_principal_flujos">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CatalogoUsuarioFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+
+        <TextView
+            android:id="@+id/textViewCatalogoUser"
+            android:layout_width="210dp"
+            android:layout_height="46dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/yrsa"
+            android:text="CATÁLOGO"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.567"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="615dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCatalogoUser">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="198dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/parent">
+                <ImageView
+                    android:id="@+id/imageTabletUser"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageLaptop"
+                    app:layout_constraintTop_toTopOf="@+id/parent"
+                    android:src="@drawable/tablet_saget" />
+
+                <ImageView
+                    android:id="@+id/imageLaptopUser"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageTablet"
+                    app:layout_constraintTop_toTopOf="@+id/parent"
+                    android:visibility="visible"
+                    android:src="@drawable/laptop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="198dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageCelularUser"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:src="@drawable/celular" />
+
+                <ImageView
+                    android:id="@+id/imageMonitorUser"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:src="@drawable/monitores" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="198dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageOtrosUser"
+                    android:layout_width="350px"
+                    android:layout_height="300px"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:src="@drawable/otros" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

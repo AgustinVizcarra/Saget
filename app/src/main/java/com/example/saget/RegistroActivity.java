@@ -175,7 +175,7 @@ public class RegistroActivity extends AppCompatActivity {
                 String finalSexo = sexo;
                 String finalContrasena = sha256(contrasena);
 
-                firebaseAuth.createUserWithEmailAndPassword(finalCorreo,finalContrasena).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                firebaseAuth.createUserWithEmailAndPassword(finalCorreo,contrasena).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
