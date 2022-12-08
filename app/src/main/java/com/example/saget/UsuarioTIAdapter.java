@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -115,8 +116,8 @@ public class UsuarioTIAdapter extends FirebaseRecyclerAdapter<Usuario, UsuarioTI
         TextView nombre;
         TextView apellido;
         TextView correo;
-        Button editarUsuarioTI;
-        Button eliminarUsuarioTI;
+        ImageButton editarUsuarioTI;
+        ImageButton eliminarUsuarioTI;
         ImageView imagenUsuario;
 
         public viewHolder(@NonNull View itemView) {

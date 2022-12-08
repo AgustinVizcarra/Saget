@@ -77,7 +77,7 @@ public class UsuarioAdapter extends FirebaseRecyclerAdapter<Usuario,UsuarioAdapt
     @Override
     public UsuarioAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_usuarios,parent,false);
-        return null;
+        return new UsuarioAdapter.viewHolder(view);
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
@@ -96,7 +96,7 @@ public class UsuarioAdapter extends FirebaseRecyclerAdapter<Usuario,UsuarioAdapt
             correo = itemView.findViewById(R.id.correoU);
             cargo = itemView.findViewById(R.id.cargoU);
             sexo = itemView.findViewById(R.id.sexoU);
-            imagenUsuario = itemView.findViewById(R.id.iconImageViewPersonalTI);
+            imagenUsuario = itemView.findViewById(R.id.iconImageViewUsuario);
         }
     }
 

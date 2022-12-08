@@ -148,7 +148,5 @@ public class UsuariosFragment extends Fragment {
                 Toast.makeText(this.getContext(),"Error en la busqueda con filtros",Toast.LENGTH_LONG).show();
         }
     }
-    public void showPopUpMenu(View view){
 
-    }
 }
