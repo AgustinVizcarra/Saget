@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -23,6 +24,11 @@ public class PuntosRecojoFragment extends Fragment {
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     PuntosRecojoAdapter puntosRecojoAdapter;
     RecyclerView recyclerView;
+
+    public PuntosRecojoFragment() {
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +40,11 @@ public class PuntosRecojoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_puntos_recojo, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerPuntoRecojo);
-        Query query = databaseReference.orderByChild("estado").equalTo(1);
+        Query query = databaseReference.child("punto_recojo").orderByChild("estado").equalTo(1);
         FirebaseRecyclerOptions<PuntoRecojo> options = new FirebaseRecyclerOptions.Builder<PuntoRecojo>().setQuery(query,PuntoRecojo.class).build();
         puntosRecojoAdapter = new PuntosRecojoAdapter(options);
         recyclerView.setAdapter(puntosRecojoAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         //Fab redirecccion a creacion de un nuevo punto de recojo
         FloatingActionButton fabAgregar = (FloatingActionButton) view.findViewById(R.id.floatingAregarPuntoRecojo);
         fabAgregar.setOnClickListener(new View.OnClickListener(){
@@ -48,5 +55,16 @@ public class PuntosRecojoFragment extends Fragment {
             }
         });
         return view;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        puntosRecojoAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        puntosRecojoAdapter.stopListening();
     }
 }

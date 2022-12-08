@@ -107,18 +107,19 @@
                         android:id="@+id/apellidoTI"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/correoTI"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="18.5dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="8sp" />
                 </LinearLayout>
 
 

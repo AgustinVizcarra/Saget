@@ -1,6 +1,8 @@
 package com.example.saget;
 
-public class PuntoRecojo {
+import java.io.Serializable;
+
+public class PuntoRecojo implements Serializable {
     private String descripcion;
     private String coordenadas;
     private Object imagenes;
@@ -15,8 +17,7 @@ public class PuntoRecojo {
         this.estado = estado;
     }
 
-    public PuntoRecojo(){
-
+    public PuntoRecojo() {
     }
 
     public String getDescripcion() {

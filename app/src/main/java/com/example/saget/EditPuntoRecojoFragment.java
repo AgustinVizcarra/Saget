@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,13 +39,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.sql.SQLOutput;
+
 public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallback {
 
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage storage;
     StorageReference StorRef;
     DatabaseReference databaseReference;
-    Fragment listadoPuntosRecojo = new PuntosRecojoFragment();
     ConnectivityManager manager;
     NetworkInfo networkInfo;
     GoogleMap mMap;
@@ -67,12 +69,12 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
 
     public static EditPuntoRecojoFragment newInstance(String param1, String param2) {
         EditPuntoRecojoFragment fragment = new EditPuntoRecojoFragment();
-
         return fragment;
     }
 
     ActivityResultLauncher<Intent> openImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
+            Toast.makeText(getContext(), "Se añadio la imagen exitosamente!", Toast.LENGTH_LONG).show();
             imageUri = result.getData().getData();
         }
     });
@@ -87,13 +89,16 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_punto_recojo, container, false);
         coordenadasEdit = (EditText) view.findViewById(R.id.ediTextCambiarCoordenadas);
+        coordenadasEdit.setText(this.puntoRecojo.getCoordenadas());
         descripcionEdit = (EditText) view.findViewById(R.id.editTextCambiarDescripcion);
+        descripcionEdit.setText(this.puntoRecojo.getDescripcion());
         btnSubirFoto = (ImageButton) view.findViewById(R.id.imgBtnEditarFoto);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapEditarPunto);
+        mapFragment.getMapAsync(this);
         btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,31 +131,32 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                     } else {
                         //Quiere decir que tendrá nueva foto
                         int numero = (int) (Math.random() * 11351 + 1);
-                        StorageReference storageReference = StorRef.child("puntoRecojo" + numero + imageUri.toString().substring(imageUri.toString().lastIndexOf(".")));
+                        String[] path = imageUri.toString().split("/");
+                        String filename = path[path.length-1];
+                        StorageReference storageReference = StorRef.child("puntoRecojo" + numero + filename);
                         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Uri> task) {
-                                                fileLink = task.getResult().toString();
-                                            }
-                                        });
-                                    }
-
-                                    ;
-                                }).addOnFailureListener(e -> Log.d("msg-test", "error"))
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        Log.d("msg-test", "ruta Foto: " + task.getResult());
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        fileLink = task.getResult().toString();
+                                        //Actualizo
+                                        databaseReference.child(puntoRecojo.getKey()).child("descripcion").setValue(descripcionEdit.getText().toString());
+                                        databaseReference.child(puntoRecojo.getKey()).child("coordenadas").setValue(coordenadasEdit.getText().toString());
+                                        databaseReference.child(puntoRecojo.getKey()).child("imagenes").setValue(fileLink);
+                                        Toast.makeText(getContext(), "Punto de recojo actualizado exitosamente!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                        //Actualizo
-                        databaseReference.child(puntoRecojo.getKey()).child("descripcion").setValue(descripcionEdit.getText().toString());
-                        databaseReference.child(puntoRecojo.getKey()).child("coordenadas").setValue(coordenadasEdit.getText().toString());
-                        databaseReference.child(puntoRecojo.getKey()).child("imagenes").setValue(fileLink);
+                            }
+
+                            ;
+                        }).addOnFailureListener(e -> Log.d("msg-test", "error")).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("msg-test", "ruta Foto: " + task.getResult());
+                            }
+                        });
                     }
-                    Toast.makeText(getContext(), "Punto de recojo actualizado exitosamente!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -160,7 +166,7 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI, listadoPuntosRecojo).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_admin, new PuntosRecojoFragment()).addToBackStack(null).commit();
             }
         });
         return view;

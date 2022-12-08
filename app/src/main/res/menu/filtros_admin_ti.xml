@@ -4,14 +4,11 @@
 
     <item
         android:id="@+id/opcion1"
-        app:showAsAction="ifRoom|withText"
         android:title="Nombre" />
     <item
         android:id="@+id/opcion2"
-        app:showAsAction="ifRoom|withText"
         android:title="Apellido" />
     <item
         android:id="@+id/opcion3"
-        app:showAsAction="ifRoom|withText"
         android:title="Correo" />
 </menu>

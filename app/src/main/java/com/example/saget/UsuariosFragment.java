@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,14 +49,6 @@ public class UsuariosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        usuariosProfileStorage.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                for (StorageReference profileFile : listResult.getItems()) {
-                    filenames.add(profileFile.getName());
-                }
-            }
-        });
     }
 
     @Override
@@ -113,7 +106,7 @@ public class UsuariosFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewUsuario);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
-        adapter = new UsuarioAdapter(options,filenames);
+        adapter = new UsuarioAdapter(options);
         recyclerView.setAdapter(adapter);
         return view;
     }
@@ -122,25 +115,25 @@ public class UsuariosFragment extends Fragment {
         switch (option){
             case "":
                 FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
-                adapter = new UsuarioAdapter(options,filenames);
+                adapter = new UsuarioAdapter(options);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "cargo":
                 FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("cargo").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options1,filenames);
+                adapter = new UsuarioAdapter(options1);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "nombres":
                 FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options2,filenames);
+                adapter = new UsuarioAdapter(options2);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
             case "apellidos":
                 FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s+"~"),Usuario.class).build();
-                adapter = new UsuarioAdapter(options3,filenames);
+                adapter = new UsuarioAdapter(options3);
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
                 break;
