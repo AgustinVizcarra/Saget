@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,13 +39,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.sql.SQLOutput;
+
 public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallback {
 
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage storage;
     StorageReference StorRef;
     DatabaseReference databaseReference;
-    Fragment listadoPuntosRecojo = new PuntosRecojoFragment();
     ConnectivityManager manager;
     NetworkInfo networkInfo;
     GoogleMap mMap;
@@ -91,8 +93,12 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_punto_recojo, container, false);
         coordenadasEdit = (EditText) view.findViewById(R.id.ediTextCambiarCoordenadas);
+        coordenadasEdit.setText(this.puntoRecojo.getCoordenadas());
         descripcionEdit = (EditText) view.findViewById(R.id.editTextCambiarDescripcion);
+        descripcionEdit.setText(this.puntoRecojo.getDescripcion());
         btnSubirFoto = (ImageButton) view.findViewById(R.id.imgBtnEditarFoto);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapEditarPunto);
+        mapFragment.getMapAsync(this);
         btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +166,7 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI, listadoPuntosRecojo).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_admin, new PuntosRecojoFragment()).addToBackStack(null).commit();
             }
         });
         return view;

@@ -94,9 +94,8 @@ public class InicioAdminFragment extends Fragment {
                                  txtBuscar.setQueryHint("Ingresar el correo del usuario");
                                  option = "correo";
                                  return true;
-                             default:
-                                 return false;
                          }
+                         return true;
                      }
                  }
                 );

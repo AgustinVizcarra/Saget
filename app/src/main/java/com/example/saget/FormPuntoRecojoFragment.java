@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -172,8 +173,7 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
         backToPuntosRecojo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI, listadoPuntosRecojo).addToBackStack(null).commit();
+                onBackPressed();
             }
         });
         return view;
@@ -205,5 +205,10 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
             }
         });
+    }
+    public void onBackPressed(){
+        AppCompatActivity activity = (AppCompatActivity)getContext();
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_container_admin,new PuntosRecojoFragment()).addToBackStack(null).commit();
     }
 }

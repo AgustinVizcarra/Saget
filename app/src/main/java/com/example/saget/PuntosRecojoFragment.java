@@ -24,6 +24,11 @@ public class PuntosRecojoFragment extends Fragment {
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     PuntosRecojoAdapter puntosRecojoAdapter;
     RecyclerView recyclerView;
+
+    public PuntosRecojoFragment() {
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

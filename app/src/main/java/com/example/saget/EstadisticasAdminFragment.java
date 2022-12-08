@@ -149,15 +149,16 @@ public class EstadisticasAdminFragment extends Fragment {
                         List<Integer> conteoPorEquipo = new ArrayList<>();
                         for(EquipoCompleto e : asociacion.keySet()){
                             if(!conteoPorEquipo.contains(asociacion.get(e).size())){
-                                Log.d("msg","ingreso aqui");
                                 if(conteoPorEquipo.isEmpty()){
                                     conteoPorEquipo.add(asociacion.get(e).size());
                                 }else{
                                     if(Collections.max(conteoPorEquipo)<asociacion.get(e).size()){
                                         //Tengo un nuevo máximo
-                                        masPrestado = e;
-                                        Log.d("EQUIPO: ",e.getEquipo().getNombre());
-                                        conteoPorEquipo.add(asociacion.get(e).size());
+                                        if(e!=null){
+                                            masPrestado = e;
+                                            Log.d("msg",e.getEquipo().getNombre());
+                                            conteoPorEquipo.add(asociacion.get(e).size());
+                                        }
                                     }
                                 }
                             }
@@ -274,18 +275,18 @@ public class EstadisticasAdminFragment extends Fragment {
                             }
                         }
                         //Finalmente rellenamos al equipo mas prestado
-                        Log.d("Longitudes",String.valueOf(equipos.size()));
-                        Log.d("Prestamos",String.valueOf(prestamos.size()));
-                        TextView nombreEquipo = (TextView) view.findViewById(R.id.nombreMasPrestadoRellenar);
-                        nombreEquipo.setText(masPrestado.getEquipo().getNombre());
-                        TextView stockEquipo = (TextView) view.findViewById(R.id.stockMasPrestadoRellenar);
-                        stockEquipo.setText(String.valueOf(masPrestado.getEquipo().getStock()));
-                        TextView marcaEquipo = (TextView) view.findViewById(R.id.marcaMasPrestadoRellenar);
-                        marcaEquipo.setText(masPrestado.getEquipo().getMarca());
-                        ArrayList<String> imagenes = (ArrayList<String>) masPrestado.getEquipo().getImagenes();
-                        int n = (int) (Math.random() * (imagenes.size() - 1)) + 1;
-                        ImageView vistaEquipo = view.findViewById(R.id.iconEstadisticaDispositivo);
-                        Glide.with(vistaEquipo.getContext()).load(imagenes.get(n)).override(100,100).into(vistaEquipo);
+                        if(masPrestado!=null) {
+                            TextView nombreEquipo = (TextView) view.findViewById(R.id.nombreMasPrestadoRellenar);
+                            nombreEquipo.setText(masPrestado.getEquipo().getNombre());
+                            TextView stockEquipo = (TextView) view.findViewById(R.id.stockMasPrestadoRellenar);
+                            stockEquipo.setText(String.valueOf(masPrestado.getEquipo().getStock()));
+                            TextView marcaEquipo = (TextView) view.findViewById(R.id.marcaMasPrestadoRellenar);
+                            marcaEquipo.setText(masPrestado.getEquipo().getMarca());
+                            ArrayList<String> imagenes = (ArrayList<String>) masPrestado.getEquipo().getImagenes();
+                            int n = (int) (Math.random() * (imagenes.size() - 1)) + 1;
+                            ImageView vistaEquipo = view.findViewById(R.id.iconEstadisticaDispositivo);
+                            Glide.with(vistaEquipo.getContext()).load(imagenes.get(n)).override(100, 100).into(vistaEquipo);
+                        }
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
