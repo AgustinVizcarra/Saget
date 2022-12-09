@@ -334,7 +334,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             System.out.println("ALTURA IMAGEN: "+imgBitMap.getHeight());
             System.out.println("ANCHO IMAGEN: "+imgBitMap.getWidth());
 
-            Bitmap output = Bitmap.createBitmap(imgBitMap, 25, 25, imgBitMap.getWidth() - 50, imgBitMap.getHeight() -25);
+            Bitmap output = Bitmap.createBitmap(imgBitMap, 25, 25, imgBitMap.getWidth() - 30, imgBitMap.getHeight() -143);
             Bitmap imgBitMap2 = getBlurImage(output);
 
             Bitmap bmOverlay = Bitmap.createBitmap(imgBitMap.getWidth(), imgBitMap.getHeight(), imgBitMap.getConfig());
@@ -361,7 +361,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
         ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
 
-        scriptIntrinsicBlur.setRadius(20f);
+        scriptIntrinsicBlur.setRadius(5f);
         scriptIntrinsicBlur.setInput(entradaTemp);
         scriptIntrinsicBlur.forEach(salidaTemp);
         salidaTemp.copyTo(salidaBitmap);
