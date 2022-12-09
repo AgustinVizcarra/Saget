@@ -8,6 +8,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -35,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,6 +130,9 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
         TextView programasText = view.findViewById(R.id.programassolicitud);
         TextView motivoText = view.findViewById(R.id.motivosolicitud);
         TextView detallesText = view.findViewById(R.id.detallessolicitud);
+
+        //TextView fondito = view.findViewById(R.id.titulosvxcvxcv);
+
         fondoDNI = view.findViewById(R.id.fondoDNI);
 
         Button botonSolicitarPrestamo = view.findViewById(R.id.solicitarprestamoboton);
@@ -137,6 +143,8 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent,1);
+
+                //fondito.setVisibility(View.GONE);
             }
         });
 
@@ -323,8 +331,22 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             Bundle extras = data.getExtras();
             imgBitMap = (Bitmap) extras.get("data");
 
-            imgBitMap = getBlurImage(imgBitMap);
-            fondoDNI.setImageBitmap(imgBitMap);
+            System.out.println("ALTURA IMAGEN: "+imgBitMap.getHeight());
+            System.out.println("ANCHO IMAGEN: "+imgBitMap.getWidth());
+
+            Bitmap output = Bitmap.createBitmap(imgBitMap, 25, 25, imgBitMap.getWidth() - 50, imgBitMap.getHeight() -25);
+            Bitmap imgBitMap2 = getBlurImage(output);
+
+            Bitmap bmOverlay = Bitmap.createBitmap(imgBitMap.getWidth(), imgBitMap.getHeight(), imgBitMap.getConfig());
+            Canvas canvas = new Canvas(bmOverlay);
+            canvas.drawBitmap(imgBitMap, new Matrix(), null);
+            canvas.drawBitmap(imgBitMap2, 0, 0, null);
+            imgBitMap.recycle();
+            imgBitMap2.recycle();
+
+            fondoDNI.setImageBitmap(bmOverlay);
+            fondoDNI.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
         }
     }
 
@@ -339,7 +361,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
         ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
 
-        scriptIntrinsicBlur.setRadius(25f);
+        scriptIntrinsicBlur.setRadius(20f);
         scriptIntrinsicBlur.setInput(entradaTemp);
         scriptIntrinsicBlur.forEach(salidaTemp);
         salidaTemp.copyTo(salidaBitmap);

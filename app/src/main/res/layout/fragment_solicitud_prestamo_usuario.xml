@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="370dp"
-            android:layout_height="870dp"
+            android:layout_height="970dp"
             android:orientation="vertical"
             android:layout_marginTop="25dp"
             android:background="@drawable/fondo_blanco"
@@ -57,7 +57,7 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:gravity="center|right"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical"
                 app:layout_constraintHorizontal_bias="0.548">
 
@@ -73,36 +73,37 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="260dp"
-                android:layout_height="140dp"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/round_device_usuario">
 
                 <ImageView
-                    android:layout_width="match_parent"
                     android:id="@+id/fondoDNI"
-                    android:scaleType="centerCrop"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter">
                 </ImageView>
 
 
                 <LinearLayout
-                    android:id="@+id/linerLayout"
+                    android:id="@+id/linerLayout123"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="35dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="75dp"
                     android:layout_marginEnd="27dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/titulostock"
-                        android:layout_width="match_parent"
+                        android:id="@+id/titulosvxcvxcv"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Subir foto de DNI(parte delantera)"
                         android:textColor="@color/black"
@@ -110,13 +111,13 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="54dp"
+                    android:layout_width="34dp"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/linerLayout"
-                    android:layout_alignStart="@+id/linerLayout"
-                    android:layout_alignEnd="@+id/linerLayout"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginTop="23dp"
+                    android:layout_below="@+id/linerLayout123"
+                    android:layout_alignStart="@+id/linerLayout123"
+                    android:layout_alignEnd="@+id/linerLayout123"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="65dp"
                     android:layout_marginEnd="76dp"
                     android:orientation="vertical">
 
@@ -296,16 +297,16 @@
                 <EditText
                     android:id="@+id/detallessolicitud"
                     android:layout_width="320dp"
-                    android:layout_height="65dp"
+                    android:layout_height="95dp"
                     android:layout_below="@+id/textView14"
                     android:layout_marginStart="10dp"
-                    android:paddingLeft="10dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/round_input_usuario"
                     android:ems="12"
                     android:inputType="textPersonName"
-                    android:text=""/>
+                    android:paddingLeft="10dp"
+                    android:text="" />
 
             </RelativeLayout>
 
