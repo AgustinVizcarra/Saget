@@ -21,7 +21,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -48,10 +50,10 @@ public class ProfileFragmentUsuario extends Fragment {
     FirebaseAuth mAuth;
     Bitmap imgBitMap;
     Usuario usuario;
-    String keyUsuario;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
     }
 
@@ -60,11 +62,8 @@ public class ProfileFragmentUsuario extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_usuario, container, false);
 
-        mAuth= FirebaseAuth.getInstance();
-        //PARA SACAR EL CORREO DEL USUARIO LOGUEADO
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String correoUsuarioPrestamo = currentUser.getEmail();
-        //String correoUsuarioPrestamo = "a20191566@pucp.edu.pe";
+
+        String keyUsuario = mAuth.getUid();
 
         ImageButton botonCamara = view.findViewById(R.id.imageButton6);
         Button botonActualizar = view.findViewById(R.id.buttonactualizardata);
@@ -74,15 +73,12 @@ public class ProfileFragmentUsuario extends Fragment {
         EditText dniTxt = view.findViewById(R.id.editTextTextPersonName5);
         fondoPerfil = view.findViewById(R.id.imagenperfilusuario);
 
-        databaseReference.child("usuario").orderByChild("correo").equalTo(correoUsuarioPrestamo).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("usuario/"+keyUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot children : snapshot.getChildren()){
-                    usuario = children.getValue(Usuario.class);
-                    keyUsuario = children.getKey();
-                   break;
-                }
+
+                usuario = snapshot.getValue(Usuario.class);
 
                 botonCamara.setVisibility(View.INVISIBLE);
 
@@ -155,10 +151,9 @@ public class ProfileFragmentUsuario extends Fragment {
                                             imgBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                             byte[] data = baos.toByteArray();
 
-                                            imageRef.child(idFoto+".jpg").putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
+                                            imageRef.child(idFoto+".jpg").putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                                 @Override
-                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                                     imageRef.child(idFoto+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                         @Override
                                                         public void onSuccess(Uri uri) {
@@ -169,10 +164,14 @@ public class ProfileFragmentUsuario extends Fragment {
 
                                                             databaseReference.child("usuario").child(keyUsuario).child("foto").setValue(valorcito);
 
+                                                            Toast.makeText(getActivity(),"Datos actualizados",Toast.LENGTH_SHORT).show();
+                                                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                                                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new ProfileFragmentUsuario()).addToBackStack(null).commit();
                                                         }
                                                     });
-
                                                 }
+
+
                                             });
 
                                         }
@@ -184,18 +183,16 @@ public class ProfileFragmentUsuario extends Fragment {
                                     }else{
 
                                         Toast.makeText(getActivity(),"Campos Incorrectos!",Toast.LENGTH_SHORT).show();
-                                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new ProfileFragmentUsuario()).addToBackStack(null).commit();
 
                                     }
 
                                 }catch (Exception e){
                                     Toast.makeText(getActivity(),"Todos los campos son obligatorios!",Toast.LENGTH_SHORT).show();
-                                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new ProfileFragmentUsuario()).addToBackStack(null).commit();
                                 }
 
+
                             }
+
                         });
 
 
@@ -207,7 +204,8 @@ public class ProfileFragmentUsuario extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
                 Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
-
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new ProfileFragmentUsuario()).addToBackStack(null).commit();
             }
         });
 

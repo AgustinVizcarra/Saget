@@ -127,7 +127,6 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             String programas;
             String motivo;
             String detalles;
-            boolean guardar = true;
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -160,10 +159,10 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
                                 Toast.makeText(getActivity(),"El equipo ya no se encuentra disponible",Toast.LENGTH_SHORT).show();
                                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipo.getTipo()))).addToBackStack(null).commit();
 
                             }else{
-
+                                boolean guardar = true;
                                 try {
                                     tiempoPrestamo = tiempoPrestamoText.getText().toString();
                                     curso = cursoText.getText().toString();
@@ -221,10 +220,8 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                         imageRef.child(idFoto+".jpg").putBytes(data);
 
 
-                                        //PARA SACAR EL CORREO DEL USUARIO LOGUEADO
-                                        /*FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        String correoUsuarioPrestamo = currentUser.getEmail();*/
-                                        String correoUsuarioPrestamo = "a20191566@pucp.edu.pe";
+                                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                                        String correoUsuarioPrestamo = currentUser.getEmail();
 
                                         databaseReference.child("usuario").child("correo").equalTo(correoUsuarioPrestamo).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -239,13 +236,13 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
                                                     Toast.makeText(getActivity(),"Reserva exitosa",Toast.LENGTH_SHORT).show();
                                                     AppCompatActivity activity = (AppCompatActivity) getContext();
-                                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).commit();
+                                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipo.getTipo()))).commit();
 
                                                 }else{
 
                                                     Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                                                     AppCompatActivity activity = (AppCompatActivity) getContext();
-                                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(key)).addToBackStack(null).commit();
 
                                                 }
                                             }
@@ -254,7 +251,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                             public void onCancelled(@NonNull DatabaseError error) {
                                                 Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                                                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new DetalleEquipoFragmentUsuario(key)).addToBackStack(null).commit();
                                             }
                                         });
 
@@ -267,8 +264,8 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                 }catch (Exception e){
 
                                     Toast.makeText(getActivity(),"Todos los campos son obligatorios!",Toast.LENGTH_SHORT).show();
-                                    AppCompatActivity activity = (AppCompatActivity) getContext();
-                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                                    //AppCompatActivity activity = (AppCompatActivity) getContext();
+                                    //activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new SolicitudPrestamoFragmentUsuario(key)).addToBackStack(null).commit();
 
                                 }
 
@@ -278,10 +275,9 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                     });
 
                 }else{
-
                     Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                     AppCompatActivity activity = (AppCompatActivity) getContext();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new CatalogoUsuarioFragment()).addToBackStack(null).commit();
                 }
 
             }
@@ -290,7 +286,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
                 Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new CatalogoUsuarioFragment()).addToBackStack(null).commit();
 
             }
         });

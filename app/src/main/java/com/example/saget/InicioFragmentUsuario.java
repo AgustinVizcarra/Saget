@@ -74,8 +74,6 @@ public class InicioFragmentUsuario extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inicio_usuario,container,false);
 
-        //tipoEquipo = "2"; //LAPTOP -> POR MIENTRAS
-        System.out.println("TIPO DE EQUIPO: "+tipoEquipo);
         TextView titulo = view.findViewById(R.id.textView3);
         switch (tipoEquipo){
             case "1":

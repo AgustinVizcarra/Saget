@@ -27,10 +27,14 @@ public class SolicitudesAdapter extends FirebaseRecyclerAdapter<SolicitudDePrest
         super(options);
     }
 
+
+
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull SolicitudDePrestamo solicitudDePrestamo) {
         int orden = position + 1;
 
+        System.out.println("------------");
+        System.out.println(orden);
         if(solicitudDePrestamo.getEstado().equals("En trámite")){
             holder.estado.setTextColor(Color.parseColor("#FAFF00"));
         }else{
@@ -42,8 +46,8 @@ public class SolicitudesAdapter extends FirebaseRecyclerAdapter<SolicitudDePrest
         }
 
         holder.estado.setText(String.valueOf(solicitudDePrestamo.getEstado()));
-        //VER PORQUE A VECES EL NUMERO DE ORDEN SE DESCUADRA
-        holder.numeroSolicitud.setText("Solicitud #"+ orden);
+
+        holder.numeroSolicitud.setText("Fecha: \n"+solicitudDePrestamo.getFechasoli());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
