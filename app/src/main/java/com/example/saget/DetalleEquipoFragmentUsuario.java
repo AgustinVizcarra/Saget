@@ -54,14 +54,6 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        View botonRetrocederListaEquipos = view.findViewById(R.id.imageButton5);
-        botonRetrocederListaEquipos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                botonRetrocederListaEquipos(view);
-            }
-        });
-
         View botonReservar = view.findViewById(R.id.button);
         botonReservar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +83,23 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue() != null){
                     Equipo equipoBanderita = snapshot.getValue(Equipo.class);
+
+                    View botonRetrocederListaEquipos = view.findViewById(R.id.imageButton5);
+                    botonRetrocederListaEquipos.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AppCompatActivity activity = (AppCompatActivity) getContext();
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipoBanderita.getTipo()))).addToBackStack(null).commit();
+                        }
+                    });
+
+
+
                     if(equipoBanderita.getEstado().equals("0_"+equipoBanderita.getTipo()) || equipoBanderita.getStock() == 0){
 
                         Toast.makeText(getActivity(),"El equipo ya no se encuentra disponible",Toast.LENGTH_SHORT).show();
                         AppCompatActivity activity = (AppCompatActivity) getContext();
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipoBanderita.getTipo()))).addToBackStack(null).commit();
 
                     }else{
                         equipo = equipoBanderita;
@@ -120,7 +124,7 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
 
                     Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                     AppCompatActivity activity = (AppCompatActivity) getContext();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipo.getTipo()))).addToBackStack(null).commit();
 
                 }
 
@@ -130,18 +134,13 @@ public class DetalleEquipoFragmentUsuario extends Fragment {
 
                 Toast.makeText(getActivity(),"An error has ocurred!",Toast.LENGTH_SHORT).show();
                 AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new CatalogoUsuarioFragment()).addToBackStack(null).commit();
 
             }
         });
 
         return  view;
 
-    }
-
-    public void botonRetrocederListaEquipos(View view){
-        AppCompatActivity activity = (AppCompatActivity) getContext();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
     }
 
     public void botonReservarDetalleEquipo(View view){

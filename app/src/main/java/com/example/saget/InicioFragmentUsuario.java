@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,7 +75,7 @@ public class InicioFragmentUsuario extends Fragment {
         View view = inflater.inflate(R.layout.fragment_inicio_usuario,container,false);
 
         //tipoEquipo = "2"; //LAPTOP -> POR MIENTRAS
-
+        System.out.println("TIPO DE EQUIPO: "+tipoEquipo);
         TextView titulo = view.findViewById(R.id.textView3);
         switch (tipoEquipo){
             case "1":
@@ -120,9 +121,8 @@ public class InicioFragmentUsuario extends Fragment {
         adapter.stopListening();
     }
 
-    //FALTA IMPLEMENTAR EL FRAGMENT
     public void botonRetrocederCatalogo(View view){
-        //AppCompatActivity activity = (AppCompatActivity) getContext();
-        //activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario()).addToBackStack(null).commit();
+        AppCompatActivity activity = (AppCompatActivity) getContext();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new CatalogoUsuarioFragment()).addToBackStack(null).commit();
     }
 }
