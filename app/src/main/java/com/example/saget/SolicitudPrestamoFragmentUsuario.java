@@ -3,9 +3,16 @@ package com.example.saget;
 import static android.app.Activity.RESULT_OK;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import androidx.annotation.NonNull;
@@ -64,6 +71,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
     ImageView fondoDNI;
     Bitmap imgBitMap;
     FirebaseAuth mAuth;
+    String channelReservaUsuario = "channelReservaUsuario";
 
     public SolicitudPrestamoFragmentUsuario(String keyEquipo){
         this.key = keyEquipo;
@@ -71,6 +79,17 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
     public SolicitudPrestamoFragmentUsuario(){
 
+    }
+
+    public void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= 26){
+            NotificationChannel channel = new NotificationChannel(channelReservaUsuario,"Mensaje de Reserva", NotificationManager.IMPORTANCE_HIGH);
+            channel.enableVibration(true);
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
     }
 
     @Override
@@ -90,6 +109,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
+        createNotificationChannel();
         super.onCreate(savedInstanceState);
     }
 
@@ -235,6 +255,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                                     databaseReference.child("prestamos").push().setValue(solicitudDePrestamo);
 
                                                     Toast.makeText(getActivity(),"Reserva exitosa",Toast.LENGTH_SHORT).show();
+                                                    sendNotificationToUser();
                                                     AppCompatActivity activity = (AppCompatActivity) getContext();
                                                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipo.getTipo()))).commit();
 
@@ -342,5 +363,15 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
         return sb.toString();
     }
 
+    public void sendNotificationToUser(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),channelReservaUsuario)
+                .setSmallIcon(R.drawable.ic_logito)
+                .setContentTitle("Reserva Exitosa")
+                .setContentText("Por favor dirigase a la vista de Solicitudes para observar los detalles de su reserva")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
 
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
+        notificationManagerCompat.notify(3,builder.build());
+    }
 }
