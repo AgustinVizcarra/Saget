@@ -172,12 +172,35 @@ public class DetallesSolicitudTiFragment extends Fragment {
         btnaceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //enviar a la vista del mapa gps con los puntos añadidos
-                Bundle bundle=new Bundle();
-                bundle.putString("keyPrestamo",key);
-                mapsFragment.setArguments(bundle);
-                AppCompatActivity activity = (AppCompatActivity) getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,mapsFragment).addToBackStack(null).commit();
+                AlertDialog.Builder alertDialog=new AlertDialog.Builder(view.getContext());
+                alertDialog.setTitle("Observación");
+                final EditText obsInput=new EditText(view.getContext());
+                obsInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                alertDialog.setView(obsInput);
+                alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ref.child("prestamos/"+key).child("observacion").setValue(obsInput.getText().toString());
+                        //enviar a la vista del mapa gps con los puntos añadidos
+                        Bundle bundle=new Bundle();
+                        bundle.putString("keyPrestamo",key);
+                        mapsFragment.setArguments(bundle);
+                        AppCompatActivity activity = (AppCompatActivity) getContext();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,mapsFragment).addToBackStack(null).commit();
+
+                    }
+                });
+                alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(view.getContext(), "Accion cancelada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.show();
+
+
+
+
             }
         });
 
