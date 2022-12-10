@@ -40,6 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -198,12 +199,15 @@ public class FormDispositivosFragment extends Fragment {
                 }
 
                 String stockEquipoStr=stockEquipo.getText().toString();
+                int stockint=0;
                 if(stockEquipoStr.isEmpty()){
                     stockEquipo.requestFocus();
                     stockEquipo.setError("No dejar en blanco");
                     fine=false;
+                }else{
+                    stockint=Integer.parseInt(stockEquipoStr);
                 }
-                int stockint=Integer.parseInt(stockEquipoStr);
+
                 String caracteristicasEquipoStr=caracteristicasEquipo.getText().toString().trim();
                 if(caracteristicasEquipoStr.isEmpty()){
                     caracteristicasEquipo.requestFocus();
@@ -257,7 +261,13 @@ public class FormDispositivosFragment extends Fragment {
                     // 3. se guardan los datos
                     refequipos.child(identificador).setValue(equipo).addOnSuccessListener(unused -> {
                         Toast.makeText(getContext(), "Equipo guardado correctamente", Toast.LENGTH_SHORT).show();
+
                     });
+                    HashMap<String, Object> valorcito = new HashMap<>();
+                    for(int i=1;i<urls.size();i++){
+                        valorcito.put(String.valueOf(i),urls.get(i-1));
+                    }
+                    refequipos.child(identificador).child("imagenes").setValue(valorcito);
                     //4. se resetean los valores
                     nombreEquipo.setText("");
                     marcaEquipo.setText("");
@@ -299,6 +309,7 @@ public class FormDispositivosFragment extends Fragment {
         btnimgadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                numero = (int)(Math.random()*11351+1);
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/jpeg");
                 launcherPhotos.launch(intent);
