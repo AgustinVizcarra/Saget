@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 
@@ -22,7 +24,7 @@ public class RequestFragmentUsuario extends Fragment {
     RecyclerView recycleview;
     SolicitudesAdapter adapter;
     String filtrador;
-
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     public RequestFragmentUsuario(){
 
     }
@@ -48,6 +50,8 @@ public class RequestFragmentUsuario extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_request_usuario, container, false);
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String keyusuario = currentUser.getUid();
 
         ImageButton botonFiltrar = view.findViewById(R.id.imageButton6);
 
@@ -66,7 +70,7 @@ public class RequestFragmentUsuario extends Fragment {
             recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
 
             FirebaseRecyclerOptions<SolicitudDePrestamo> options = new FirebaseRecyclerOptions.Builder<SolicitudDePrestamo>()
-                    .setQuery(FirebaseDatabase.getInstance().getReference().child("prestamos"),SolicitudDePrestamo.class)
+                    .setQuery(FirebaseDatabase.getInstance().getReference().child("prestamos").orderByChild("usuario").equalTo(keyusuario),SolicitudDePrestamo.class)
                     .build();
 
             adapter = new SolicitudesAdapter(options);

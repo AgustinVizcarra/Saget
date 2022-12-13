@@ -1,6 +1,7 @@
 package com.example.saget;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,8 +48,12 @@ public class DetallesSolicitudTiFragment extends Fragment {
     private FirebaseDatabase firebaseDatabase;
     TextView textViewSoliNumber,textViewFechaSoli,nombreEquipoSolicitudTI,tiempoTIPrestamo,cursosolicitudTi,programassolicitudTi,motivosolicitudTi,detallessolicitudTi;
     ImageView imageViewDniSoliUser;
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    StorageReference imageRef = firebaseStorage.getReference();
     Fragment solifFragmentTi =new SolicitudesFragmentTi();
     Fragment mapsFragment =new MapsFragment();
+    int stock;
+    String keyequipo;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -130,6 +138,8 @@ public class DetallesSolicitudTiFragment extends Fragment {
                             if(snapshot.getValue() != null){
                                 Equipo equip = snapshot.getValue(Equipo.class);
                                 String txto=solicprestm.getEquipo()+"-"+equip.getNombre()+"-"+equip.getMarca()+"-"+equip.getStock();
+                                stock=equip.getStock();
+                                keyequipo=solicprestm.getEquipo();
                                 nombreEquipoSolicitudTI.setText(txto);
                             }else{
                                 //error message
@@ -150,7 +160,22 @@ public class DetallesSolicitudTiFragment extends Fragment {
                     motivosolicitudTi.setText(String.valueOf(solicprestm.getMotivo()));
                     detallessolicitudTi.setText(String.valueOf(solicprestm.getDetalles()));
 
-                    Glide.with(view.getContext()).load(solicprestm.getFoto()).into(imageViewDniSoliUser);
+                    imageRef.child(solicprestm.getFoto()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            // Conseguimos el enlace de descarga
+                            String downloadUrl = uri.toString();
+                            Glide.with(view.getContext()).load(downloadUrl).into(imageViewDniSoliUser);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Manejamos algun error
+                        }
+                    });
+
+
+
 
                 }else{
                     //error message
@@ -223,9 +248,20 @@ public class DetallesSolicitudTiFragment extends Fragment {
                         ref.child("prestamos/"+key).updateChildren(childupdate).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getContext(), "Se ha denegado la solicitud", Toast.LENGTH_SHORT).show();
-                                AppCompatActivity activity = (AppCompatActivity) getContext();
-                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,solifFragmentTi).addToBackStack(null).commit();
+                                Map<String, Object> childupdatenuev= new HashMap<>();
+                                int nuevostocl=stock+1;
+                                childupdatenuev.put("stock",nuevostocl);
+                                ref.child("equipo/"+keyequipo).updateChildren(childupdatenuev).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(getContext(), "Se ha denegado la solicitud", Toast.LENGTH_SHORT).show();
+                                        AppCompatActivity activity = (AppCompatActivity) getContext();
+                                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_TI,solifFragmentTi).addToBackStack(null).commit();
+                                    }
+                                });
+
+
+
                             }
                         });
 

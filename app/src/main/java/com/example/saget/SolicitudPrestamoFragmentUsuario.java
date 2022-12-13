@@ -198,6 +198,11 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                     motivo = motivoText.getText().toString();
                                     detalles = detallesText.getText().toString();
 
+                                    if(Integer.parseInt(tiempoPrestamo)>30){
+                                        tiempoPrestamoText.setError("No debe superar el límite de 30 días");
+                                        guardar = false;
+                                    }
+
                                     if(tiempoPrestamo.equalsIgnoreCase("") || tiempoPrestamo == null || tiempoPrestamo.isEmpty()){
                                         tiempoPrestamoText.setError("Ingrese su tiempo de prestamo");
                                         guardar = false;
@@ -244,17 +249,18 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
 
                                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                         imgBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                        imgBitMap.recycle();
                                         byte[] data = baos.toByteArray();
                                         imageRef.child(idFoto+".jpg").putBytes(data);
 
 
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        String correoUsuarioPrestamo = currentUser.getEmail();
+                                        String uidUser = currentUser.getUid();
 
-                                        databaseReference.child("usuario").child("correo").equalTo(correoUsuarioPrestamo).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        databaseReference.child("usuario/"+uidUser).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if(snapshot != null){
+                                                if(snapshot.getValue() != null){
                                                     String keyUsuario = snapshot.getKey();
                                                     DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, HH:mm:ss ");
 
@@ -263,7 +269,7 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
                                                     databaseReference.child("prestamos").push().setValue(solicitudDePrestamo);
 
                                                     Toast.makeText(getActivity(),"Reserva exitosa",Toast.LENGTH_SHORT).show();
-                                                    sendNotificationToUser();
+                                                    //sendNotificationToUser();
                                                     AppCompatActivity activity = (AppCompatActivity) getContext();
                                                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container_user,new InicioFragmentUsuario(String.valueOf(equipo.getTipo()))).commit();
 
@@ -341,7 +347,6 @@ public class SolicitudPrestamoFragmentUsuario extends Fragment {
             Canvas canvas = new Canvas(bmOverlay);
             canvas.drawBitmap(imgBitMap, new Matrix(), null);
             canvas.drawBitmap(imgBitMap2, 0, 0, null);
-            imgBitMap.recycle();
             imgBitMap2.recycle();
 
             fondoDNI.setImageBitmap(bmOverlay);
