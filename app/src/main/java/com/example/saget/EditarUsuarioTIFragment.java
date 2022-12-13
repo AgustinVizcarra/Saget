@@ -90,10 +90,10 @@ public class EditarUsuarioTIFragment extends Fragment {
             //en el caso de los valores ya existentes se muestran
             editarNombres.setText(nombres);
             editarApellidos.setText(apellidos);
-            editarApellidos.setEnabled(false);
             editarCorreo.setText(correo);
             editarCorreo.setEnabled(false);
             editarPwd.setText(password);
+            editarPwd.setEnabled(false);
             existe = true;
         }
         buttonEditarCampo.setOnClickListener(new View.OnClickListener() {
