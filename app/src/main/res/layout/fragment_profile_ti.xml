@@ -35,13 +35,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPerfilTi">
+
             <ImageView
                 android:id="@+id/imagenperfilTi"
                 android:layout_width="match_parent"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:background="@drawable/fondo_perfil"
-                android:layout_height="match_parent">
-            </ImageView>
+                android:gravity="center"></ImageView>
 
         </LinearLayout>
         <ImageButton

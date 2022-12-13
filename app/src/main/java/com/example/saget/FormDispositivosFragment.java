@@ -56,7 +56,7 @@ public class FormDispositivosFragment extends Fragment {
     EditText nombreEquipo,marcaEquipo,stockEquipo,caracteristicasEquipo,equiposAdicion;
     Spinner spinnerFormEquipo;
     int tipoint;
-    ArrayList<String> urls = new ArrayList<>();
+    ArrayList<String> urls= new ArrayList<>();;
     ArrayList<SlideModel> imageList = new ArrayList<>();
 
 
@@ -83,6 +83,7 @@ public class FormDispositivosFragment extends Fragment {
                                                     String fileLink = task.getResult().toString();
                                                     Log.d("url", fileLink);
                                                     urls.add(fileLink);
+                                                    Toast.makeText(getContext(), "Imagen guardada correctamente", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }
@@ -141,6 +142,7 @@ public class FormDispositivosFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -215,6 +217,11 @@ public class FormDispositivosFragment extends Fragment {
                     fine=false;
                 }
 
+                if(urls.size()==0){
+                    fine=false;
+                }
+
+
                 String equiposAdicionStr=equiposAdicion.getText().toString().trim();
                 String txtSpinnnerTipoEquipo=spinnerFormEquipo.getSelectedItem().toString();
                 switch (txtSpinnnerTipoEquipo){
@@ -227,8 +234,11 @@ public class FormDispositivosFragment extends Fragment {
                     case "Celular":
                         tipoEquipo=3;
                         break;
-                    case "Otro":
+                    case "Monitor":
                         tipoEquipo=4;
+                        break;
+                    case "Otro":
+                        tipoEquipo=5;
                         break;
                     default:
                         fine=false;
@@ -263,9 +273,12 @@ public class FormDispositivosFragment extends Fragment {
                         Toast.makeText(getContext(), "Equipo guardado correctamente", Toast.LENGTH_SHORT).show();
 
                     });
+
+
+
                     HashMap<String, Object> valorcito = new HashMap<>();
-                    for(int i=1;i<urls.size();i++){
-                        valorcito.put(String.valueOf(i),urls.get(i-1));
+                    for(int i=0;i<urls.size();i++){
+                        valorcito.put(String.valueOf(i+1),urls.get(i));
                     }
                     refequipos.child(identificador).child("imagenes").setValue(valorcito);
                     //4. se resetean los valores

@@ -37,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -53,7 +54,7 @@ public class FormEditDispositivosFragment extends Fragment {
     EditText nombreEditEquipo,marcaEditEquipo,stockEditEquipo,caracteristicasEditEquipo,equiposEditAdicion;
     Spinner spinnerFormEditEquipo;
     CheckBox checkBox;
-    ArrayList<String> urls = new ArrayList<>();
+    ArrayList<String> urls2 = new ArrayList<>();
     ArrayList<SlideModel> imageList = new ArrayList<>();
     //static int cont = 1;
 
@@ -76,7 +77,8 @@ public class FormEditDispositivosFragment extends Fragment {
                                                 public void onComplete(@NonNull Task<Uri> task) {
                                                     String fileLink = task.getResult().toString();
                                                     Log.d("url", fileLink);
-
+                                                    urls2.add(fileLink);
+                                                    Toast.makeText(getContext(), "Imagen guardada correctamente", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }
@@ -179,14 +181,151 @@ public class FormEditDispositivosFragment extends Fragment {
                     caracteristicasEditEquipo.setText(String.valueOf(equipoForm.getCaracteristicas()));
                     equiposEditAdicion.setText(String.valueOf(equipoForm.getEquiposAdicionales()));
                     spinnerFormEditEquipo.setSelection(equipoForm.getTipo());
-                    checkBox.setSelected(equipoForm.getDisponibilidad()==1);
+                    checkBox.setChecked(equipoForm.getDisponibilidad()==1);
 
-                    urls = (ArrayList<String>) equipoForm.getImagenes();
+                    urls2 = (ArrayList<String>) equipoForm.getImagenes();
 
-                    for(int i=1;i<urls.size();i++){
-                        imageList.add(new SlideModel(urls.get(i),null));
+                    if(urls2!=null){
+                        for(int i=1;i<urls2.size();i++){
+                            imageList.add(new SlideModel(urls2.get(i),null));
+                        }
+                        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP);
                     }
-                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP);
+
+
+
+
+                    DatabaseReference refequipos = ref.child("equipo");
+
+
+                    //btn guardar data form
+                    View btnadd=view.findViewById(R.id.btnActualizarEquipoForm);
+                    btnadd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            boolean fine = true;
+                            int tipoEquipo=0;
+
+                            String nameEquipoStr=nombreEditEquipo.getText().toString().trim();
+                            //validaciones
+                            if(nameEquipoStr.isEmpty()){
+                                nombreEditEquipo.requestFocus();
+                                nombreEditEquipo.setError("No dejar en blanco");
+                                fine=false;
+                            }
+                            String marcaEquipoStr=marcaEditEquipo.getText().toString().trim();
+                            if(marcaEquipoStr.isEmpty()){
+                                marcaEditEquipo.requestFocus();
+                                marcaEditEquipo.setError("No dejar en blanco");
+                                fine=false;
+                            }
+
+                            String stockEquipoStr=stockEditEquipo.getText().toString();
+                            if(stockEquipoStr.isEmpty()){
+                                stockEditEquipo.requestFocus();
+                                stockEditEquipo.setError("No dejar en blanco");
+                                fine=false;
+                            }
+                            int stockint=Integer.parseInt(stockEquipoStr);
+                            String caracteristicasEquipoStr=caracteristicasEditEquipo.getText().toString().trim();
+                            if(caracteristicasEquipoStr.isEmpty()){
+                                caracteristicasEditEquipo.requestFocus();
+                                caracteristicasEditEquipo.setError("No dejar en blanco");
+                                fine=false;
+                            }
+
+                            String equiposAdicionStr=equiposEditAdicion.getText().toString().trim();
+                            String txtSpinnnerTipoEquipo=spinnerFormEditEquipo.getSelectedItem().toString();
+                            switch (txtSpinnnerTipoEquipo){
+                                case "Tablet":
+                                    tipoEquipo=1;
+                                    break;
+                                case "Laptop":
+                                    tipoEquipo=2;
+                                    break;
+                                case "Celular":
+                                    tipoEquipo=3;
+                                    break;
+                                case "Monitor":
+                                    tipoEquipo=4;
+                                    break;
+                                case "Otro":
+                                    tipoEquipo=5;
+                                    break;
+                                default:
+                                    fine=false;
+                            }
+                            //disponibilidad
+                            int disponi;
+                            if(checkBox.isChecked()){
+                                disponi=1;
+                            }else{
+                                disponi=0;
+                            }
+                            if(fine){
+
+                                Equipo equipo= new Equipo();
+                                equipo.setNombre(nameEquipoStr);
+                                equipo.setMarca(marcaEquipoStr);
+                                equipo.setStock(stockint);
+                                equipo.setCaracteristicas(caracteristicasEquipoStr);
+                                equipo.setEquiposAdicionales(equiposAdicionStr);
+                                equipo.setTipo(tipoEquipo);
+                                equipo.setDisponibilidad(disponi);
+                                //se guarda el estado con disponibilidad y tipo de equipo
+                                if(stockint==0){
+                                    equipo.setEstado("0_"+String.valueOf(tipoEquipo));
+                                }else{
+                                    equipo.setEstado(String.valueOf(disponi)+"_"+String.valueOf(tipoEquipo));
+                                }
+
+
+                                //Toast.makeText(getContext(), String.valueOf(urls2.get(1)), Toast.LENGTH_SHORT).show();
+                                refequipos.child(key).child("imagenes").removeValue();
+
+                                // 3. se guardan los datos
+                                refequipos.child(key).setValue(equipo).addOnSuccessListener(unused -> {
+                                    Toast.makeText(getContext(), "Equipo guardado correctamente", Toast.LENGTH_SHORT).show();
+
+                                });
+
+
+                                HashMap<String, Object> valorcito2 = new HashMap<>();
+                                int valmax=urls2.size()-1;
+                                for(int k=1;k<urls2.size();k++){
+                                    valorcito2.put(String.valueOf(k),urls2.get(k));
+
+                                }
+                                //Toast.makeText(getContext(), String.valueOf(valorcito2.size()), Toast.LENGTH_SHORT).show();
+                                refequipos.child(key).child("imagenes").setValue(valorcito2);
+
+                                //4. se resetean los valores
+                                nombreEditEquipo.setText("");
+                                marcaEditEquipo.setText("");
+                                stockEditEquipo.setText("");
+                                caracteristicasEditEquipo.setText("");
+                                equiposEditAdicion.setText("");
+                                //5. cambiamos de vista
+                                Bundle bundle=new Bundle();
+                                bundle.putInt("tipo",tipoint);
+                                listadoDispositivosTIFragment.setArguments(bundle);
+                                AppCompatActivity activity = (AppCompatActivity) getContext();
+                                activity.getSupportFragmentManager().beginTransaction()
+                                        .setReorderingAllowed(true)
+                                        .replace(R.id.frame_container_TI,listadoDispositivosTIFragment)
+                                        .addToBackStack(null).commit();
+
+
+                            }else{
+                                Toast.makeText(getContext(), "Debe llenar correctamente los datos pedidos", Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+
+                    });
+
+
                 }else{
                     //error message
                     AppCompatActivity activity = (AppCompatActivity) getContext();
@@ -207,118 +346,14 @@ public class FormEditDispositivosFragment extends Fragment {
 
 
 
-        DatabaseReference refequipos = ref.child("equipo");
 
-
-        //btn guardar data form
-        View btnadd=view.findViewById(R.id.btnActualizarEquipoForm);
-        btnadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean fine = true;
-                int tipoEquipo=0;
-
-                String nameEquipoStr=nombreEditEquipo.getText().toString().trim();
-                //validaciones
-                if(nameEquipoStr.isEmpty()){
-                    nombreEditEquipo.requestFocus();
-                    nombreEditEquipo.setError("No dejar en blanco");
-                    fine=false;
-                }
-                String marcaEquipoStr=marcaEditEquipo.getText().toString().trim();
-                if(marcaEquipoStr.isEmpty()){
-                    marcaEditEquipo.requestFocus();
-                    marcaEditEquipo.setError("No dejar en blanco");
-                    fine=false;
-                }
-
-                String stockEquipoStr=stockEditEquipo.getText().toString();
-                if(stockEquipoStr.isEmpty()){
-                    stockEditEquipo.requestFocus();
-                    stockEditEquipo.setError("No dejar en blanco");
-                    fine=false;
-                }
-                int stockint=Integer.parseInt(stockEquipoStr);
-                String caracteristicasEquipoStr=caracteristicasEditEquipo.getText().toString().trim();
-                if(caracteristicasEquipoStr.isEmpty()){
-                    caracteristicasEditEquipo.requestFocus();
-                    caracteristicasEditEquipo.setError("No dejar en blanco");
-                    fine=false;
-                }
-
-                String equiposAdicionStr=equiposEditAdicion.getText().toString().trim();
-                String txtSpinnnerTipoEquipo=spinnerFormEditEquipo.getSelectedItem().toString();
-                switch (txtSpinnnerTipoEquipo){
-                    case "Tablet":
-                        tipoEquipo=1;
-                        break;
-                    case "Laptop":
-                        tipoEquipo=2;
-                        break;
-                    case "Celular":
-                        tipoEquipo=3;
-                        break;
-                    case "Otro":
-                        tipoEquipo=4;
-                        break;
-                    default:
-                        fine=false;
-                }
-                //disponibilidad
-                int disponi;
-                if(checkBox.isChecked()){
-                    disponi=1;
-                }else{
-                    disponi=0;
-                }
-                if(fine){
-
-                    Equipo equipo= new Equipo();
-                    equipo.setNombre(nameEquipoStr);
-                    equipo.setMarca(marcaEquipoStr);
-                    equipo.setStock(stockint);
-                    equipo.setCaracteristicas(caracteristicasEquipoStr);
-                    equipo.setEquiposAdicionales(equiposAdicionStr);
-                    equipo.setTipo(tipoEquipo);
-                    equipo.setDisponibilidad(disponi);
-
-                    // 3. se guardan los datos
-                    refequipos.child(key).setValue(equipo).addOnSuccessListener(unused -> {
-                        Toast.makeText(getContext(), "Equipo guardado correctamente", Toast.LENGTH_SHORT).show();
-                    });
-                    //4. se resetean los valores
-                    nombreEditEquipo.setText("");
-                    marcaEditEquipo.setText("");
-                    stockEditEquipo.setText("");
-                    caracteristicasEditEquipo.setText("");
-                    equiposEditAdicion.setText("");
-                    //5. cambiamos de vista
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("tipo",tipoint);
-                    listadoDispositivosTIFragment.setArguments(bundle);
-                    AppCompatActivity activity = (AppCompatActivity) getContext();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.frame_container_TI,listadoDispositivosTIFragment)
-                            .addToBackStack(null).commit();
-
-
-                }else{
-                    Toast.makeText(getContext(), "Debe llenar correctamente los datos pedidos", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-        });
 
         //btn foto
         View btnimgadd=view.findViewById(R.id.imgbtnEditsubir);
         btnimgadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                numero = (int)(Math.random()*11351+1);
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/jpeg");
                 launcherPhotos.launch(intent);
