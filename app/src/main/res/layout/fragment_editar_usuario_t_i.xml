@@ -62,7 +62,7 @@
                     />
                 <EditText
                     android:id="@+id/NombrePersonalTI"
-                    android:layout_width="230dp"
+                    android:layout_width="245dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -94,7 +94,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/round_input_usuario"
                     android:inputType="textPersonName"
-                    android:hint="Ingrese los Apellidos"
+                    android:hint="Ingrese los apellidos"
                     android:textSize="16sp"
                     android:textAlignment="center"
                     android:textColor="#000000" />

@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import org.w3c.dom.Text;
 
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EditarUsuarioTIFragment extends Fragment {
@@ -89,7 +90,9 @@ public class EditarUsuarioTIFragment extends Fragment {
             //en el caso de los valores ya existentes se muestran
             editarNombres.setText(nombres);
             editarApellidos.setText(apellidos);
+            editarApellidos.setEnabled(false);
             editarCorreo.setText(correo);
+            editarCorreo.setEnabled(false);
             editarPwd.setText(password);
             existe = true;
         }
@@ -164,20 +167,13 @@ public class EditarUsuarioTIFragment extends Fragment {
                             HashMap<Integer,String> foto = new HashMap<>();
                             String url = usuariosProfileStorage.child("defaultProfile.jpg").toString();
                             foto.put(1,url);
-                            Usuario usuario = new Usuario(nombresText,apellidosText,correoText,"No especifica","Operario",2,sha256(pwdeTxt),url);
-                            firebaseDatabase.getReference("ti").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    String key = firebaseDatabase.getReference("ti").push().getKey();
-                                    firebaseDatabase.getReference().child(key).child(dniTxt).setValue(usuario);
-                                    Toast.makeText(getActivity().getApplicationContext(),"Se ha añadido al usuario de manera exitosa",Toast.LENGTH_SHORT).show();
-                                    onBackPressed();
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+                            ArrayList<Object> lista = new ArrayList<>();
+                            lista.add(foto);
+                            Usuario usuario = new Usuario(nombresText,apellidosText,correoText,"No especifica","Operario",2,sha256(pwdeTxt),dniTxt,null);
+                            String key = firebaseDatabase.getReference().child("ti").push().getKey();
+                            firebaseDatabase.getReference().child("ti").child(key).setValue(usuario);
+                            Toast.makeText(getActivity().getApplicationContext(),"Se ha añadido al usuario de manera exitosa",Toast.LENGTH_SHORT).show();
+                            onBackPressed();
                         }
                     }
                 }

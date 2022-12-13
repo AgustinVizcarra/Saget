@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -58,6 +60,8 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
     String fileLink = "";
     ImageButton backToPuntosRecojo;
     PuntoRecojo puntoRecojo;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
 
     public EditPuntoRecojoFragment() {
         // Required empty public constructor
@@ -128,6 +132,11 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                         //Quiere decir que se queda con la foto anterior
                         databaseReference.child(puntoRecojo.getKey()).child("descripcion").setValue(descripcionEdit.getText().toString());
                         databaseReference.child(puntoRecojo.getKey()).child("coordenadas").setValue(coordenadasEdit.getText().toString());
+                        Toast.makeText(getContext(), "Punto de recojo actualizado exitosamente!", Toast.LENGTH_SHORT).show();
+                        //Redirigir a vista de puntos
+                        AppCompatActivity activity = (AppCompatActivity)getContext();
+                        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_container_admin,new PuntosRecojoFragment()).addToBackStack(null).commit();
                     } else {
                         //Quiere decir que tendrá nueva foto
                         int numero = (int) (Math.random() * 11351 + 1);
@@ -146,6 +155,10 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                                         databaseReference.child(puntoRecojo.getKey()).child("coordenadas").setValue(coordenadasEdit.getText().toString());
                                         databaseReference.child(puntoRecojo.getKey()).child("imagenes").setValue(fileLink);
                                         Toast.makeText(getContext(), "Punto de recojo actualizado exitosamente!", Toast.LENGTH_SHORT).show();
+                                        //Redirigir a vista de puntos
+                                        AppCompatActivity activity = (AppCompatActivity)getContext();
+                                        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.frame_container_admin,new PuntosRecojoFragment()).addToBackStack(null).commit();
                                     }
                                 });
                             }
@@ -170,6 +183,12 @@ public class EditPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
             }
         });
         return view;
+    }
+
+    public void onBackPressed(){
+        AppCompatActivity activity = (AppCompatActivity)getContext();
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_container_admin,new PuntosRecojoFragment()).addToBackStack(null).commit();
     }
 
     @Override

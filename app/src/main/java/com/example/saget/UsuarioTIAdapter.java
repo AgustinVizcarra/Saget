@@ -68,7 +68,8 @@ public class UsuarioTIAdapter extends FirebaseRecyclerAdapter<Usuario, UsuarioTI
                 builder.setTitle("Eliminar usuario");
                 builder.setMessage("¿Está seguro que desea eliminar al usuario" + model.getNombres() + " " + model.getApellidos() + "? ");
                 builder.setPositiveButton("Sí", (dialogInterface, i) -> {
-                    databaseReference.child("usuario").child(getRef(holder.getAbsoluteAdapterPosition()).getKey()).removeValue();
+                    databaseReference.child("ti").child(getRef(holder.getAbsoluteAdapterPosition()).getKey()).removeValue();
+                    Toast.makeText(view.getContext(), "Se elimino el usuario exitosamente!", Toast.LENGTH_SHORT).show();
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override

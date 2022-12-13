@@ -47,6 +47,18 @@ public class UsuariosFragment extends Fragment {
     FloatingActionButton filtrosUsuarios;
 
     @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -107,7 +119,6 @@ public class UsuariosFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query,Usuario.class).build();
         adapter = new UsuarioAdapter(options);
-        adapter.startListening();
         recyclerView.setAdapter(adapter);
         return view;
     }

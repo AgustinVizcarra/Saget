@@ -51,6 +51,7 @@ public class InicioAdminFragment extends Fragment {
     View filtros;
     FloatingActionButton floatingFiltros;
 
+
     public InicioAdminFragment() {
 
     }
@@ -81,6 +82,7 @@ public class InicioAdminFragment extends Fragment {
         floatingFiltros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 registerForContextMenu(view);
             }
         });
@@ -126,26 +128,26 @@ public class InicioAdminFragment extends Fragment {
             case "":
                 FirebaseRecyclerOptions<Usuario> options = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query, Usuario.class).build();
                 adapter = new UsuarioTIAdapter(options);
-                adapter.startListening();
                 recyclerView.setAdapter(adapter);
+                adapter.startListening();
                 break;
             case "nombres":
                 FirebaseRecyclerOptions<Usuario> options1 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("nombres").startAt(s).endAt(s + "~"), Usuario.class).build();
                 adapter = new UsuarioTIAdapter(options1);
-                adapter.startListening();
                 recyclerView.setAdapter(adapter);
+                adapter.startListening();
                 break;
             case "apellidos":
                 FirebaseRecyclerOptions<Usuario> options2 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("apellidos").startAt(s).endAt(s + "~"), Usuario.class).build();
                 adapter = new UsuarioTIAdapter(options2);
-                adapter.startListening();
                 recyclerView.setAdapter(adapter);
+                adapter.startListening();
                 break;
             case "correo":
                 FirebaseRecyclerOptions<Usuario> options3 = new FirebaseRecyclerOptions.Builder<Usuario>().setQuery(query.orderByChild("correo").startAt(s).endAt(s + "~"), Usuario.class).build();
                 adapter = new UsuarioTIAdapter(options3);
-                adapter.startListening();
                 recyclerView.setAdapter(adapter);
+                adapter.startListening();
                 break;
             default:
                 Toast.makeText(this.getContext(), "Error en la busqueda con filtros", Toast.LENGTH_LONG).show();
@@ -158,7 +160,6 @@ public class InicioAdminFragment extends Fragment {
         int id = v.getId();
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.filtros_admin_ti,menu);
-
     }
 
     @Override
