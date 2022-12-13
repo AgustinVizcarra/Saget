@@ -147,6 +147,7 @@ public class FormPuntoRecojoFragment extends Fragment implements OnMapReadyCallb
                                             String keyPuntoRecojo = databaseReference.child("punto_recojo").push().getKey();
                                             PuntoRecojo puntoRecojo = new PuntoRecojo(descripcion.getText().toString(), coordenadas.getText().toString(), fileLink, keyPuntoRecojo, 1);
                                             databaseReference.child("punto_recojo").child(keyPuntoRecojo).setValue(puntoRecojo);
+                                            Toast.makeText(getContext(), "Punto de recojo añadido exitosamente!", Toast.LENGTH_SHORT).show();
                                             //Salvado exitoso
                                             descripcion.setText("");
                                             coordenadas.setText("");

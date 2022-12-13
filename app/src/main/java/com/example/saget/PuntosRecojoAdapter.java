@@ -71,7 +71,7 @@ public class PuntosRecojoAdapter extends FirebaseRecyclerAdapter<PuntoRecojo,Pun
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 HashMap<String,Object> map = new HashMap<>();
-                                map.put("estado","0");
+                                map.put("estado",0);
                                 firebaseDatabase.getReference().child("punto_recojo").child(model.getKey()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
